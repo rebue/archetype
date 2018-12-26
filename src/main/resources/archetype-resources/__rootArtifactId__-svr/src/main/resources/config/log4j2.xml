@@ -1,0 +1,94 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<!-- Log4j 2.x 配置文件。每5秒自动检查配置文件是否更新； -->
+<Configuration monitorInterval="5" strict="true"
+	schema="log4j-core-2.8.2.jar/Log4j-config.xsd">
+	<Appenders>
+		<!-- 输出到控制台 -->
+		<Console name="console" target="SYSTEM_OUT">
+			<!-- 需要记录的级别 -->
+			<!-- <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" 
+				/> -->
+			<PatternLayout pattern="%d{hh:mm:ss,sss}[%5p]%m --- %l %t%n" />
+		</Console>
+
+		<!-- 输出debug/info/warn/error到文件，按天或者超过5MB分割 -->
+		<RollingFile name="logfile" filename="logs/current.log"
+			filepattern="logs/${symbol_dollar}${symbol_dollar}{date:yyyyMM}/%d{yyyyMMddHH}-%i.log.gz">
+			<!-- 需要记录的级别 -->
+			<!-- <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" 
+				/> -->
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}[%5p]%m --- %l %t%n" />
+			<Policies>
+				<!-- <OnStartupTriggeringPolicy /> -->
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="5 MB" />
+			</Policies>
+		</RollingFile>
+
+		<!-- 只输出warn/error到文件，按天或者超过5MB分割 -->
+		<RollingFile name="errfile" filename="logs/current.error"
+			filepattern="logs/${symbol_dollar}${symbol_dollar}{date:yyyyMM}/%d{yyyyMMddHH}-%i.error.gz">
+			<!-- 需要记录的级别 -->
+			<ThresholdFilter level="warn" onMatch="ACCEPT"
+				onMismatch="DENY" />
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}[%5p] %m --- %l %t%n" />
+			<Policies>
+				<!-- <OnStartupTriggeringPolicy /> -->
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="5 MB" />
+			</Policies>
+		</RollingFile>
+
+		<!-- 只输出SQL到文件，按天或者超过5MB分割 -->
+		<RollingFile name="sqlfile" filename="logs/current.sql"
+			filepattern="logs/${symbol_dollar}${symbol_dollar}{date:yyyyMM}/%d{yyyyMMddHH}-%i.sql.gz">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}[%5p] %m --- %t%n" />
+			<Policies>
+				<!-- <OnStartupTriggeringPolicy /> -->
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="5 MB" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<!-- 全局配置 -->
+		<Root level="debug">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="logfile" />
+			<AppenderRef ref="errfile" />
+		</Root>
+
+		<logger name="org.apache.ibatis.logging.jdbc.BaseJdbcLogger.debug"
+			level="debug">
+			<AppenderRef ref="sqlfile" />
+		</logger>
+
+		<!-- sql 以及耗费的执行时间 -->
+		<logger name="jdbc.sqltiming" level="debug">
+			<AppenderRef ref="sqlfile" />
+		</logger>
+		<!-- 执行之后的返回结果 -->
+		<logger name="jdbc.resultsettable" level="debug">
+			<AppenderRef ref="sqlfile" />
+		</logger>
+		<!-- 只有sql -->
+		<logger name="jdbc.sqlonly" level="debug">
+			<AppenderRef ref="sqlfile" />
+		</logger>
+		<logger name="jdbc.audit" level="debug">
+			<AppenderRef ref="sqlfile" />
+		</logger>
+		<logger name="jdbc.resultset" level="debug">
+			<AppenderRef ref="sqlfile" />
+		</logger>
+		<!-- 能看到数据库的连接数 -->
+		<logger name="jdbc.connection" level="debug">
+			<AppenderRef ref="sqlfile" />
+		</logger>
+	</Loggers>
+
+</Configuration>

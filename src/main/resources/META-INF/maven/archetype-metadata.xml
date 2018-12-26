@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd" name="hlw"
+	xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<requiredProperties>
+		<!-- 服务名的前缀，首字母大写 -->
+		<requiredProperty key="svrNamePrefix">
+			<defaultValue>${artifactId.substring(0,1).toUpperCase().concat(${artifactId.substring(1)})}</defaultValue>
+		</requiredProperty>
+		<!-- 服务名的前缀大写 -->
+		<requiredProperty key="svrNamePrefixCap">
+			<defaultValue>${artifactId.toUpperCase()}</defaultValue>
+		</requiredProperty>
+	</requiredProperties>
+
+	<fileSets>
+		<fileSet encoding="UTF-8">
+			<directory>db/script</directory>
+			<includes>
+				<include>**/*.sql</include>
+			</includes>
+		</fileSet>
+		<fileSet encoding="UTF-8">
+			<directory>db/model</directory>
+			<includes>
+			</includes>
+		</fileSet>
+		<fileSet encoding="UTF-8">
+			<directory>doc</directory>
+			<includes>
+				<include>**/*.md</include>
+				<include>**/*.doc</include>
+			</includes>
+		</fileSet>
+		<fileSet encoding="UTF-8">
+			<directory>db</directory>
+			<includes>
+				<include>**/*.md</include>
+			</includes>
+		</fileSet>
+		<fileSet encoding="UTF-8">
+			<directory></directory>
+			<includes>
+				<include>.gitignore</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+	<modules>
+		<module id="${rootArtifactId}-gen" dir="__rootArtifactId__-gen" name="${rootArtifactId}-gen">
+			<fileSets>
+				<fileSet filtered="true" encoding="UTF-8">
+					<directory>src/main/java</directory>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" encoding="UTF-8">
+					<directory>src/main/resources</directory>
+					<includes>
+						<include>**/*.xml</include>
+						<include>**/*.properties</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" encoding="UTF-8">
+					<directory>src/main/resources</directory>
+					<includes>
+						<include>**/*.json</include>
+						<include>**/*.btl</include>
+					</includes>
+				</fileSet>
+			</fileSets>
+		</module>
+		<module id="${rootArtifactId}-api" dir="__rootArtifactId__-api" name="${rootArtifactId}-api">
+			<fileSets>
+				<fileSet filtered="true" encoding="UTF-8">
+					<directory>src/main/java</directory>
+					<includes>
+						<include>**/*.java</include>
+						<include>**/*.xml</include>
+					</includes>
+				</fileSet>
+			</fileSets>
+		</module>
+		<module id="${rootArtifactId}-bll" dir="__rootArtifactId__-bll" name="${rootArtifactId}-bll">
+			<fileSets>
+				<fileSet filtered="true" encoding="UTF-8">
+					<directory>src/main/java</directory>
+					<includes>
+						<include>**/*.java</include>
+						<include>**/*.xml</include>
+					</includes>
+				</fileSet>
+			</fileSets>
+		</module>
+		<module id="${rootArtifactId}-svr" dir="__rootArtifactId__-svr" name="${rootArtifactId}-svr">
+			<fileSets>
+				<fileSet filtered="true" encoding="UTF-8">
+					<directory>src/main/java</directory>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" encoding="UTF-8">
+					<directory>src/main/resources</directory>
+					<includes>
+						<include>**/*.xml</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" encoding="UTF-8">
+					<directory>src/main/resources</directory>
+					<includes>
+						<include>**/*.yml</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" encoding="UTF-8">
+					<directory>src/test/java</directory>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</fileSet>
+			</fileSets>
+		</module>
+	</modules>
+</archetype-descriptor>

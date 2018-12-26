@@ -1,0 +1,44 @@
+# 生成环境的配置
+server:
+  port: 0
+
+logging:
+  config: classpath:config/log4j2.xml
+  level:
+    root: info
+    rebue: trace
+    org.apache.http: warn
+    com.netflix.discovery: warn
+    org.springframework.context.event.SimpleApplicationEventMulticaster: warn
+    org.springframework.dao: debug
+    org.springframework.cloud: warn
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+
+spring:
+  rabbitmq:
+      host: 127.0.0.1
+      port: 5672
+      username: guest
+      password: guest
+  cloud:
+    config:
+      profile: prod
+      discovery:
+        enabled: true #开启通过服务来访问Config Server的功能
+        service-id: config-server
+    bus:
+      enabled: true
+      trace:
+        enabled: true # 开启消息跟踪
+      refresh:
+        enabled: true 
+    
+endpoints:
+  bus-refresh:
+    enabled: true
+
+appid: 0

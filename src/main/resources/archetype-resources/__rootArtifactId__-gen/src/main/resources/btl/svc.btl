@@ -1,0 +1,21 @@
+package ${modulePackage}.svc;
+
+import rebue.robotech.svc.BaseSvc;
+import ${modulePackage}.mo.${entityName}Mo;
+import ${modulePackage}.jo.${entityName}Jo;
+
+/**
+ * ${table.remarks}
+ *
+ * @mbg.generated 自动生成的注释，如需修改本注释，请删除本行
+ */
+public interface ${entityName}Svc extends BaseSvc<<&
+		for(id in ids){
+			if(!idLP.first) {
+				print(', ');
+			}
+		    print(id.value);
+		}
+	&>, ${entityName}Mo, ${entityName}Jo>{
+
+}

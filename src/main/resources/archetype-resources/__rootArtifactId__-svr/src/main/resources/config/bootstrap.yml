@@ -1,0 +1,37 @@
+# 基础配置
+server:
+  port: 0
+
+spring:
+  application:
+    name: ${parentArtifactId}-svr
+  profiles:
+    active: dev
+  jpa:
+    # 打印SQL
+    show-sql: true
+    hibernate:
+      naming:
+        # 识别大写表
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      
+eureka:
+  instance:
+    # 客户端注册时使用IP而不是hostname(在客户端配置)
+    prefer-ip-address: true
+    # 将Instance ID设置成IP:端口的形式(在客户端配置)
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+    
+mybatis:
+  configuration:
+    # 自动将数据库中用下划线分隔单词的风格转换为小驼峰风格
+    map-underscore-to-camel-case: true
+    # 自动转化枚举类型
+    default-enum-type-handler: rebue.wheel.mybatis.AutoEnumTypeHandler
+
+pagehelper:
+  # 分页合理化参数。
+  # 当该参数设置为 true 时，pageNum<=0 时会查询第一页， 
+  # pageNum>pages（超过总数时），会查询最后一页。
+  reasonable: true
+    

@@ -1,0 +1,131 @@
+package ${modulePackage}.jo;
+
+import java.io.Serializable;
+
+import java.util.Date;
+import java.math.BigDecimal;
+import java.util.List;
+
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+/**
+ * The persistent class for the ${tableName} database table.
+ * @mbg.generated 自动生成，如需修改，请删除本行
+ */
+@Entity
+@Table(name = "${tableName}")
+@Getter
+@Setter
+@ToString
+public class ${entityName}Jo implements Serializable {
+
+	/**
+     * @mbg.generated 自动生成，如需修改，请删除本行
+     */
+	private static final long serialVersionUID = 1L;
+
+	<&
+		for(var i=0;i<props.~size;i++){
+        	println('/**');
+        	println('* ' + props[i].name);
+        	println('*');
+        	println('* @mbg.generated 自动生成，如需修改，请删除本行');
+        	println('*/');
+	        if(props[i].code == 'id') {
+	        	println('@Id');
+	        }
+	        
+	        println('@Basic(optional = ' + props[i].isNullable + ')');
+	        
+	        if(props[i].type != 'BigDecimal') {
+	        	println('@Column(name = "' + props[i].sourceCode + '", nullable = ' + props[i].isNullable + ', length=' + props[i].length + ')');
+	        } else {
+	        	println('@Column(name = "' + props[i].sourceCode + '", nullable = ' + props[i].isNullable + ', precision=' + props[i].length + ', scale = ' + props[i].scale + ' )');
+	        }
+	        
+	        if(props[i].type != 'Time') {
+	        	println('private ' + props[i].type + ' ' + props[i].code + ';');
+	        } else {
+	        	println('@Temporal(TemporalType.DATE)');
+	        	println('private Date ' + props[i].code + ';');
+	        }
+		}
+	&>
+	
+	<&
+		for(foreignKey in fkFks) {
+			println('/**');
+			println('* ' + foreignKey.title);
+        	println('*');
+        	println('* @mbg.generated 自动生成，如需修改，请删除本行');
+        	println('*/');
+			print('@JoinColumn(name = "'+foreignKey.fkFieldName+'", referencedColumnName = "'+foreignKey.pkFieldName+'"');
+			if(!foreignKey.isNullable) print(', nullable = false');
+			println(')');
+		    print('@ManyToOne(');
+			if(!foreignKey.isNullable) print('optional = false');
+			println(')');
+		    println('private '+foreignKey.pkClassName+' '+foreignKey.pkBeanName+';');
+		}
+	&>
+
+	<&
+		for(foreignKey in fkPks) {
+			if (!foreignKey.isMiddleTableOnFk || isGenTargetOnMiddleTable) {
+				println('/**');
+				println('* ' + foreignKey.title + '列表');
+	        	println('*');
+	        	println('* @mbg.generated 自动生成，如需修改，请删除本行');
+	        	println('*/');
+			    print('@OneToMany(cascade = CascadeType.ALL, mappedBy = "'+foreignKey.pkBeanName+'")');
+			    println('private List<'+foreignKey.fkClassName+'> '+foreignKey.fkBeanName+'List;');
+		    }
+		}
+	&>
+
+	/**
+     * @mbg.generated 自动生成，如需修改，请删除本行
+     */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	/**
+     * @mbg.generated 自动生成，如需修改，请删除本行
+     */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		${entityName}Jo other = (${entityName}Jo) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+}

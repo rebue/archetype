@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>${groupId}</groupId>
+		<artifactId>${rootArtifactId}</artifactId>
+		<version>${version}</version>
+	</parent>
+
+	<artifactId>${artifactId}</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>${groupId}</groupId>
+			<artifactId>${rootArtifactId}-bll</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.rebue.wheel</groupId>
+			<artifactId>wheel-turing</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.rebue.wheel</groupId>
+			<artifactId>wheel-test</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.rebue.sbs</groupId>
+			<artifactId>smx-spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.rebue.sbs</groupId>
+			<artifactId>feign-spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+		</dependency>
+
+		<!-- 引入log4j2依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+		<!-- 用slf4j实现jcl -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
