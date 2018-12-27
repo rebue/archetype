@@ -14,7 +14,7 @@ import rebue.mbgx.MybatisGeneratorWrap;
 /**
  * 自动生成Mybatis
  */
-public class ${svrNamePrefix}Gen {
+public class ${projectNameCapitalise}Gen {
 
     public static void main(final String[] args) throws IOException, XMLParserException, InvalidConfigurationException, SQLException, InterruptedException {
         MybatisGeneratorWrap.gen(true, "conf/mbg-${parentArtifactId}.properties");

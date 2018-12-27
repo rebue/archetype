@@ -3,12 +3,12 @@ debug: true
 
 server:
   # 自定义端口号，方便开发测试
-  port: 9009
+  port: ${microServerPort}
 
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka/
+      defaultZone: ${eurekaUrl}
 
 logging:
   config: classpath:config/log4j2.xml
@@ -19,13 +19,13 @@ logging:
 
 spring:
   rabbitmq:
-      host: 127.0.0.1
-      port: 5672
-      username: guest
-      password: guest
+      host: ${rabbitmqHost}
+      port: ${rabbitmqPort}
+      username: ${rabbitmqUser}
+      password: ${rabbitmqPswd}
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/${parentArtifactId}?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
-    username: ${parentArtifactId}
-    password: ${parentArtifactId}
+    url: ${jdbcUrl}
+    username: ${jdbcUser}
+    password: ${jdbcPswd}
 
 appid: 1

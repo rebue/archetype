@@ -4,12 +4,51 @@
 	xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
 	<requiredProperties>
-		<!-- 服务名的前缀，首字母大写 -->
-		<requiredProperty key="svrNamePrefix">
+		<!-- 微服务端口号 -->
+		<requiredProperty key="microServerPort">
+		</requiredProperty>
+		<!-- eureka服务器地址 -->
+		<requiredProperty key="eurekaUrl">
+			<defaultValue>http://127.0.0.1:8761/eureka/</defaultValue>
+		</requiredProperty>
+		<!-- rabbitmq服务器主机地址 -->
+		<requiredProperty key="rabbitmqHost">
+			<defaultValue>127.0.0.1</defaultValue>
+		</requiredProperty>
+		<!-- rabbitmq服务器端口号 -->
+		<requiredProperty key="rabbitmqPort">
+			<defaultValue>5672</defaultValue>
+		</requiredProperty>
+		<!-- rabbitmq用户名称 -->
+		<requiredProperty key="rabbitmqUser">
+			<defaultValue>guest</defaultValue>
+		</requiredProperty>
+		<!-- rabbitmq密码 -->
+		<requiredProperty key="rabbitmqPswd">
+			<defaultValue>guest</defaultValue>
+		</requiredProperty>
+		<!-- jdbc数据库驱动 -->
+		<requiredProperty key="jdbcDriver">
+			<defaultValue>com.mysql.jdbc.Driver</defaultValue>
+		</requiredProperty>
+		<!-- jdbc链接 -->
+		<requiredProperty key="jdbcUrl">
+			<defaultValue>jdbc:mysql://127.0.0.1:3306/${artifactId}?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true</defaultValue>
+		</requiredProperty>
+		<!-- jdbc用户名称 -->
+		<requiredProperty key="jdbcUser">
+			<defaultValue>${artifactId}</defaultValue>
+		</requiredProperty>
+		<!-- jdbc密码 -->
+		<requiredProperty key="jdbcPswd">
+			<defaultValue>${artifactId}</defaultValue>
+		</requiredProperty>
+		<!-- 项目名称首字母大写 -->
+		<requiredProperty key="projectNameCapitalise">
 			<defaultValue>${artifactId.substring(0,1).toUpperCase().concat(${artifactId.substring(1)})}</defaultValue>
 		</requiredProperty>
-		<!-- 服务名的前缀大写 -->
-		<requiredProperty key="svrNamePrefixCap">
+		<!-- 项目名称大写 -->
+		<requiredProperty key="projectNameUpperCase">
 			<defaultValue>${artifactId.toUpperCase()}</defaultValue>
 		</requiredProperty>
 	</requiredProperties>
