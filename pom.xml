@@ -84,6 +84,56 @@
 					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 				</repository>
 			</distributionManagement>
+
+			<build>
+				<plugins>
+					<!-- 创建源码包 -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- 创建文档包 -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>3.0.1</version>
+						<configuration>
+							<!-- 不检查JavaDoc规范 -->
+							<!-- <doclint>none</doclint> -->
+							<!-- <additionalparam>-Xdoclint:none</additionalparam> -->
+							<tags>
+								<tag>
+									<name>mbg.generated</name>
+									<!-- todo tag for all places -->
+									<placement>a</placement>
+									<head>mybatis自动生成的代码</head>
+								</tag>
+							</tags>
+						</configuration>
+					</plugin>
+					<!-- 部署时用GPG数字签名 -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 	</profiles>
 </project>
