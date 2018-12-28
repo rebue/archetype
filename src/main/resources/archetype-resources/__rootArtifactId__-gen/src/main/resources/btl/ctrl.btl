@@ -1,6 +1,5 @@
 package ${modulePackage}.ctrl;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -83,9 +82,8 @@ public class ${entityName}Ctrl {
             ro.setResult(ResultDic.FAIL);
             return ro;
         } catch (RuntimeException e) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String msg = "添加失败，出现运行时异常(" + sdf.format(new Date()) + ")";
-            _log.error(msg + ": mo=" + mo, e);
+            String msg = "添加失败，出现运行时异常";
+            _log.error(msg + ": mo-" + mo, e);
             ro.setMsg(msg);
             ro.setResult(ResultDic.FAIL);
             return ro;
@@ -122,9 +120,8 @@ public class ${entityName}Ctrl {
             ro.setResult(ResultDic.FAIL);
             return ro;
         } catch (RuntimeException e) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String msg = "修改失败，出现运行时异常(" + sdf.format(new Date()) + ")";
-            _log.error("{}: mo-{}", msg, mo);
+            String msg = "修改失败，出现运行时异常";
+            _log.error(msg + ": mo-" + mo, e);
             ro.setMsg(msg);
             ro.setResult(ResultDic.FAIL);
             return ro;
