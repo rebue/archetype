@@ -77,7 +77,7 @@ public class ${entityName}Ctrl {
             }
         } catch (DuplicateKeyException e) {
             String msg = "添加失败，" + _uniqueFilesName + "已存在，不允许出现重复";
-            _log.error("{}: mo-{}", msg, mo);
+            _log.error(msg + ": mo-" + mo, e);
             ro.setMsg(msg);
             ro.setResult(ResultDic.FAIL);
             return ro;
