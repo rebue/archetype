@@ -21,7 +21,7 @@ import rebue.wheel.RandomEx;
  */
 public class ${entityName}Tests {
 
-	private final String hostUrl = "http://127.0.0.1:${microServerPort}";
+	private final String hostUrl = "http://127.0.0.1:9800";
 
     /**
      * @mbg.generated 自动生成，如需修改，请删除本行
@@ -40,7 +40,7 @@ public class ${entityName}Tests {
 			mo = (${entityName}Mo) RandomEx.randomPojo(${entityName}Mo.class);
 			mo.setId(null);
 			System.out.println("添加${table.remarks}的参数为：" + mo);
-			final String addResult = OkhttpUtils.postByJsonParams(hostUrl + "/${strutil.toLowerCase(entityNamePrefix)}/${strutil.toLowerCase(entitySimpleName)}", mo);
+			final String addResult = OkhttpUtils.postByJsonParams(hostUrl + "/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}", mo);
 			System.out.println("添加${table.remarks}的返回值为：" + addResult);
 			final IdRo idRo = _objectMapper.readValue(addResult, IdRo.class);
 			System.out.println(idRo);
@@ -53,19 +53,19 @@ public class ${entityName}Tests {
 			}
 	        &>
     	}
-		final String listResult = OkhttpUtils.get(hostUrl + "/${strutil.toLowerCase(entityNamePrefix)}/${strutil.toLowerCase(entitySimpleName)}?pageNum=1&pageSize=5");
+		final String listResult = OkhttpUtils.get(hostUrl + "/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}?pageNum=1&pageSize=5");
 		System.out.println("查询${table.remarks}的返回值为：" + listResult);
 		System.out.println("获取单个${table.remarks}的参数为：" + mo.getId());
-		final String getByIdResult = OkhttpUtils.get(hostUrl + "/${strutil.toLowerCase(entityNamePrefix)}/${strutil.toLowerCase(entitySimpleName)}/getbyid?id=" + mo.getId());
+		final String getByIdResult = OkhttpUtils.get(hostUrl + "/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id?id=" + mo.getId());
 		System.out.println("获取单个${table.remarks}的返回值为：" + getByIdResult);
 		System.out.println("修改${table.remarks}的参数为：" + mo);
-		final String modifyResult = OkhttpUtils.putByJsonParams(hostUrl + "/${strutil.toLowerCase(entityNamePrefix)}/${strutil.toLowerCase(entitySimpleName)}", mo);
+		final String modifyResult = OkhttpUtils.putByJsonParams(hostUrl + "/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}", mo);
         System.out.println("修改积分日志类型的返回值为：" + modifyResult);
 		final Ro modifyRo = _objectMapper.readValue(modifyResult, Ro.class);
         System.out.println(modifyRo);
         Assert.assertEquals(ResultDic.SUCCESS, modifyRo.getResult());
 		System.out.println("删除${table.remarks}的参数为：" + mo.getId());
-		final String deleteResult = OkhttpUtils.delete(hostUrl + "/${strutil.toLowerCase(entityNamePrefix)}/${strutil.toLowerCase(entitySimpleName)}?id=" + mo.getId());
+		final String deleteResult = OkhttpUtils.delete(hostUrl + "/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}?id=" + mo.getId());
 		System.out.println("删除${table.remarks}的返回值为：" + deleteResult);
         final Ro deleteRo = _objectMapper.readValue(deleteResult, Ro.class);
         System.out.println(deleteRo);

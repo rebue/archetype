@@ -63,12 +63,12 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
         <&
         if (idType=="String") {
 			println("        if (mo.getId() == null || mo.getId().trim().isEmpty()) {");
-			println("            mo.setId(UUID.randomUUID().toString().replaceAll(\"-\", \"\"));");
-	        	println("        }");
+			println('            mo.setId(UUID.randomUUID().toString().replaceAll(\"-\", \"\"));');
+	        println("        }");
 		} else if (idType=="Long") {
 			println("        if (mo.getId() == null || mo.getId() == 0) {");
 			println("            mo.setId(_idWorker.getId());");
-	        	println("        }");
+	        println("        }");
 		}
 		println("        return super.add(mo);");
         &>

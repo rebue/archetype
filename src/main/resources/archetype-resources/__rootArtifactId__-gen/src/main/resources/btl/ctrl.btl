@@ -55,7 +55,7 @@ public class ${entityName}Ctrl {
      *
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    @PostMapping("/${strutil.toLowerCase(entityNamePrefix)}/${strutil.toLowerCase(entitySimpleName)}")
+    @PostMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     IdRo add(@RequestBody ${moClassShortName} mo) throws Exception {
         _log.info("add ${moClassShortName}: {}", mo);
         IdRo ro = new IdRo();
@@ -95,7 +95,7 @@ public class ${entityName}Ctrl {
      *
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    @PutMapping("/${strutil.toLowerCase(entityNamePrefix)}/${strutil.toLowerCase(entitySimpleName)}")
+    @PutMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     Ro modify(@RequestBody ${moClassShortName} mo) throws Exception {
         _log.info("modify ${moClassShortName}: {}", mo);
         Ro ro = new Ro();
@@ -133,7 +133,7 @@ public class ${entityName}Ctrl {
      * 
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    @DeleteMapping("/${strutil.toLowerCase(entityNamePrefix)}/${strutil.toLowerCase(entitySimpleName)}")
+    @DeleteMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     Ro del(<&
         for(id in ids){
             if(!idLP.first) {
@@ -185,7 +185,7 @@ public class ${entityName}Ctrl {
      * 
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${strutil.toLowerCase(entitySimpleName)}")
+    @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     PageInfo<${moClassShortName}> list(${moClassShortName} mo, @RequestParam(value = "pageNum", required = false) Integer pageNum, @RequestParam(value = "pageSize", required = false) Integer pageSize) {
         if (pageNum == null)
             pageNum = 1;
@@ -207,7 +207,7 @@ public class ${entityName}Ctrl {
      * 
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${strutil.toLowerCase(entitySimpleName)}/getbyid")
+    @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id")
     ${entityName}Mo getById(<&
         for(id in ids){
             if(!idLP.first) {
