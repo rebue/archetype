@@ -1,4 +1,5 @@
-package ${modulePackage}.test;
+#set( $dollar = "$" ) 
+package ${dollar}{modulePackage}.test;
 
 import java.io.IOException;
 
@@ -9,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ${modulePackage}.mo.${entityName}Mo;
+import ${dollar}{modulePackage}.mo.${dollar}{entityName}Mo;
 import rebue.robotech.dic.ResultDic;
 import rebue.robotech.ro.IdRo;
 import rebue.robotech.ro.Ro;
@@ -17,21 +18,21 @@ import rebue.wheel.OkhttpUtils;
 import rebue.wheel.RandomEx;
 
 /**
- * ${table.remarks}
+ * ${dollar}{table.remarks}
  *
  * @mbg.generated 自动生成的注释，如需修改本注释，请删除本行
  */
-public class ${entityName}Tests {
+public class ${dollar}{entityName}Tests {
 
     /**
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    private static final Logger _log          = LoggerFactory.getLogger(${entityName}Tests.class);
+    private static final Logger _log          = LoggerFactory.getLogger(${dollar}{entityName}Tests.class);
 
     /**
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-	private final String hostUrl 			  = "http://127.0.0.1:9800";
+	private final String hostUrl 			  = "http://127.0.0.1:${microServerPort}";
 
     /**
      * @mbg.generated 自动生成，如需修改，请删除本行
@@ -45,13 +46,13 @@ public class ${entityName}Tests {
 	 */
 	@Test
 	public void testCrud() throws IOException, ReflectiveOperationException {
-		${entityName}Mo mo = null;
+		${dollar}{entityName}Mo mo = null;
 		for(int i=0;i<20;i++) {
-			mo = (${entityName}Mo) RandomEx.randomPojo(${entityName}Mo.class);
+			mo = (${dollar}{entityName}Mo) RandomEx.randomPojo(${dollar}{entityName}Mo.class);
 			mo.setId(null);
-			_log.info("添加${table.remarks}的参数为：" + mo);
-			final String addResult = OkhttpUtils.postByJsonParams(hostUrl + "/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}", mo);
-			_log.info("添加${table.remarks}的返回值为：" + addResult);
+			_log.info("添加${dollar}{table.remarks}的参数为：" + mo);
+			final String addResult = OkhttpUtils.postByJsonParams(hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}", mo);
+			_log.info("添加${dollar}{table.remarks}的返回值为：" + addResult);
 			final IdRo idRo = _objectMapper.readValue(addResult, IdRo.class);
 			_log.info(idRo.toString());
         	Assert.assertEquals(ResultDic.SUCCESS, idRo.getResult());
@@ -63,20 +64,20 @@ public class ${entityName}Tests {
 			}
 	        &>
     	}
-		final String listResult = OkhttpUtils.get(hostUrl + "/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}?pageNum=1&pageSize=5");
-		_log.info("查询${table.remarks}的返回值为：" + listResult);
-		_log.info("获取单个${table.remarks}的参数为：" + mo.getId());
-		final String getByIdResult = OkhttpUtils.get(hostUrl + "/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id?id=" + mo.getId());
-		_log.info("获取单个${table.remarks}的返回值为：" + getByIdResult);
-		_log.info("修改${table.remarks}的参数为：" + mo);
-		final String modifyResult = OkhttpUtils.putByJsonParams(hostUrl + "/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}", mo);
+		final String listResult = OkhttpUtils.get(hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}?pageNum=1&pageSize=5");
+		_log.info("查询${dollar}{table.remarks}的返回值为：" + listResult);
+		_log.info("获取单个${dollar}{table.remarks}的参数为：" + mo.getId());
+		final String getByIdResult = OkhttpUtils.get(hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id?id=" + mo.getId());
+		_log.info("获取单个${dollar}{table.remarks}的返回值为：" + getByIdResult);
+		_log.info("修改${dollar}{table.remarks}的参数为：" + mo);
+		final String modifyResult = OkhttpUtils.putByJsonParams(hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}", mo);
         _log.info("修改积分日志类型的返回值为：" + modifyResult);
 		final Ro modifyRo = _objectMapper.readValue(modifyResult, Ro.class);
         _log.info(modifyRo.toString());
         Assert.assertEquals(ResultDic.SUCCESS, modifyRo.getResult());
-		_log.info("删除${table.remarks}的参数为：" + mo.getId());
-		final String deleteResult = OkhttpUtils.delete(hostUrl + "/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}?id=" + mo.getId());
-		_log.info("删除${table.remarks}的返回值为：" + deleteResult);
+		_log.info("删除${dollar}{table.remarks}的参数为：" + mo.getId());
+		final String deleteResult = OkhttpUtils.delete(hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}?id=" + mo.getId());
+		_log.info("删除${dollar}{table.remarks}的返回值为：" + deleteResult);
         final Ro deleteRo = _objectMapper.readValue(deleteResult, Ro.class);
         _log.info(deleteRo.toString());
         Assert.assertEquals(ResultDic.SUCCESS, deleteRo.getResult());
