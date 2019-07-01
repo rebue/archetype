@@ -99,12 +99,12 @@
 					<includes>
 						<include>**/*.xml</include>
 						<include>**/*.properties</include>
+						<include>**/*.json</include>
 					</includes>
 				</fileSet>
-				<fileSet filtered="true" encoding="UTF-8">
+				<fileSet filtered="false" encoding="UTF-8">
 					<directory>src/main/resources</directory>
 					<includes>
-						<include>**/*.json</include>
 						<include>**/*.btl</include>
 					</includes>
 				</fileSet>
