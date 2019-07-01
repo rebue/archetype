@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<!-- Log4j 2.x 配置文件。每5秒自动检查配置文件是否更新； -->
+<Configuration monitorInterval="5" strict="true" schema="log4j-core-2.9.1.jar/Log4j-config.xsd">
+	<Appenders>
+		<!-- 输出到控制台 -->
+		<Console name="console" target="SYSTEM_OUT">
+			<!-- 需要记录的级别 -->
+			<!-- <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" /> -->
+			<PatternLayout pattern="%d{hh:mm:ss,sss}[%5p]%m %t %c (%F:%L)%n" />
+		</Console>
+
+		<!-- 输出debug/warn/error到文件，按天或者超过5MB分割 -->
+		<RollingFile name="logfile" filename="logs/current.log" filepattern="logs/$${date:yyyyMM}/%d{yyyyMMddHH}-%i.log.gz">
+			<!-- 需要记录的级别 -->
+			<!-- <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" /> -->
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}[%5p]%m %t (%c:%L)%n" />
+			<Policies>
+				<!-- <OnStartupTriggeringPolicy /> -->
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="5 MB" />
+			</Policies>
+		</RollingFile>
+
+		<!-- 只输出错误和警告到文件，按天或者超过5MB分割 -->
+		<RollingFile name="errfile" filename="logs/current.error" filepattern="logs/$${date:yyyyMM}/%d{yyyyMMddHH}-%i.error.gz">
+			<!-- 需要记录的级别 -->
+			<ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY" />
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}[%5p] %m %t (%c:%L)%n" />
+			<Policies>
+				<!-- <OnStartupTriggeringPolicy /> -->
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="5 MB" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<!-- 全局配置 -->
+		<Root level="debug">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="logfile" />
+			<AppenderRef ref="errfile" />
+		</Root>
+		<!-- spring的信息太多，少看些 -->
+		<Logger name="org.springframework" level="info" additivity="false" />
+	</Loggers>
+
+</Configuration>
