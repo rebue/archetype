@@ -50,7 +50,8 @@ public class ${entityName}Ctrl {
      */
     @PostMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     IdRo add(@RequestBody final ${moClassShortName} mo) throws Exception {
-        _log.info("add ${moClassShortName}: {}", mo);
+        _log.info("received post:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
+        _log.info("${entitySimpleName} add: {}", mo);
         final IdRo ro = new IdRo();
         try {
             final int result = svc.add(mo);
@@ -90,7 +91,8 @@ public class ${entityName}Ctrl {
      */
     @PutMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     Ro modify(@RequestBody final ${moClassShortName} mo) throws Exception {
-        _log.info("modify ${moClassShortName}: {}", mo);
+        _log.info("received put:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
+        _log.info("${entitySimpleName} modify: {}", mo);
         final Ro ro = new Ro();
         try {
             if (svc.modify(mo) == 1) {
@@ -140,7 +142,8 @@ public class ${entityName}Ctrl {
             print(id.key);
         }
     &>) {
-        _log.info("del ${moClassShortName} by id: {}", <&
+        _log.info("received delete:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
+        _log.info("${entitySimpleName} del: {}", <&
             for(id in ids){
                 if(!idLP.first) {
                     print(', ');
@@ -180,6 +183,8 @@ public class ${entityName}Ctrl {
      */
     @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     PageInfo<${moClassShortName}> list(final ${moClassShortName} mo, @RequestParam(value = "pageNum", required = false) Integer pageNum, @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+        _log.info("received get:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
+        _log.info("${entitySimpleName} list: {},pageNum-{},pageSize-{}", mo, pageNum, pageSize);
         if (pageNum == null) {
             pageNum = 1;
         }
@@ -216,7 +221,8 @@ public class ${entityName}Ctrl {
             print(id.key);
         }
     &>) {
-        _log.info("get ${moClassShortName} by id: {}", id);
+        _log.info("received get:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id");
+        _log.info("${moClassShortName} getById: {}", id);
         return svc.getById(id);
     }
 
