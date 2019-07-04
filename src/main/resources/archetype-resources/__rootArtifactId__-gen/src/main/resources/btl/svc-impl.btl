@@ -58,7 +58,7 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
     @Override
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public int add(${moClassShortName} mo) {
-    	_log.info("添加${entityTitle}");
+    	_log.info("${sputil.uncapitalize(entityName)}Svc.add: 添加${entityTitle} mo-", mo);
         // 如果id为空那么自动生成分布式id
         <&
         if (idType=="String") {
