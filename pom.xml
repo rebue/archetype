@@ -5,7 +5,7 @@
 
 	<groupId>com.github.rebue.archetype</groupId>
 	<artifactId>rebue-archetype</artifactId>
-	<version>1.0.9</version>
+	<version>1.1.0</version>
 	<packaging>maven-archetype</packaging>
 
 	<name>rebue-archetype</name>
@@ -38,7 +38,7 @@
 			<extension>
 				<groupId>org.apache.maven.archetype</groupId>
 				<artifactId>archetype-packaging</artifactId>
-				<version>3.0.1</version>
+				<version>3.1.1</version>
 			</extension>
 		</extensions>
 
@@ -46,7 +46,17 @@
 			<plugins>
 				<plugin>
 					<artifactId>maven-archetype-plugin</artifactId>
-					<version>3.0.1</version>
+					<version>3.1.1</version>
+				</plugin>
+				<!-- 设置生成项目时，不要默认排除掉.gitignore文件 -->
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.1.0</version>
+					<configuration>
+						<!-- Required so that .gitignore gets included in archetypes -->
+						<!-- see https://issues.apache.org/jira/browse/MRESOURCES-190 -->
+						<addDefaultExcludes>false</addDefaultExcludes>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>

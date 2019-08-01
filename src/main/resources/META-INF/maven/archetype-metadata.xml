@@ -29,7 +29,7 @@
 		</requiredProperty>
 		<!-- jdbc数据库驱动 -->
 		<requiredProperty key="jdbcDriver">
-			<defaultValue>com.mysql.jdbc.Driver</defaultValue>
+			<defaultValue>com.mysql.cj.jdbc.Driver</defaultValue>
 		</requiredProperty>
 		<!-- jdbc链接 -->
 		<requiredProperty key="jdbcUrl">
@@ -81,6 +81,7 @@
 		<fileSet encoding="UTF-8">
 			<directory></directory>
 			<includes>
+				<include>**/*.md</include>
 				<include>.gitignore</include>
 			</includes>
 		</fileSet>

@@ -3,8 +3,8 @@ package ${dollar}{modulePackage}.test;
 
 import java.io.IOException;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +55,7 @@ public class ${dollar}{entityName}Tests {
 			_log.info("添加${dollar}{table.remarks}的返回值为：" + addResult);
 			final IdRo idRo = _objectMapper.readValue(addResult, IdRo.class);
 			_log.info(idRo.toString());
-        	Assert.assertEquals(ResultDic.SUCCESS, idRo.getResult());
+        	Assertions.assertEquals(ResultDic.SUCCESS, idRo.getResult());
 			<&
 	        if (idType=="String") {
 				println("        mo.setId(idRo.getId());");
@@ -74,12 +74,12 @@ public class ${dollar}{entityName}Tests {
         _log.info("修改积分日志类型的返回值为：" + modifyResult);
 		final Ro modifyRo = _objectMapper.readValue(modifyResult, Ro.class);
         _log.info(modifyRo.toString());
-        Assert.assertEquals(ResultDic.SUCCESS, modifyRo.getResult());
+        Assertions.assertEquals(ResultDic.SUCCESS, modifyRo.getResult());
 		_log.info("删除${dollar}{table.remarks}的参数为：" + mo.getId());
 		final String deleteResult = OkhttpUtils.delete(hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}?id=" + mo.getId());
 		_log.info("删除${dollar}{table.remarks}的返回值为：" + deleteResult);
         final Ro deleteRo = _objectMapper.readValue(deleteResult, Ro.class);
         _log.info(deleteRo.toString());
-        Assert.assertEquals(ResultDic.SUCCESS, deleteRo.getResult());
+        Assertions.assertEquals(ResultDic.SUCCESS, deleteRo.getResult());
 	}
 }
