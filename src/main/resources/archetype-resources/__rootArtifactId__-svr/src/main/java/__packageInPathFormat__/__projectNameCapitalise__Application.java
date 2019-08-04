@@ -1,7 +1,7 @@
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
-package rebue.${parentArtifactId};
+package ${package};
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;

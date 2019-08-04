@@ -1,7 +1,7 @@
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
-package rebue.${parentArtifactId}.gen;
+package ${package}.gen;
 
 import java.io.IOException;
 import java.sql.SQLException;
