@@ -15,7 +15,7 @@ logging:
   level:
     root: info
     rebue: trace
-    com.netflix.discovery: off
+    com.netflix.discovery: false
 
 spring:
   rabbitmq:
