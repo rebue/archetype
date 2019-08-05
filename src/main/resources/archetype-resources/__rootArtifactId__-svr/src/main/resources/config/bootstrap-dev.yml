@@ -15,7 +15,8 @@ logging:
   level:
     root: info
     rebue: trace
-    com.netflix.discovery: false
+    # 注意'OFF'必须大写并加引号
+    com.netflix.discovery: 'OFF'
 
 spring:
   rabbitmq:
