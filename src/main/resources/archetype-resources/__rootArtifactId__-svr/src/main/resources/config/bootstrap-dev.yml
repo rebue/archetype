@@ -19,6 +19,9 @@ logging:
     com.netflix.discovery: 'OFF'
 
 spring:
+  cloud:
+    config:
+      enabled: false
   rabbitmq:
       host: ${rabbitmqHost}
       port: ${rabbitmqPort}

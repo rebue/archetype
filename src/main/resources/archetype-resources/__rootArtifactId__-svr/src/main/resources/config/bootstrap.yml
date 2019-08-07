@@ -34,4 +34,9 @@ pagehelper:
   # 当该参数设置为 true 时，pageNum<=0 时会查询第一页， 
   # pageNum>pages（超过总数时），会查询最后一页。
   reasonable: true
-    
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
