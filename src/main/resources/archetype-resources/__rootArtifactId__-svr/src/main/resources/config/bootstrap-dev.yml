@@ -23,10 +23,10 @@ spring:
     config:
       enabled: false
   rabbitmq:
-      host: ${rabbitmqHost}
-      port: ${rabbitmqPort}
-      username: ${rabbitmqUser}
-      password: ${rabbitmqPswd}
+    host: ${rabbitmqHost}
+    port: ${rabbitmqPort}
+    username: ${rabbitmqUser}
+    password: ${rabbitmqPswd}
   datasource:
     url: ${jdbcUrl}
     username: ${jdbcUser}
