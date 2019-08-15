@@ -68,7 +68,7 @@ public class ${dollar}{entityName}Tests {
 		log.info("获取单个${dollar}{table.remarks}的返回值为：" + getByIdResult);
 		log.info("修改${dollar}{table.remarks}的参数为：" + mo);
 		final String modifyResult = OkhttpUtils.putByJsonParams(hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}", mo);
-        log.info("修改积分日志类型的返回值为：" + modifyResult);
+        log.info("修改${dollar}{table.remarks}的返回值为：" + modifyResult);
 		final Ro modifyRo = _objectMapper.readValue(modifyResult, Ro.class);
         log.info(modifyRo.toString());
         Assertions.assertEquals(ResultDic.SUCCESS, modifyRo.getResult());
