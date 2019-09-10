@@ -205,7 +205,7 @@ public class ${entityName}Ctrl {
         }
     &>) {
         log.info("received get:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id");
-        log.info("${sputil.uncapitalize(moClassShortName)}Ctrl.getById: {}", id);
+        log.info("${sputil.uncapitalize(entitySimpleName)}Ctrl.getById: {}", id);
         return svc.getById(id);
     }
 
