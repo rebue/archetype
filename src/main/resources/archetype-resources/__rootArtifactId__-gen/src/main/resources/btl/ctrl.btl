@@ -167,7 +167,7 @@ public class ${entityName}Ctrl {
     @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     PageInfo<${moClassShortName}> list(final ${moClassShortName} mo, @RequestParam(value = "pageNum", required = false) Integer pageNum, @RequestParam(value = "pageSize", required = false) Integer pageSize) {
         log.info("received get:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
-        log.info("${sputil.uncapitalize(entitySimpleName)}.list: {},pageNum-{},pageSize-{}", mo, pageNum, pageSize);
+        log.info("${sputil.uncapitalize(entitySimpleName)}Ctrl.list: {},pageNum-{},pageSize-{}", mo, pageNum, pageSize);
         if (pageNum == null) {
             pageNum = 1;
         }
