@@ -36,6 +36,9 @@ spring:
         enabled: true # 开启消息跟踪
       refresh:
         enabled: true 
+  sleuth:
+    sampler:
+      probability: 1
     
 endpoints:
   bus-refresh:

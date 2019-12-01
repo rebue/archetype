@@ -19,9 +19,6 @@ logging:
     com.netflix.discovery: 'OFF'
 
 spring:
-  cloud:
-    config:
-      enabled: false
   rabbitmq:
     host: ${rabbitmqHost}
     port: ${rabbitmqPort}
@@ -31,5 +28,11 @@ spring:
     url: ${jdbcUrl}
     username: ${jdbcUser}
     password: ${jdbcPswd}
+  cloud:
+    config:
+      enabled: false
+  sleuth:
+    sampler:
+      probability: 1
 
 appid: 1
