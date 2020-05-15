@@ -33,6 +33,10 @@
 		<url>https://github.com/rebue/archetype.git</url>
 	</scm>
 
+	<properties>
+		<maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
+	</properties>
+
 	<build>
 		<extensions>
 			<extension>
@@ -114,7 +118,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>3.0.1</version>
+						<version>${maven-javadoc-plugin.version}</version>
 						<configuration>
 							<!-- 不检查JavaDoc规范 -->
 							<!-- <doclint>none</doclint> -->
@@ -128,6 +132,15 @@
 								</tag>
 							</tags>
 						</configuration>
+						<!-- javadoc插件默认不运行，要绑定到MAven的生命周期阶段中 -->
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 					<!-- 部署时用GPG数字签名 -->
 					<plugin>
