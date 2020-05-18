@@ -14,14 +14,12 @@ spring:
       naming:
         # 识别大写表
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      
-eureka:
-  instance:
-    # 客户端注册时使用IP而不是hostname(在客户端配置)
-    prefer-ip-address: true
-    # 将Instance ID设置成IP:端口的形式(在客户端配置)
-    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
-    
+  cloud:
+    nacos:
+      config:
+        # 默认是properties的方式
+        file-extension: yaml
+
 mybatis:
   configuration:
     # 自动将数据库中用下划线分隔单词的风格转换为小驼峰风格
@@ -34,9 +32,3 @@ pagehelper:
   # 当该参数设置为 true 时，pageNum<=0 时会查询第一页， 
   # pageNum>pages（超过总数时），会查询最后一页。
   reasonable: true
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: refresh

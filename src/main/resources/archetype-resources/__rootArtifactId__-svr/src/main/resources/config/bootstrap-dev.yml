@@ -5,11 +5,6 @@ server:
   # 自定义端口号，方便开发测试
   port: ${microServerPort}
 
-eureka:
-  client:
-    service-url:
-      defaultZone: ${eurekaUrl}
-
 logging:
   config: classpath:config/log4j2.xml
   level:
@@ -19,18 +14,16 @@ logging:
     com.netflix.discovery: 'OFF'
 
 spring:
-  rabbitmq:
-    host: ${rabbitmqHost}
-    port: ${rabbitmqPort}
-    username: ${rabbitmqUser}
-    password: ${rabbitmqPswd}
   datasource:
     url: ${jdbcUrl}
     username: ${jdbcUser}
     password: ${jdbcPswd}
   cloud:
-    config:
-      enabled: false
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
   sleuth:
     sampler:
       probability: 1
