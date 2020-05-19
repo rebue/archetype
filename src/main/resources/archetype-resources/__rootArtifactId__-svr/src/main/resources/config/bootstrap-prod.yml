@@ -12,6 +12,7 @@ logging:
     org.springframework.context.event.SimpleApplicationEventMulticaster: warn
     org.springframework.dao: debug
     org.springframework.cloud: warn
+    com.alibaba.nacos.client.config.impl.ClientWorker: warn
 
 spring:
   cloud:

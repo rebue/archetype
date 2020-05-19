@@ -12,6 +12,7 @@ logging:
     rebue: trace
     # 注意'OFF'必须大写并加引号
     com.netflix.discovery: 'OFF'
+    com.alibaba.nacos.client.config.impl.ClientWorker: warn
 
 spring:
   datasource:

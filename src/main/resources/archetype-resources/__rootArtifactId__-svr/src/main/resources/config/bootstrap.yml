@@ -19,6 +19,8 @@ spring:
       config:
         # 默认是properties的方式
         file-extension: yaml
+        # 配置分组(不设置默认为DEFAULT_GROUP)
+        group: REBUE
 
 mybatis:
   configuration:
