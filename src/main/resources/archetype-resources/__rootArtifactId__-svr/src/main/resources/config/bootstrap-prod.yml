@@ -24,5 +24,11 @@ spring:
   sleuth:
     sampler:
       probability: 1
-    
+
+
+# 是否提供在线API文档服务
+springdoc:
+  api-docs:
+    enabled: false
+
 appid: 0
