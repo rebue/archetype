@@ -15,10 +15,6 @@ logging:
     com.alibaba.nacos.client.config.impl.ClientWorker: warn
 
 spring:
-  datasource:
-    url: ${jdbcUrl}
-    username: ${jdbcUser}
-    password: ${jdbcPswd}
   cloud:
     nacos:
       discovery:
