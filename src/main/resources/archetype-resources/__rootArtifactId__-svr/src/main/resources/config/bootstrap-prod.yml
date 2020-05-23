@@ -18,9 +18,12 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: ${nacosAddr}
       config:
-        server-addr: 127.0.0.1:8848
+        server-addr: ${nacosAddr}
+    sentinel:
+      transport:
+        dashboard: ${sentinelDashboardAddr}
   sleuth:
     sampler:
       # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1

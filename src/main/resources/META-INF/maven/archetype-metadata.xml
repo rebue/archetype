@@ -6,26 +6,16 @@
 	<requiredProperties>
 		<!-- 微服务端口号 -->
 		<requiredProperty key="microServerPort">
+			<defaultValue>9${package.getClass().forName("java.util.Random").newInstance().nextInt(10)}${package.getClass().forName("java.util.Random").newInstance().nextInt(10)}${package.getClass().forName("java.util.Random").newInstance().nextInt(10)}</defaultValue>
+			<!-- <defaultValue>${artifactId.valueOf(9).concat(package.getClass().forName("java.util.Random").newInstance().nextInt(1000))}</defaultValue> -->
 		</requiredProperty>
-		<!-- eureka服务器地址 -->
-		<requiredProperty key="eurekaUrl">
-			<defaultValue>http://127.0.0.1:8761/eureka/</defaultValue>
+		<!-- Nacos服务器地址 -->
+		<requiredProperty key="nacosAddr">
+			<defaultValue>http://127.0.0.1:8848</defaultValue>
 		</requiredProperty>
-		<!-- rabbitmq服务器主机地址 -->
-		<requiredProperty key="rabbitmqHost">
-			<defaultValue>127.0.0.1</defaultValue>
-		</requiredProperty>
-		<!-- rabbitmq服务器端口号 -->
-		<requiredProperty key="rabbitmqPort">
-			<defaultValue>5672</defaultValue>
-		</requiredProperty>
-		<!-- rabbitmq用户名称 -->
-		<requiredProperty key="rabbitmqUser">
-			<defaultValue>guest</defaultValue>
-		</requiredProperty>
-		<!-- rabbitmq密码 -->
-		<requiredProperty key="rabbitmqPswd">
-			<defaultValue>guest</defaultValue>
+		<!-- SentinelDashboard服务器地址 -->
+		<requiredProperty key="sentinelDashboardAddr">
+			<defaultValue>127.0.0.1:15080</defaultValue>
 		</requiredProperty>
 		<!-- jdbc数据库驱动 -->
 		<requiredProperty key="jdbcDriver">
