@@ -21,13 +21,14 @@ spring:
         server-addr: ${nacosUrl}
       config:
         server-addr: ${nacosUrl}
+    sentinel:
+      enabled: false
   zipkin:
     base-url: ${zipkinUrl}
   sleuth:
     sampler:
       # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
       probability: 1
-
 
 # 是否提供在线API文档服务
 springdoc:
