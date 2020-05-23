@@ -7,7 +7,6 @@
 		<!-- 微服务端口号 -->
 		<requiredProperty key="microServerPort">
 			<defaultValue>9${package.getClass().forName("java.util.Random").newInstance().nextInt(10)}${package.getClass().forName("java.util.Random").newInstance().nextInt(10)}${package.getClass().forName("java.util.Random").newInstance().nextInt(10)}</defaultValue>
-			<!-- <defaultValue>${artifactId.valueOf(9).concat(package.getClass().forName("java.util.Random").newInstance().nextInt(1000))}</defaultValue> -->
 		</requiredProperty>
 		<!-- Nacos服务器地址 -->
 		<requiredProperty key="nacosAddr">
