@@ -22,8 +22,10 @@ spring:
       config:
         server-addr: ${nacosAddr}
     sentinel:
-      transport:
-        dashboard: ${sentinelDashboardAddr}
+      # 默认不要开启流控，因为SpringCloud微服务一般都统一在gateway那里控制了
+      enabled: false
+      # transport:
+      #   dashboard: 127.0.0.1:15080
   sleuth:
     sampler:
       # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1

@@ -21,6 +21,8 @@ spring:
         server-addr: ${nacosAddr}
       config:
         server-addr: ${nacosAddr}
+    sentinel:
+      enabled: false
   sleuth:
     enabled: false
 

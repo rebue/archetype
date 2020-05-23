@@ -12,10 +12,6 @@
 		<requiredProperty key="nacosAddr">
 			<defaultValue>http://127.0.0.1:8848</defaultValue>
 		</requiredProperty>
-		<!-- SentinelDashboard服务器地址 -->
-		<requiredProperty key="sentinelDashboardAddr">
-			<defaultValue>127.0.0.1:15080</defaultValue>
-		</requiredProperty>
 		<!-- jdbc数据库驱动 -->
 		<requiredProperty key="jdbcDriver">
 			<defaultValue>com.mysql.cj.jdbc.Driver</defaultValue>
