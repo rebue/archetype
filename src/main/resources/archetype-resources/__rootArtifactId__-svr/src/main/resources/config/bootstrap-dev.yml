@@ -18,11 +18,9 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: ${nacosAddr}
+        server-addr: ${nacosUrl}
       config:
-        server-addr: ${nacosAddr}
-    sentinel:
-      enabled: false
+        server-addr: ${nacosUrl}
   sleuth:
     enabled: false
 

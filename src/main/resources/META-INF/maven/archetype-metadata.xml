@@ -8,9 +8,13 @@
 		<requiredProperty key="microServerPort">
 			<defaultValue>9${package.getClass().forName("java.util.Random").newInstance().nextInt(10)}${package.getClass().forName("java.util.Random").newInstance().nextInt(10)}${package.getClass().forName("java.util.Random").newInstance().nextInt(10)}</defaultValue>
 		</requiredProperty>
-		<!-- Nacos服务器地址 -->
-		<requiredProperty key="nacosAddr">
+		<!-- Nacos服务访问URL -->
+		<requiredProperty key="nacosUrl">
 			<defaultValue>http://127.0.0.1:8848</defaultValue>
+		</requiredProperty>
+		<!-- Zipkin服务访问URL -->
+		<requiredProperty key="zipkinUrl">
+			<defaultValue>http://127.0.0.1:9411</defaultValue>
 		</requiredProperty>
 		<!-- jdbc数据库驱动 -->
 		<requiredProperty key="jdbcDriver">
