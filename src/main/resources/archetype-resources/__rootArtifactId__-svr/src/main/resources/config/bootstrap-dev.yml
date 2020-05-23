@@ -21,5 +21,7 @@ spring:
         server-addr: ${nacosAddr}
       config:
         server-addr: ${nacosAddr}
+  sleuth:
+    enabled: false
 
 appid: 1
