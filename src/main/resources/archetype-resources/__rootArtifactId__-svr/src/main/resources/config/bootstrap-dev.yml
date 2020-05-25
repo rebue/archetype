@@ -17,9 +17,9 @@ logging:
 spring:
   cloud:
     nacos:
-      discovery:
-        server-addr: ${nacosUrl}
       config:
+        server-addr: ${nacosUrl}
+      discovery:
         server-addr: ${nacosUrl}
     sentinel:
       enabled: false
