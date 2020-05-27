@@ -44,6 +44,13 @@
 
 	<fileSets>
 		<fileSet encoding="UTF-8">
+			<directory>doc</directory>
+			<includes>
+				<include>**/*.md</include>
+				<include>**/*.doc</include>
+			</includes>
+		</fileSet>
+		<fileSet encoding="UTF-8">
 			<directory>db/script</directory>
 			<includes>
 				<include>**/*.sql</include>
@@ -52,13 +59,6 @@
 		<fileSet encoding="UTF-8">
 			<directory>db/model</directory>
 			<includes>
-			</includes>
-		</fileSet>
-		<fileSet encoding="UTF-8">
-			<directory>doc</directory>
-			<includes>
-				<include>**/*.md</include>
-				<include>**/*.doc</include>
 			</includes>
 		</fileSet>
 		<fileSet encoding="UTF-8">
@@ -113,34 +113,19 @@
 				</fileSet>
 			</fileSets>
 		</module>
-		<module id="${rootArtifactId}-bll" dir="__rootArtifactId__-bll" name="${rootArtifactId}-bll">
-			<fileSets>
-				<fileSet filtered="true" encoding="UTF-8">
-					<directory>src/main/java</directory>
-					<includes>
-						<include>**/*.java</include>
-						<include>**/*.xml</include>
-					</includes>
-				</fileSet>
-			</fileSets>
-		</module>
 		<module id="${rootArtifactId}-svr" dir="__rootArtifactId__-svr" name="${rootArtifactId}-svr">
 			<fileSets>
 				<fileSet filtered="true" encoding="UTF-8">
 					<directory>src/main/java</directory>
 					<includes>
 						<include>**/*.java</include>
-					</includes>
-				</fileSet>
-				<fileSet filtered="true" encoding="UTF-8">
-					<directory>src/main/resources</directory>
-					<includes>
 						<include>**/*.xml</include>
 					</includes>
 				</fileSet>
 				<fileSet filtered="true" encoding="UTF-8">
 					<directory>src/main/resources</directory>
 					<includes>
+						<include>**/*.xml</include>
 						<include>**/*.yml</include>
 					</includes>
 				</fileSet>

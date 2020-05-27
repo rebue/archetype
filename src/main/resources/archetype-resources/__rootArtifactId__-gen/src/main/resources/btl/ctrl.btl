@@ -21,7 +21,6 @@ import ${moClassFullName};
 import ${modulePackage}.svc.${entityName}Svc;
 
 import rebue.robotech.dic.ResultDic;
-import rebue.robotech.ro.IdRo;
 import rebue.robotech.ro.Ro;
 
 /**
@@ -44,39 +43,9 @@ public class ${entityName}Ctrl {
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     @PostMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
-    IdRo add(@RequestBody final ${moClassShortName} mo) throws Exception {
+    Ro add(@RequestBody final ${moClassShortName} mo) {
         log.info("received post:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
-        log.info("${sputil.uncapitalize(entitySimpleName)}Ctrl.add: {}", mo);
-        final IdRo ro = new IdRo();
-        try {
-            final int result = svc.add(mo);
-            if (result == 1) {
-                final String msg = "添加成功";
-                log.info("{}: mo-{}", msg, mo);
-                ro.setMsg(msg);
-                ro.setResult(ResultDic.SUCCESS);
-                ro.setId(mo.getId().toString());
-                return ro;
-            } else {
-                final String msg = "添加失败";
-                log.error("{}: mo-{}", msg, mo);
-                ro.setMsg(msg);
-                ro.setResult(ResultDic.FAIL);
-                return ro;
-            }
-        } catch (final DuplicateKeyException e) {
-            final String msg = "添加失败，唯一键重复：" + e.getCause().getMessage();
-            log.error(msg + ": mo-" + mo, e);
-            ro.setMsg(msg);
-            ro.setResult(ResultDic.FAIL);
-            return ro;
-        } catch (final RuntimeException e) {
-            final String msg = "添加失败，出现运行时异常";
-            log.error(msg + ": mo-" + mo, e);
-            ro.setMsg(msg);
-            ro.setResult(ResultDic.FAIL);
-            return ro;
-        }
+        return svc.add(mo);
     }
 
     /**
@@ -87,26 +56,7 @@ public class ${entityName}Ctrl {
     @PutMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     Ro modify(@RequestBody final ${moClassShortName} mo) throws Exception {
         log.info("received put:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
-        log.info("${sputil.uncapitalize(entitySimpleName)}Ctrl.modify: {}", mo);
-        try {
-            if (svc.modify(mo) == 1) {
-                final String msg = "修改成功";
-                log.info("{}: mo-{}", msg, mo);
-                return new Ro(ResultDic.SUCCESS, msg);
-            } else {
-                final String msg = "修改失败";
-                log.error("{}: mo-{}", msg, mo);
-                return new Ro(ResultDic.FAIL, msg);
-            }
-        } catch (final DuplicateKeyException e) {
-            final String msg = "修改失败，唯一键重复：" + e.getCause().getMessage();
-            log.error(msg + ": mo=" + mo, e);
-            return new Ro(ResultDic.FAIL, msg);
-        } catch (final RuntimeException e) {
-            final String msg = "修改失败，出现运行时异常";
-            log.error(msg + ": mo-" + mo, e);
-            return new Ro(ResultDic.FAIL, msg);
-        }
+        return svc.modify(mo);
     }
 
     /**
@@ -129,7 +79,7 @@ public class ${entityName}Ctrl {
         }
     &>) {
         log.info("received delete:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
-        log.info("${sputil.uncapitalize(entitySimpleName)}Ctrl.del: {}", <&
+		return svc.del(<&
             for(id in ids){
                 if(!idLP.first) {
                     print(', ');
@@ -137,24 +87,6 @@ public class ${entityName}Ctrl {
                 print(id.key);
             }
         &>);
-        final int result = svc.del(<&
-            for(id in ids){
-                if(!idLP.first) {
-                    print(', ');
-                }
-                print(id.key);
-            }
-        &>);
-
-        if (result == 1) {
-            final String msg = "删除成功";
-            log.info("{}: id-{}", msg, id);
-            return new Ro(ResultDic.SUCCESS, msg);
-        } else {
-            final String msg = "删除失败，找不到该记录";
-            log.error("{}: id-{}", msg, id);
-            return new Ro(ResultDic.FAIL, msg);
-        }
     }
 
     /**
@@ -203,7 +135,6 @@ public class ${entityName}Ctrl {
         }
     &>) {
         log.info("received get:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id");
-        log.info("${sputil.uncapitalize(entitySimpleName)}Ctrl.getById: {}", id);
         return svc.getById(id);
     }
 

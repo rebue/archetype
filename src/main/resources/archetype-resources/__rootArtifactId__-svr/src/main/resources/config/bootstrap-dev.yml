@@ -13,6 +13,7 @@ logging:
     # 注意'OFF'必须大写并加引号
     com.netflix.discovery: 'OFF'
     com.alibaba.nacos.client.config.impl.ClientWorker: warn
+    org.apache.dubbo.config.ServiceConfig: error
 
 spring:
   cloud:
@@ -26,4 +27,6 @@ spring:
   sleuth:
     enabled: false
 
-appid: 1
+robotech:
+  # 用于生成ID，多服务实例情况下不要设置为0，应不同实例分配一个唯一的id，这样以此生成的ID才不会重复 
+  appid: 1

@@ -14,39 +14,52 @@
 	<dependencies>
 		<dependency>
 			<groupId>${groupId}</groupId>
-			<artifactId>${rootArtifactId}-bll</artifactId>
+			<artifactId>${rootArtifactId}-api</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>com.github.rebue.wheel</groupId>
-			<artifactId>wheel-test</artifactId>
+			<groupId>com.github.rebue.robotech</groupId>
+			<artifactId>robotech-bll</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.rebue.sbs</groupId>
-			<artifactId>scx-spring-boot-starter</artifactId>
+			<artifactId>sc-spring-boot-starter</artifactId>
 		</dependency>
 
-		<!-- 服务链路跟踪 -->
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-zipkin</artifactId>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-dubbo</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.pagehelper</groupId>
-			<artifactId>pagehelper-spring-boot-starter</artifactId>
 		</dependency>
 
 		<dependency>

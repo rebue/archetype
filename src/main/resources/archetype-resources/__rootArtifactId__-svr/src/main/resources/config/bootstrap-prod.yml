@@ -1,7 +1,4 @@
 # 生成环境的配置
-server:
-  port: 0
-
 logging:
   config: classpath:config/log4j2.xml
   level:
@@ -35,4 +32,6 @@ springdoc:
   api-docs:
     enabled: false
 
-appid: 0
+robotech:
+  # 用于生成ID，多服务实例情况下不要设置为0，应不同实例分配一个唯一的id，这样以此生成的ID才不会重复 
+  appid: 0

@@ -3,10 +3,15 @@ server:
   port: 0
 
 spring:
-  application:
-    name: ${parentArtifactId}-svr
   profiles:
     active: dev
+  application:
+    name: ${parentArtifactId}-svr
+  main:
+    # Spring Boot 2.1 之后将默认改为了false, dubbo会报错(https://github.com/apache/dubbo/issues/3193#issuecomment-474340165)，因此需要设定
+    allow-bean-definition-overriding: true
+    # 不启动Web服务器
+    web-application-type: none
   jpa:
     # 打印SQL
     show-sql: true
@@ -25,12 +30,25 @@ spring:
         # 配置分组(默认为DEFAULT_GROUP)
         group: REBUE
 
+dubbo:
+  scan:
+    # dubbo 服务扫描基准包
+    base-packages: ${package}.svc
+  protocol:
+    # dubbo 协议
+    name: dubbo
+    # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
+    port: -1
+  cloud:
+    # 默认订阅所有服务，影响性能，需直接指定要订阅的服务，如无可置为空
+    subscribed-services:
+
 mybatis:
   configuration:
     # 自动将数据库中用下划线分隔单词的风格转换为小驼峰风格
     map-underscore-to-camel-case: true
     # 自动转化枚举类型
-    default-enum-type-handler: rebue.wheel.mybatis.AutoEnumTypeHandler
+    default-enum-type-handler: rebue.robotech.mybatis.AutoEnumTypeHandler
 
 pagehelper:
   # 分页合理化参数。
