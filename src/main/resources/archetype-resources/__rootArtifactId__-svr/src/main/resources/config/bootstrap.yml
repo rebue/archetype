@@ -3,10 +3,10 @@ server:
   port: 0
 
 spring:
-  profiles:
-    active: dev
   application:
     name: ${parentArtifactId}-svr
+  profiles:
+    active: dev
   main:
     # Spring Boot 2.1 之后将默认改为了false, dubbo会报错(https://github.com/apache/dubbo/issues/3193#issuecomment-474340165)，因此需要设定
     allow-bean-definition-overriding: true
