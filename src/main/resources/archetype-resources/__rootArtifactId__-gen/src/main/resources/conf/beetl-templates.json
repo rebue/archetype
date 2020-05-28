@@ -38,6 +38,13 @@
 		"backup": false
 	},
 	{
+		"templateName": "test.btl",
+		"targetDir": "../${parentArtifactId}-svr/src/test/java/${symbol_dollar}{modulePath}/test/",
+		"targetFile": "${symbol_dollar}{entityName}Tests.java",
+		"isGenTargetOnMiddleTable": false,
+		"backup": false
+	},
+	{
 		"templateName": "test-http.btl",
 		"targetDir": "../${parentArtifactId}-svr/src/test/java/${symbol_dollar}{modulePath}/test/",
 		"targetFile": "${symbol_dollar}{entityName}HttpTests.java",
