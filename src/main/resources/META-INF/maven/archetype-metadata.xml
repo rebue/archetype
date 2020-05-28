@@ -10,11 +10,11 @@
 		</requiredProperty>
 		<!-- Nacos服务访问URL -->
 		<requiredProperty key="nacosUrl">
-			<defaultValue>http://127.0.0.1:8848</defaultValue>
+			<defaultValue>127.0.0.1:8848</defaultValue>
 		</requiredProperty>
 		<!-- Zipkin服务访问URL -->
 		<requiredProperty key="zipkinUrl">
-			<defaultValue>http://127.0.0.1:9411</defaultValue>
+			<defaultValue>127.0.0.1:9411</defaultValue>
 		</requiredProperty>
 		<!-- jdbc数据库驱动 -->
 		<requiredProperty key="jdbcDriver">
