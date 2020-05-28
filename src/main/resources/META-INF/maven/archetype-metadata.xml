@@ -91,7 +91,7 @@
 						<include>**/*.properties</include>
 						<include>**/*.json</include>
 						<!-- 此文件要取属性来设置微服务的端口 -->
-						<include>btl/test.btl</include>
+						<include>btl/test-http.btl</include>
 					</includes>
 				</fileSet>
 				<fileSet filtered="false" encoding="UTF-8">

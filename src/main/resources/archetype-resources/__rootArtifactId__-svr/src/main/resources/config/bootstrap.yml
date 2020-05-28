@@ -10,8 +10,8 @@ spring:
   main:
     # Spring Boot 2.1 之后将默认改为了false, dubbo会报错(https://github.com/apache/dubbo/issues/3193#issuecomment-474340165)，因此需要设定
     allow-bean-definition-overriding: true
-    # 不启动Web服务器
-    web-application-type: none
+#    # 不启动Web服务器(不提供HTTP服务)
+#    web-application-type: none
   jpa:
     # 打印SQL
     show-sql: true

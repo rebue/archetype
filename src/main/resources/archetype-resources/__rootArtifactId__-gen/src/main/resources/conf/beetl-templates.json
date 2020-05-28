@@ -3,6 +3,13 @@
 #set( $symbol_escape = '\' )
 [
 	{
+		"templateName": "jo.btl",
+		"targetDir": "../${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/jo/",
+		"targetFile": "${symbol_dollar}{entityName}Jo.java",
+		"isGenTargetOnMiddleTable": false,
+		"backup": false
+	},
+	{
 		"templateName": "svc.btl",
 		"targetDir": "../${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/svc/",
 		"targetFile": "${symbol_dollar}{entityName}Svc.java",
@@ -10,8 +17,15 @@
 		"backup": false
 	},
 	{
+		"templateName": "dao.btl",
+		"targetDir": "../${parentArtifactId}-svr/src/main/java/${symbol_dollar}{modulePath}/dao/",
+		"targetFile": "${symbol_dollar}{entityName}Dao.java",
+		"isGenTargetOnMiddleTable": false,
+		"backup": false
+	},
+	{
 		"templateName": "svc-impl.btl",
-		"targetDir": "../${parentArtifactId}-bll/src/main/java/${symbol_dollar}{modulePath}/svc/impl/",
+		"targetDir": "../${parentArtifactId}-svr/src/main/java/${symbol_dollar}{modulePath}/svc/impl/",
 		"targetFile": "${symbol_dollar}{entityName}SvcImpl.java",
 		"isGenTargetOnMiddleTable": false,
 		"backup": false
@@ -24,23 +38,9 @@
 		"backup": false
 	},
 	{
-		"templateName": "test.btl",
+		"templateName": "test-http.btl",
 		"targetDir": "../${parentArtifactId}-svr/src/test/java/${symbol_dollar}{modulePath}/test/",
-		"targetFile": "${symbol_dollar}{entityName}Tests.java",
-		"isGenTargetOnMiddleTable": false,
-		"backup": false
-	},
-	{
-		"templateName": "dao.btl",
-		"targetDir": "../${parentArtifactId}-bll/src/main/java/${symbol_dollar}{modulePath}/dao/",
-		"targetFile": "${symbol_dollar}{entityName}Dao.java",
-		"isGenTargetOnMiddleTable": false,
-		"backup": false
-	},
-	{
-		"templateName": "jo.btl",
-		"targetDir": "../${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/jo/",
-		"targetFile": "${symbol_dollar}{entityName}Jo.java",
+		"targetFile": "${symbol_dollar}{entityName}HttpTests.java",
 		"isGenTargetOnMiddleTable": false,
 		"backup": false
 	}
