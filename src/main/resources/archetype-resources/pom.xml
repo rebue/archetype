@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.github.rebue.common-pom</groupId>
@@ -13,17 +14,18 @@
 	<description>基于Spring CLoud构建微服务的演示项目</description>
 	<version>${version}</version>
 
+	<modules>
+		<module>${rootArtifactId}-gen</module>
+		<module>${rootArtifactId}-api</module>
+		<module>${rootArtifactId}-svr</module>
+	</modules>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>${groupId}</groupId>
 				<artifactId>${rootArtifactId}-api</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>${groupId}</groupId>
-				<artifactId>${rootArtifactId}-bll</artifactId>
-				<version>${version}</version>
+				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
