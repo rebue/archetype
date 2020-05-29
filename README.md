@@ -14,7 +14,7 @@
    - Group Id
    - Artifact Id
    - Version
-   - Package **注意包名后面两级会重复，去掉最后一级即可**
+   - Package **注意包名后面两级可能会重复，去掉最后一级即可**
    - microServerPort **微服务本地调试时用的端口号**
 
    ![配置参数](./img/配置参数.png)
