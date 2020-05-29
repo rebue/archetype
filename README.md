@@ -1,29 +1,12 @@
 # archetype
 
-基于Spring CLoud构建微服务的自定义archetype
+构建 **Rebue** 微服务项目的archetype插件
 
 [TOC]
 
-## 使用
+## Rebue开发指南
 
-1. `File` > `New` > `Maven Project`
-2. `Next >`
-3. 选择 `rebue-archetype` > `Next >`
-   ![选择archetype](./img/选择archetype.png)
-4. 填写下面几项，然后 `Finish`
-   - Group Id
-   - Artifact Id
-   - Version
-   - Package **注意包名后面两级可能会重复，去掉最后一级即可**
-   - microServerPort **微服务本地调试时用的端口号**
-
-   ![配置参数](./img/配置参数.png)
-5. 项目建成
-6. 数据库设计建模(按规范放于db相应目录下)
-7. 创建数据库
-8. 运行xxx-gen项目中的主程序生成代码
-9. 用Spring Boot App的方式启动xxx-svr项目
-10. 运行xxx-svr项目下的单元测试
+<https://github.com/rebue/archetype/blob/master/src/main/resources/archetype-resources/doc/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97.md>
 
 ## 编译
 
