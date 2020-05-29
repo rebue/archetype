@@ -1,19 +1,13 @@
 # 开发环境的配置
 debug: true
 
+robotech:
+  # 用于生成ID，多服务实例情况下不要设置为0，应不同实例分配一个唯一的id，这样以此生成的ID才不会重复 
+  appid: 1
+
 server:
   # 自定义端口号，方便开发测试
   port: ${microServerPort}
-
-logging:
-  config: classpath:config/log4j2.xml
-  level:
-    root: info
-    rebue: trace
-    # 注意'OFF'必须大写并加引号
-    com.netflix.discovery: 'OFF'
-    com.alibaba.nacos.client.config.impl.ClientWorker: warn
-    org.apache.dubbo.config.ServiceConfig: error
 
 spring:
   cloud:
@@ -27,6 +21,12 @@ spring:
   sleuth:
     enabled: false
 
-robotech:
-  # 用于生成ID，多服务实例情况下不要设置为0，应不同实例分配一个唯一的id，这样以此生成的ID才不会重复 
-  appid: 1
+logging:
+  config: classpath:config/log4j2.xml
+  level:
+    root: info
+    rebue: trace
+    # 注意'OFF'必须大写并加引号
+    com.netflix.discovery: 'OFF'
+    com.alibaba.nacos.client.config.impl.ClientWorker: warn
+    org.apache.dubbo.config.ServiceConfig: error

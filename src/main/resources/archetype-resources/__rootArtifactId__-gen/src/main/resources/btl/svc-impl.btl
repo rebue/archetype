@@ -73,9 +73,9 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     @Override
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    @Transactional(readOnly = false, propagation = Propagation.SUPPORTS)
     public Ro add(final ${moClassShortName} mo) {
-    	log.info("${entityName}Svc.add: 添加${entityTitle} mo-", mo);
+    	log.info("${entityName}Svc.add: 添加${entityTitle} mo-{}", mo);
         // 如果id为空那么自动生成分布式id
         <&
         if (idType=="String") {
@@ -89,102 +89,12 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
 		}
         &>
         
-        try {
-            final int result = thisSvc.insertSelective(mo);
-            if (result == 1) {
-                final String msg = "添加成功";
-                log.info("{}: mo-{}", msg, mo);
-                return new IdRo<${idType}>(ResultDic.SUCCESS, msg, mo.getId());
-            } else {
-                final String msg = "添加失败";
-                log.error("{}: mo-{}", msg, mo);
-                return new Ro(ResultDic.FAIL, msg);
-            }
-        } catch (final DuplicateKeyException e) {
-            final String msg = "添加失败，唯一键重复：" + e.getCause().getMessage();
-            log.error(msg + ": mo-" + mo, e);
-            return new Ro(ResultDic.FAIL, msg);
-        } catch (final RuntimeException e) {
-            final String msg = "添加失败，出现运行时异常";
-            log.error(msg + ": mo-" + mo, e);
-            return new Ro(ResultDic.FAIL, msg);
-        }
-    }
-
-    /**
-     * 修改{entityTitle}
-     *
-     * @mbg.generated 自动生成，如需修改，请删除本行
-     */
-    @Override
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-    public Ro modify(final ${moClassShortName} mo) {
-    	log.info("${entityName}Svc.modify: 修改${entityTitle} mo-", mo);
-        try {
-            if (thisSvc.updateByPrimaryKeySelective(mo) == 1) {
-                final String msg = "修改成功";
-                log.info("{}: mo-{}", msg, mo);
-                return new Ro(ResultDic.SUCCESS, msg);
-            } else {
-                final String msg = "修改失败";
-                log.error("{}: mo-{}", msg, mo);
-                return new Ro(ResultDic.FAIL, msg);
-            }
-        } catch (final DuplicateKeyException e) {
-            final String msg = "修改失败，唯一键重复：" + e.getCause().getMessage();
-            log.error(msg + ": mo=" + mo, e);
-            return new Ro(ResultDic.FAIL, msg);
-        } catch (final RuntimeException e) {
-            final String msg = "修改失败，出现运行时异常";
-            log.error(msg + ": mo-" + mo, e);
-            return new Ro(ResultDic.FAIL, msg);
-        }
-    }
-    
-    /**
-     * 删除${entityTitle}
-     * 
-     * @mbg.generated 自动生成，如需修改，请删除本行
-     */
-    @Override
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-    public Ro del(<&
-        for(id in ids){
-            if(!idLP.first) {
-                print(', ');
-            }
-            print(id.value);
-            print(' ');
-            print(id.key);
-        }
-    &>) {
-    	log.info("${entityName}Svc.del: 删除${entityTitle} id-", <&
-            for(id in ids){
-                if(!idLP.first) {
-                    print(', ');
-                }
-                print(id.key);
-            }
-        &>);
-        final int result = thisSvc.deleteByPrimaryKey(<&
-            for(id in ids){
-                if(!idLP.first) {
-                    print(', ');
-                }
-                print(id.key);
-            }
-        &>);
-
-        if (result == 1) {
-            final String msg = "删除成功";
-            log.info("{}: id-{}", msg, id);
-            return new Ro(ResultDic.SUCCESS, msg);
+        final Ro ro = thisSvc.add(mo);
+        if (ResultDic.SUCCESS.equals(ro.getResult())) {
+            return new IdRo<>(ro.getResult(), ro.getMsg(), mo.getId());
         } else {
-            final String msg = "删除失败，找不到该记录";
-            log.error("{}: id-{}", msg, id);
-            return new Ro(ResultDic.FAIL, msg);
+            return ro;
         }
     }
-
 
 }
