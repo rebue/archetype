@@ -12,6 +12,11 @@ spring:
     allow-bean-definition-overriding: true
 #    # 不启动Web服务器(不提供HTTP服务)
 #    web-application-type: none
+  # 项目中没有使用Redis(如果使用了Redis，请把这一节注释起来)
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
   jpa:
     # 打印SQL
     show-sql: true
