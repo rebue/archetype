@@ -21,6 +21,7 @@ import ${moClassFullName};
 import ${modulePackage}.svc.${entityName}Svc;
 
 import rebue.robotech.dic.ResultDic;
+import reactor.core.publisher.Mono;
 import rebue.robotech.ro.Ro;
 
 /**
@@ -43,9 +44,9 @@ public class ${entityName}Ctrl {
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     @PostMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
-    Ro add(@RequestBody final ${moClassShortName} mo) {
+    Mono<Ro> add(@RequestBody final ${moClassShortName} mo) {
         log.info("received post:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
-        return svc.add(mo);
+        return Mono.just(svc.add(mo));
     }
 
     /**
@@ -54,9 +55,9 @@ public class ${entityName}Ctrl {
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     @PutMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
-    Ro modify(@RequestBody final ${moClassShortName} mo) throws Exception {
+    Mono<Ro> modify(@RequestBody final ${moClassShortName} mo) throws Exception {
         log.info("received put:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
-        return svc.modify(mo);
+        return Mono.just(svc.modify(mo));
     }
 
     /**
@@ -65,7 +66,7 @@ public class ${entityName}Ctrl {
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     @DeleteMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
-    Ro del(<&
+    Mono<Ro> del(<&
         for(id in ids){
             if(!idLP.first) {
                 print(', ');
@@ -79,14 +80,14 @@ public class ${entityName}Ctrl {
         }
     &>) {
         log.info("received delete:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
-		return svc.del(<&
+		return Mono.just(svc.del(<&
             for(id in ids){
                 if(!idLP.first) {
                     print(', ');
                 }
                 print(id.key);
             }
-        &>);
+        &>));
     }
 
     /**
@@ -95,7 +96,7 @@ public class ${entityName}Ctrl {
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id")
-    ${entityName}Mo getById(<&
+    Mono<${entityName}Mo> getById(<&
         for(id in ids){
             if(!idLP.first) {
                 print(', ');
@@ -109,7 +110,7 @@ public class ${entityName}Ctrl {
         }
     &>) {
         log.info("received get:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id");
-        return svc.getById(id);
+        return Mono.just(svc.getById(id));
     }
 
     /**
@@ -118,9 +119,9 @@ public class ${entityName}Ctrl {
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
-    PageInfo<${moClassShortName}> list(final ${moClassShortName} qo, @RequestParam(value = "pageNum", required = false) final Integer pageNum, @RequestParam(value = "pageSize", required = false) final Integer pageSize, @RequestParam(value = "orderBy", required = false) final String orderBy) {
+    Mono<PageInfo<${moClassShortName}>> list(final ${moClassShortName} qo, @RequestParam(value = "pageNum", required = false) final Integer pageNum, @RequestParam(value = "pageSize", required = false) final Integer pageSize, @RequestParam(value = "orderBy", required = false) final String orderBy) {
         log.info("received get:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
-        return svc.list(qo, pageNum, pageSize, orderBy);
+        return Mono.just(svc.list(qo, pageNum, pageSize, orderBy));
     }
 
 }
