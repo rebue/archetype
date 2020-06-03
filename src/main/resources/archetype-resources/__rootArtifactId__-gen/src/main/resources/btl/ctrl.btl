@@ -46,7 +46,7 @@ public class ${entityName}Ctrl {
     @PostMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     Mono<Ro> add(@RequestBody final ${moClassShortName} mo) {
         log.info("received post:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
-        return Mono.just(svc.add(mo));
+        return Mono.create(callback -> callback.success(svc.add(mo)));
     }
 
     /**
@@ -57,7 +57,7 @@ public class ${entityName}Ctrl {
     @PutMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     Mono<Ro> modify(@RequestBody final ${moClassShortName} mo) throws Exception {
         log.info("received put:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
-        return Mono.just(svc.modify(mo));
+        return Mono.create(callback -> callback.success(svc.modify(mo)));
     }
 
     /**
@@ -80,14 +80,14 @@ public class ${entityName}Ctrl {
         }
     &>) {
         log.info("received delete:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
-		return Mono.just(svc.del(<&
+		return Mono.create(callback -> callback.success(svc.del(<&
             for(id in ids){
                 if(!idLP.first) {
                     print(', ');
                 }
                 print(id.key);
             }
-        &>));
+        &>)));
     }
 
     /**
@@ -110,7 +110,7 @@ public class ${entityName}Ctrl {
         }
     &>) {
         log.info("received get:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id");
-        return Mono.just(svc.getById(id));
+        return Mono.create(callback -> callback.success(svc.getById(id)));
     }
 
     /**
@@ -121,7 +121,7 @@ public class ${entityName}Ctrl {
     @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     Mono<PageInfo<${moClassShortName}>> list(final ${moClassShortName} qo, @RequestParam(value = "pageNum", required = false) final Integer pageNum, @RequestParam(value = "pageSize", required = false) final Integer pageSize, @RequestParam(value = "orderBy", required = false) final String orderBy) {
         log.info("received get:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
-        return Mono.just(svc.list(qo, pageNum, pageSize, orderBy));
+        return Mono.create(callback -> callback.success(svc.list(qo, pageNum, pageSize, orderBy)));
     }
 
 }
