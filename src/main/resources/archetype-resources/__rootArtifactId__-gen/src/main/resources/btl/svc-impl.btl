@@ -68,13 +68,13 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
     private ${entityName}Svc thisSvc;
 
     /**
-     * 添加${entityTitle}
+     * 添加${entityTitle}(自动生成ID)
      * 
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     @Override
     @Transactional(readOnly = false, propagation = Propagation.SUPPORTS)
-    public Ro add(final ${moClassShortName} mo) {
+    public Ro addWithAutoGenId(final ${moClassShortName} mo) {
     	log.info("${entityName}Svc.add: 添加${entityTitle} mo-{}", mo);
         // 如果id为空那么自动生成分布式id
         <&
