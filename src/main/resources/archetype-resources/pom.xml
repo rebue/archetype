@@ -11,7 +11,7 @@
 	<groupId>${groupId}</groupId>
 	<artifactId>${artifactId}</artifactId>
 	<packaging>pom</packaging>
-	<description>基于Spring CLoud构建微服务的演示项目</description>
+	<description>${projectDescription}</description>
 	<version>${version}</version>
 
 	<modules>
