@@ -33,7 +33,7 @@
 		<!-- 该插件给Mapper类加上继承的父接口 -->
 		<plugin type="rebue.mbgx.plugin.MapperRootIntfacePlugin" />
 		<!-- 该插件给Model类加上Swagger注解 -->
-		<!-- <plugin type="rebue.mbgx.plugin.SwaggerPlugin" /> -->
+		<plugin type="rebue.mbgx.plugin.SwaggerPlugin" />
 		<!-- 该插件给Model类加上Jackson注解 -->
 		<plugin type="rebue.mbgx.plugin.ModelJacksonPlugin" />
 		<!-- 该插件给Model类加上后缀 -->
@@ -68,7 +68,8 @@
 		</commentGenerator>
 
 		<!-- jdbc -->
-		<jdbcConnection driverClass="${symbol_dollar}{jdbc.driver}" connectionURL="${symbol_dollar}{jdbc.url}" userId="${symbol_dollar}{jdbc.username}" password="${symbol_dollar}{jdbc.password}">
+		<jdbcConnection driverClass="${symbol_dollar}{jdbc.driver}" connectionURL="${symbol_dollar}{jdbc.url}" userId="${symbol_dollar}{jdbc.username}"
+			password="${symbol_dollar}{jdbc.password}">
 			<!-- 取不到数据库中字段的注释时，需配置下面的属性 -->
 			<!-- 针对oracle数据库 -->
 			<property name="remarksReporting" value="true"></property>
