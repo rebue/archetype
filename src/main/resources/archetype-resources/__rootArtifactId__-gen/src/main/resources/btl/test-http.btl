@@ -69,7 +69,7 @@ public class ${dollar}{entityName}HttpTests {
 			}
 	        &>
     	}
-		final String listResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}?pageNum=1&pageSize=5");
+		final String listResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/list?pageNum=1&pageSize=5");
 		log.info("查询${dollar}{table.remarks}的返回值为：" + listResult);
 		log.info("获取单个${dollar}{table.remarks}的参数为：" + mo.getId());
 		final String getByIdResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id?id=" + mo.getId());

@@ -74,7 +74,7 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
      */
     @Override
     @Transactional(readOnly = false, propagation = Propagation.SUPPORTS)
-    public Ro addWithAutoGenId(final ${moClassShortName} mo) {
+    public Ro add(final ${moClassShortName} mo) {
     	log.info("${entityName}Svc.add: 添加${entityTitle} mo-{}", mo);
         // 如果id为空那么自动生成分布式id
         <&
@@ -89,7 +89,7 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
 		}
         &>
         
-        final Ro ro = thisSvc.add(mo);
+        final Ro ro = thisSvc.add0(mo);
         if (ResultDic.SUCCESS.equals(ro.getResult())) {
             return new IdRo<>(ro.getResult(), ro.getMsg(), mo.getId());
         } else {

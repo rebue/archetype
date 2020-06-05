@@ -59,7 +59,7 @@ public class ${entityName}Ctrl {
     @PostMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     Mono<Ro> add(@RequestBody final ${moClassShortName} mo) {
         log.info("received post:/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}");
-        return Mono.create(callback -> callback.success(svc.addWithAutoGenId(mo)));
+        return Mono.create(callback -> callback.success(svc.add(mo)));
     }
 
     /**
