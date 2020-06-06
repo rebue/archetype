@@ -6,7 +6,7 @@
 
 ## Rebue快速开发指南
 
-<https://github.com/rebue/archetype/blob/master/src/main/resources/archetype-resources/doc/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97.md>
+<https://github.com/rebue/archetype/blob/master/src/main/resources/archetype-resources/doc/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/index.md>
 
 ## 使用
 
