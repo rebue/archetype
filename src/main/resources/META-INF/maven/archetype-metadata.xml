@@ -49,10 +49,6 @@
 	<fileSets>
 		<fileSet encoding="UTF-8">
 			<directory>doc</directory>
-			<includes>
-				<include>**/*.md</include>
-				<include>**/*.doc</include>
-			</includes>
 		</fileSet>
 		<fileSet encoding="UTF-8">
 			<directory>db/script</directory>

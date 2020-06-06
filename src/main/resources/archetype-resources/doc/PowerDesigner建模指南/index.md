@@ -119,3 +119,16 @@ id                   bigint unsigned not null  comment 'XXX',
 ## 8. 建库并执行脚本
 
 不同数据库、不同工具，方式各不相同，这里略
+
+### 8.1. 禁用外键约束
+
+在执行脚本删除表时，有可能因为外键而导致删除不了表，这里就要临时禁用外键约束
+
+**MySQL**
+
+```sql
+-- 会话内禁用外键约束
+SET  FOREIGN_KEY_CHECKS = 0;
+-- 会话内启用外键约束
+SET FOREIGN_KEY_CHECKS = 1;
+```
