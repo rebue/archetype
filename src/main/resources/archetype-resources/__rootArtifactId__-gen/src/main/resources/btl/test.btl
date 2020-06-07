@@ -47,10 +47,10 @@ public class ${entityName}Tests {
             mo.setId(null);
             log.info("添加${table.remarks}的参数为：" + mo);
             @SuppressWarnings("unchecked")
-            final IdRo<Long> idRo = (IdRo<Long>) _svc.add(mo);
+            final IdRo<${idType}> idRo = (IdRo<${idType}>) _svc.add(mo);
             log.info("添加${table.remarks}的返回值为：" + idRo);
             Assertions.assertEquals(ResultDic.SUCCESS, idRo.getResult());
-            mo.setId(Long.valueOf(idRo.getId()));
+            mo.setId(idRo.getId());
         }
         final PageInfo<${entityName}Mo> listResult = _svc.list(null, 1, 5);
         log.info("查询${table.remarks}的返回值为：" + listResult);

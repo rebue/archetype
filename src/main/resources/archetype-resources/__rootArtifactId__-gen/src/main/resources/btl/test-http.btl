@@ -1,5 +1,5 @@
 #set( $dollar = "$" )
-package ${dollar}{modulePackage}.test;
+package ${dollar}{modulePackage}.test.http;
 
 import java.io.IOException;
 

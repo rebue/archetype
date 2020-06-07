@@ -46,7 +46,7 @@
 	},
 	{
 		"templateName": "test-http.btl",
-		"targetDir": "../${parentArtifactId}-svr/src/test/java/${symbol_dollar}{modulePath}/test/",
+		"targetDir": "../${parentArtifactId}-svr/src/test/java/${symbol_dollar}{modulePath}/test/http",
 		"targetFile": "${symbol_dollar}{entityName}HttpTests.java",
 		"isGenTargetOnMiddleTable": false,
 		"backup": false
