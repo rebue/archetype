@@ -30,3 +30,7 @@ logging:
     com.netflix.discovery: 'OFF'
     com.alibaba.nacos.client.config.impl.ClientWorker: warn
     org.apache.dubbo.config.ServiceConfig: error
+    org.apache.dubbo.config.DubboShutdownHook: error
+    org.apache.dubbo.registry.integration.RegistryProtocol: error
+    org.springframework.web.context.support.GenericWebApplicationContext: error
+    org.springframework.beans.factory.BeanCreationNotAllowedException: error
