@@ -128,7 +128,12 @@ id                   bigint unsigned not null  comment 'XXX',
 
 ```sql
 -- 会话内禁用外键约束
-SET  FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS = 0;
 -- 会话内启用外键约束
 SET FOREIGN_KEY_CHECKS = 1;
+
+-- 全局禁用外键约束
+SET GLOBAL FOREIGN_KEY_CHECKS = 0;
+-- 全局启用外键约束
+SET GLOBAL FOREIGN_KEY_CHECKS = 1;
 ```
