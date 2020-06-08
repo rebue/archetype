@@ -22,7 +22,7 @@ import rebue.wheel.http.HttpClient;
 import rebue.wheel.http.impl.OkHttpClientImpl;
 
 /**
- * ${dollar}{table.remarks}
+ * ${dollar}{table.remarks}测试
  *
  * @mbg.generated 自动生成的注释，如需修改本注释，请删除本行
  */
