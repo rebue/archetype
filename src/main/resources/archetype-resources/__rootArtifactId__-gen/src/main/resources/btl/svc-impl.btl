@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,6 +65,7 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
      * 
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
+    @Lazy
     @Resource
     private ${entityName}Svc thisSvc;
 
