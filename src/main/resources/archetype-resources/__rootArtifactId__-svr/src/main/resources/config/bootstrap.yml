@@ -48,6 +48,17 @@ dubbo:
     # 默认订阅所有服务，影响性能，需直接指定要订阅的服务，如无可置为空
     subscribed-services:
 
+rebue:
+  sbs:
+    aop:
+      log-aop:
+        ctrl:
+          # 默认启用控制器层日志拦截
+          enabled: true
+        svc:
+          # 默认启用服务层日志拦截
+          enabled: true
+
 mybatis:
   configuration:
     # 自动将数据库中用下划线分隔单词的风格转换为小驼峰风格
