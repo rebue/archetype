@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import ${dollar}{modulePackage}.mo.${dollar}{entityName}Mo;
 import rebue.robotech.dic.ResultDic;
 import rebue.robotech.ro.IdRo;
+import rebue.robotech.ro.PageRo;
 import rebue.robotech.ro.Ro;
 import rebue.wheel._httpClient;
 import rebue.wheel.RandomEx;
@@ -71,6 +72,8 @@ public class ${dollar}{entityName}HttpTests {
     	}
 		final String listResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/list?pageNum=1&pageSize=5");
 		log.info("查询${dollar}{table.remarks}的返回值为：" + listResult);
+		final PageRo<${dollar}{entityName}Mo> listRo = _objectMapper.readValue(listResult, new TypeReference<PageRo<${dollar}{entityName}Mo>>() {});
+        Assertions.assertEquals(ResultDic.SUCCESS, listRo.getResult());
 		log.info("获取单个${dollar}{table.remarks}的参数为：" + mo.getId());
 		final String getByIdResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id?id=" + mo.getId());
 		log.info("获取单个${dollar}{table.remarks}的返回值为：" + getByIdResult);
