@@ -1,0 +1,27 @@
+package ${modulePackage}.api.impl;
+
+import org.apache.dubbo.config.annotation.Service;
+
+import ${moClassFullName};
+import ${modulePackage}.api.${entityName}Api;
+import ${modulePackage}.jo.${entityName}Jo;
+import ${modulePackage}.svc.${entityName}Svc;
+
+import rebue.robotech.api.impl.BaseApiImpl;
+
+/**
+ * ${table.remarks}
+ *
+ * @mbg.generated 自动生成的注释，如需修改本注释，请删除本行
+ */
+@Service
+public class ${entityName}ApiImpl extends BaseApiImpl<<&
+		for(id in ids){
+			if(!idLP.first) {
+				print(', ');
+			}
+		    print(id.value);
+		}
+	&>, ${moClassShortName}, ${entityName}Jo, ${entityName}Svc> implements ${entityName}Api {
+	
+}

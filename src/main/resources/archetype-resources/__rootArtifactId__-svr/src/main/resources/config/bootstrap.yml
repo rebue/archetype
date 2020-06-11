@@ -38,7 +38,7 @@ spring:
 dubbo:
   scan:
     # dubbo 服务扫描基准包
-    base-packages: ${package}.svc
+    base-packages: ${package}.api
   protocol:
     # dubbo 协议
     name: dubbo

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import ${modulePackage}.mo.${entityName}Mo;
-import ${modulePackage}.svc.${entityName}Svc;
+import ${modulePackage}.api.${entityName}Api;
 
 import lombok.extern.slf4j.Slf4j;
 import rebue.robotech.dic.ResultDic;
@@ -32,7 +32,7 @@ public class ${entityName}Tests {
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     @Reference
-    private ${entityName}Svc _svc;
+    private ${entityName}Api _api;
 
     /**
      * 测试基本的增删改查
@@ -47,23 +47,23 @@ public class ${entityName}Tests {
             mo.setId(null);
             log.info("添加${table.remarks}的参数为：" + mo);
             @SuppressWarnings("unchecked")
-            final IdRo<${idType}> idRo = (IdRo<${idType}>) _svc.add(mo);
+            final IdRo<${idType}> idRo = (IdRo<${idType}>) _api.add(mo);
             log.info("添加${table.remarks}的返回值为：" + idRo);
             Assertions.assertEquals(ResultDic.SUCCESS, idRo.getResult());
             mo.setId(idRo.getId());
         }
-        final PageRo<${entityName}Mo> listResult = _svc.list(null, 1, 5);
+        final PageRo<${entityName}Mo> listResult = _api.list(null, 1, 5);
         log.info("查询${table.remarks}的返回值为：" + listResult);
         Assertions.assertEquals(ResultDic.SUCCESS, listResult.getResult());
         log.info("获取单个${table.remarks}的参数为：" + mo.getId());
-        final ${entityName}Mo getByIdResult = _svc.getById(mo.getId());
+        final ${entityName}Mo getByIdResult = _api.getById(mo.getId());
         log.info("获取单个${table.remarks}的返回值为：" + getByIdResult);
         log.info("修改${table.remarks}的参数为：" + mo);
-        final Ro modifyResult = _svc.modify(mo);
+        final Ro modifyResult = _api.modify(mo);
         log.info("修改${table.remarks}的返回值为：" + modifyResult);
         Assertions.assertEquals(ResultDic.SUCCESS, modifyResult.getResult());
         log.info("删除${table.remarks}的参数为：" + mo.getId());
-        final Ro deleteResult = _svc.del(mo.getId());
+        final Ro deleteResult = _api.del(mo.getId());
         log.info("删除${table.remarks}的返回值为：" + deleteResult);
         Assertions.assertEquals(ResultDic.SUCCESS, deleteResult.getResult());
     }

@@ -13,9 +13,9 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
-import org.apache.dubbo.config.annotation.Service;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,9 +63,9 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
      * 
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    @Lazy
-    @Resource
-    private ${entityName}Svc thisSvc;
+//    @Lazy
+//    @Resource
+//    private ${entityName}Svc thisSvc;
 
     /**
      * 添加${entityTitle}(自动生成ID)
@@ -88,7 +88,7 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
 		}
         &>
         
-        final Ro ro = thisSvc.add0(mo);
+        final Ro ro = super.add(mo);
         if (ResultDic.SUCCESS.equals(ro.getResult())) {
             return new IdRo<>(ro.getResult(), ro.getMsg(), mo.getId());
         } else {
