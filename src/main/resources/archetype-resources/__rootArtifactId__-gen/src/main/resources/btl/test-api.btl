@@ -2,7 +2,7 @@ package ${modulePackage}.test.api;
 
 import java.io.IOException;
 
-import org.apache.dubbo.config.annotation.Reference;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,7 +31,7 @@ public class ${entityName}ApiTests {
      * 
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    @Reference
+    @DubboReference
     private ${entityName}Api _api;
 
     /**
