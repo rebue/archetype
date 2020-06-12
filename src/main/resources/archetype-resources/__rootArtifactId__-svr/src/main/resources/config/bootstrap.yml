@@ -44,6 +44,9 @@ dubbo:
     name: dubbo
     # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
     port: -1
+  consumer:
+    # Dubbo默认（缺省）会在启动时检查依赖的服务是否可用，不可用时会立即抛出异常，导致服务启动失败
+    check: false
   cloud:
     # 默认订阅所有服务，影响性能，需直接指定要订阅的服务，如无可置为空
     subscribed-services:
