@@ -52,7 +52,7 @@ public class ${entityName}Tests {
             Assertions.assertEquals(ResultDic.SUCCESS, idRo.getResult());
             mo.setId(idRo.getId());
         }
-        final PageRo<${entityName}Mo> listResult = _api.list(null, 1, 5);
+        final PageRo<${entityName}Mo> listResult = _api.list(null, 1, 5, null, 10);
         log.info("查询${table.remarks}的返回值为：" + listResult);
         Assertions.assertEquals(ResultDic.SUCCESS, listResult.getResult());
         log.info("获取单个${table.remarks}的参数为：" + mo.getId());
