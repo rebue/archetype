@@ -27,8 +27,9 @@ import ${modulePackage}.api.${entityName}Api;
 
 import rebue.robotech.dic.ResultDic;
 import reactor.core.publisher.Mono;
-import rebue.robotech.ro.IdRo;
-import rebue.robotech.ro.PageRo;
+import rebue.robotech.ra.IdRa;
+import rebue.robotech.ra.PageRa;
+import rebue.robotech.ra.PojoRa;
 import rebue.robotech.ro.Ro;
 
 /**
@@ -54,7 +55,7 @@ public class ${entityName}Ctrl {
     @ApiResponses({ @ApiResponse(description = "添加${entityTitle}的结果", //
             content = @Content(mediaType = "application/json; charset=utf-8", schema = @Schema(implementation = IdRo.class))) })
     @PostMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
-    public Mono<Ro> add(@RequestBody final ${moClassShortName} mo) {
+    public Mono<Ro<?>> add(@RequestBody final ${moClassShortName} mo) {
         return Mono.create(callback -> callback.success(api.add(mo)));
     }
 
@@ -68,7 +69,7 @@ public class ${entityName}Ctrl {
     @ApiResponses({ @ApiResponse(description = "修改${entityTitle}的结果", //
             content = @Content(mediaType = "application/json; charset=utf-8", schema = @Schema(implementation = Ro.class))) })
     @PutMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
-    public Mono<Ro> modify(@RequestBody final ${moClassShortName} mo) throws Exception {
+    public Mono<Ro<?>> modify(@RequestBody final ${moClassShortName} mo) throws Exception {
         return Mono.create(callback -> callback.success(api.modify(mo)));
     }
 
@@ -82,7 +83,7 @@ public class ${entityName}Ctrl {
     @ApiResponses({ @ApiResponse(description = "删除${entityTitle}的结果", //
             content = @Content(mediaType = "application/json; charset=utf-8", schema = @Schema(implementation = Ro.class))) })
     @DeleteMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
-    public Mono<Ro> del(<&
+    public Mono<Ro<?>> del(<&
         for(id in ids){
             if(!idLP.first) {
                 print(', ');
@@ -115,7 +116,7 @@ public class ${entityName}Ctrl {
     @ApiResponses({ @ApiResponse(description = "获取单个${entityTitle}的结果", //
             content = @Content(mediaType = "application/json; charset=utf-8", schema = @Schema(implementation = ${entityName}Mo.class))) })
     @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id")
-    public Mono<${entityName}Mo> getById(<&
+    public Mono<Ro<PojoRa<${entityName}Mo>>> getById(<&
         for(id in ids){
             if(!idLP.first) {
                 print(', ');
@@ -145,7 +146,7 @@ public class ${entityName}Ctrl {
     @ApiResponses({ @ApiResponse(description = "查询${entityTitle}列表的结果", //
             content = @Content(mediaType = "application/json; charset=utf-8", schema = @Schema(implementation = ${entityName}Mo.class))) })
     @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/list")
-    public Mono<PageRo<${moClassShortName}>> list(final ${moClassShortName} qo, @RequestParam(value = "pageNum", required = false) final Integer pageNum, @RequestParam(value = "pageSize", required = false) final Integer pageSize, @RequestParam(value = "orderBy", required = false) final String orderBy) {
+    public Mono<Ro<PageRa<${moClassShortName}>>> list(final ${moClassShortName} qo, @RequestParam(value = "pageNum", required = false) final Integer pageNum, @RequestParam(value = "pageSize", required = false) final Integer pageSize, @RequestParam(value = "orderBy", required = false) final String orderBy) {
         return Mono.create(callback -> callback.success(api.list(qo, pageNum, pageSize, orderBy, 10)));
     }
 
