@@ -44,6 +44,10 @@ dubbo:
     name: dubbo
     # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
     port: -1
+    # dubbo推荐的序列化组件，还有一个是fst
+    serialization: kryo
+    # 序列化优化器
+    optimizer: rebue.sbs.dubbo.SerializationOptimizerImpl
   consumer:
     # Dubbo默认（缺省）会在启动时检查依赖的服务是否可用，不可用时会立即抛出异常，导致服务启动失败
     check: false
