@@ -70,7 +70,6 @@
 		<fileSet encoding="UTF-8">
 			<directory></directory>
 			<includes>
-				<include>**/*.md</include>
 				<include>.gitignore</include>
 			</includes>
 		</fileSet>
