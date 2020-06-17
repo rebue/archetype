@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 
 @OpenAPIDefinition(info = @Info(title = "${projectDescription}", version = "${version}"))
 @SpringCloudApplication
-public class Application {
+public class ${projectNameCapitalise}Application {
 
     public static void main(final String[] args) {
         SpringApplication.run(Application.class, args);

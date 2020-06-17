@@ -11,3 +11,10 @@ logs
 *.log.gz
 *.class
 rebel.xml
+.gradle
+gradle
+build.grdle
+gradlew
+gradlew.bat
+settings.gradle
+

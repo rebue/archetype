@@ -98,6 +98,9 @@
 					<includes>
 						<include>**/*.btl</include>
 					</includes>
+					<excludes>
+						<exclude>btl/test-http.btl</exclude>
+					</excludes>
 				</fileSet>
 			</fileSets>
 		</module>
