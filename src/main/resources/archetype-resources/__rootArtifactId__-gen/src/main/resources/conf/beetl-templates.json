@@ -4,70 +4,70 @@
 [
 	{
 		"templateName": "jo.btl",
-		"targetDir": "../${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/jo/",
+		"targetDir": "../../../${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/jo/",
 		"targetFile": "${symbol_dollar}{entityName}Jo.java",
 		"isGenTargetOnMiddleTable": false,
 		"backup": false
 	},
 	{
 		"templateName": "api.btl",
-		"targetDir": "../${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/api/",
+		"targetDir": "../../../${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/api/",
 		"targetFile": "${symbol_dollar}{entityName}Api.java",
 		"isGenTargetOnMiddleTable": false,
 		"backup": false
 	},
 	{
 		"templateName": "svc.btl",
-		"targetDir": "../${parentArtifactId}-svr/src/main/java/${symbol_dollar}{modulePath}/svc/",
+		"targetDir": "../../../${parentArtifactId}-svr/src/main/java/${symbol_dollar}{modulePath}/svc/",
 		"targetFile": "${symbol_dollar}{entityName}Svc.java",
 		"isGenTargetOnMiddleTable": false,
 		"backup": false
 	},
 	{
 		"templateName": "dao.btl",
-		"targetDir": "../${parentArtifactId}-svr/src/main/java/${symbol_dollar}{modulePath}/dao/",
+		"targetDir": "../../../${parentArtifactId}-svr/src/main/java/${symbol_dollar}{modulePath}/dao/",
 		"targetFile": "${symbol_dollar}{entityName}Dao.java",
 		"isGenTargetOnMiddleTable": false,
 		"backup": false
 	},
 	{
 		"templateName": "svc-impl.btl",
-		"targetDir": "../${parentArtifactId}-svr/src/main/java/${symbol_dollar}{modulePath}/svc/impl/",
+		"targetDir": "../../../${parentArtifactId}-svr/src/main/java/${symbol_dollar}{modulePath}/svc/impl/",
 		"targetFile": "${symbol_dollar}{entityName}SvcImpl.java",
 		"isGenTargetOnMiddleTable": false,
 		"backup": false
 	},
 	{
 		"templateName": "api-impl.btl",
-		"targetDir": "../${parentArtifactId}-svr/src/main/java/${symbol_dollar}{modulePath}/api/impl/",
+		"targetDir": "../../../${parentArtifactId}-svr/src/main/java/${symbol_dollar}{modulePath}/api/impl/",
 		"targetFile": "${symbol_dollar}{entityName}ApiImpl.java",
 		"isGenTargetOnMiddleTable": false,
 		"backup": false
 	},
 	{
 		"templateName": "ctrl.btl",
-		"targetDir": "../${parentArtifactId}-svr/src/main/java/${symbol_dollar}{modulePath}/ctrl/",
+		"targetDir": "../../../${parentArtifactId}-svr/src/main/java/${symbol_dollar}{modulePath}/ctrl/",
 		"targetFile": "${symbol_dollar}{entityName}Ctrl.java",
 		"isGenTargetOnMiddleTable": false,
 		"backup": false
 	},
 	{
 		"templateName": "test-svc.btl",
-		"targetDir": "../${parentArtifactId}-svr/src/test/java/${symbol_dollar}{modulePath}/test/svc",
+		"targetDir": "../../../${parentArtifactId}-svr/src/test/java/${symbol_dollar}{modulePath}/test/svc",
 		"targetFile": "${symbol_dollar}{entityName}SvcTests.java",
 		"isGenTargetOnMiddleTable": false,
 		"backup": false
 	},
 	{
 		"templateName": "test-api.btl",
-		"targetDir": "../${parentArtifactId}-svr/src/test/java/${symbol_dollar}{modulePath}/test/api",
+		"targetDir": "../../../${parentArtifactId}-svr/src/test/java/${symbol_dollar}{modulePath}/test/api",
 		"targetFile": "${symbol_dollar}{entityName}ApiTests.java",
 		"isGenTargetOnMiddleTable": false,
 		"backup": false
 	},
 	{
 		"templateName": "test-http.btl",
-		"targetDir": "../${parentArtifactId}-svr/src/test/java/${symbol_dollar}{modulePath}/test/http",
+		"targetDir": "../../../${parentArtifactId}-svr/src/test/java/${symbol_dollar}{modulePath}/test/http",
 		"targetFile": "${symbol_dollar}{entityName}HttpTests.java",
 		"isGenTargetOnMiddleTable": false,
 		"backup": false

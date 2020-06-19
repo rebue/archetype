@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 public class ${projectNameCapitalise}Application {
 
     public static void main(final String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(${projectNameCapitalise}Application.class, args);
     }
 
 }
