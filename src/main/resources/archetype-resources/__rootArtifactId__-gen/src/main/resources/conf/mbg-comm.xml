@@ -1,4 +1,3 @@
-
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
@@ -17,20 +16,16 @@
 		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
 		<!-- 该插件给Model类添加equals()和hashCode()方法 -->
 		<plugin type="rebue.mbgx.plugin.MyEqualsHashCodePlugin" />
-		<!-- 该插件给Mapper及其XML文件添加selectAll()方法 -->
-		<!-- 在配置context的属性targetRuntime="MyBatis3"的方式下 -->
-		<!-- 并不会生成selectAll方法，本插件补充将这个方法补充进去 -->
-		<!-- <plugin type="rebue.mbgx.plugin.SelectAllPlugin" /> -->
-		<!-- 该插件给Mapper及其XML文件添加selectSelective()方法 -->
-		<!-- <plugin type="rebue.mbgx.plugin.SelectSelectivePlugin" /> -->
-		<!-- 该插件给Mapper及其XML文件添加existByPrimaryKey()方法 -->
-		<!-- <plugin type="rebue.mbgx.plugin.ExistByPrimaryKeyPlugin" /> -->
-		<!-- 该插件给Mapper及其XML文件添加existSelective()方法 -->
-		<!-- <plugin type="rebue.mbgx.plugin.ExistSelectivePlugin" /> -->
-		<!-- 该插件给Mapper及其XML文件加上countSelective()方法 -->
-		<!-- <plugin type="rebue.mbgx.plugin.CountSelectivePlugin" /> -->
-		<!-- 该插件给Mapper类加上@Mapper -->
-		<!-- <plugin type="rebue.mbgx.plugin.MapperAnnotationPlugin" /> -->
+		<!-- 该插件给Mapper类加上selectOne()方法 -->
+		<plugin type="rebue.mbgx.plugin.SelectOnePlugin" />
+		<!-- 该插件给Mapper类加上countSelective()方法 -->
+		<plugin type="rebue.mbgx.plugin.CountSelectivePlugin" />
+		<!-- 该插件给Mapper类添加existByPrimaryKey()方法 -->
+		<plugin type="rebue.mbgx.plugin.ExistByPrimaryKeyPlugin" />
+		<!-- 该插件给Mapper类添加existSelective()方法 -->
+		<plugin type="rebue.mbgx.plugin.ExistSelectivePlugin" />
+		<!-- 该插件给Mappe类添加selectSelective()方法 -->
+		<plugin type="rebue.mbgx.plugin.SelectSelectivePlugin" />
 		<!-- 该插件给Mapper类加上继承的父接口 -->
 		<plugin type="rebue.mbgx.plugin.MapperRootIntfacePlugin" />
 		<!-- 该插件给Model类加上Swagger注解 -->
@@ -63,10 +58,6 @@
 
 		<!-- 注释 -->
 		<commentGenerator type="rebue.mbgx.custom.CommentGeneratorEx">
-			<!-- 是否给Model类的属性添加字段的备注，默认为false -->
-			<!-- <property name="addRemarkComments" value="true" /> -->
-			<!-- 生成注释的时间格式 -->
-			<!-- <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss" /> -->
 		</commentGenerator>
 
 		<!-- jdbc -->
@@ -88,18 +79,9 @@
 
 		<!-- Model -->
 		<javaModelGenerator targetPackage="${symbol_dollar}{model.package}" targetProject="${symbol_dollar}{model.target}" />
-		<!-- <property name="enableSubPackages" value="false" /> -->
-		<!-- </javaModelGenerator> -->
-
-		<!-- Mapper的Xml映射文件(和下面的Mapper顺序不能对调) -->
-		<!-- <sqlMapGenerator targetPackage="${symbol_dollar}{mapper.package}" targetProject="${symbol_dollar}{mapper.target}"> -->
-		<!-- <property name="enableSubPackages" value="false" /> -->
-		<!-- </sqlMapGenerator> -->
 
 		<!-- Mapper 与 DynamicSqlSupport -->
 		<javaClientGenerator targetPackage="${symbol_dollar}{mapper.package}" targetProject="${symbol_dollar}{mapper.target}" />
-		<!-- <property name="enableSubPackages" value="false" /> -->
-		<!-- </javaClientGenerator> -->
 
 		<!-- tableName:用于自动生成代码的数据库表(必须已经被建立)；domainObjectName:对应于数据库表的javaBean类名 -->
 		<table tableName="${symbol_dollar}{table.name}" />
