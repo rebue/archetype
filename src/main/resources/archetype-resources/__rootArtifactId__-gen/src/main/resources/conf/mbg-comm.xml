@@ -1,3 +1,4 @@
+
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
@@ -6,7 +7,7 @@
 <generatorConfiguration>
 	<properties resource="conf/mbg-comm.properties" />
 
-	<context id="comm" defaultModelType="flat">
+	<context id="comm">
 		<!-- 生成的Java文件的编码 -->
 		<property name="javaFileEncoding" value="UTF-8" />
 
@@ -19,17 +20,17 @@
 		<!-- 该插件给Mapper及其XML文件添加selectAll()方法 -->
 		<!-- 在配置context的属性targetRuntime="MyBatis3"的方式下 -->
 		<!-- 并不会生成selectAll方法，本插件补充将这个方法补充进去 -->
-		<plugin type="rebue.mbgx.plugin.SelectAllPlugin" />
+		<!-- <plugin type="rebue.mbgx.plugin.SelectAllPlugin" /> -->
 		<!-- 该插件给Mapper及其XML文件添加selectSelective()方法 -->
-		<plugin type="rebue.mbgx.plugin.SelectSelectivePlugin" />
+		<!-- <plugin type="rebue.mbgx.plugin.SelectSelectivePlugin" /> -->
 		<!-- 该插件给Mapper及其XML文件添加existByPrimaryKey()方法 -->
-		<plugin type="rebue.mbgx.plugin.ExistByPrimaryKeyPlugin" />
+		<!-- <plugin type="rebue.mbgx.plugin.ExistByPrimaryKeyPlugin" /> -->
 		<!-- 该插件给Mapper及其XML文件添加existSelective()方法 -->
-		<plugin type="rebue.mbgx.plugin.ExistSelectivePlugin" />
+		<!-- <plugin type="rebue.mbgx.plugin.ExistSelectivePlugin" /> -->
 		<!-- 该插件给Mapper及其XML文件加上countSelective()方法 -->
-		<plugin type="rebue.mbgx.plugin.CountSelectivePlugin" />
+		<!-- <plugin type="rebue.mbgx.plugin.CountSelectivePlugin" /> -->
 		<!-- 该插件给Mapper类加上@Mapper -->
-		<plugin type="rebue.mbgx.plugin.MapperAnnotationPlugin" />
+		<!-- <plugin type="rebue.mbgx.plugin.MapperAnnotationPlugin" /> -->
 		<!-- 该插件给Mapper类加上继承的父接口 -->
 		<plugin type="rebue.mbgx.plugin.MapperRootIntfacePlugin" />
 		<!-- 该插件给Model类加上Swagger注解 -->
@@ -42,10 +43,11 @@
 		</plugin>
 		<!-- 该插件给Date类型的属性加上@DateTimeFormat注解 -->
 		<!-- 如果字段名以_DATE结束，那么添加@DateTimeFormat(pattern="yyyy-MM-dd") -->
-		<!-- 如果字段名以_TIME结束，那么添加@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") -->
+		<!-- 如果字段名以_DATETIME结束，那么添加@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") -->
 		<plugin type="rebue.mbgx.plugin.DateTimeFormatPlugin">
-			<property name="daySuffix" value="${symbol_dollar}{field.day.suffix}" />
+			<property name="dateSuffix" value="${symbol_dollar}{field.date.suffix}" />
 			<property name="timeSuffix" value="${symbol_dollar}{field.time.suffix}" />
+			<property name="datetimeSuffix" value="${symbol_dollar}{field.datetime.suffix}" />
 		</plugin>
 		<!-- 该插件可以根据模板自动生成代码 -->
 		<plugin type="rebue.mbgx.plugin.CodeGenByBeetlPlugin">
@@ -78,26 +80,28 @@
 		</jdbcConnection>
 
 		<!-- 扩展了默认的Java类型解析器 -->
-		<!-- 如果数据库字段类型为char(1)且名字以"IS_"开头，那么将Model类的相应属性映射成Boolean类型 -->
-		<javaTypeResolver type="rebue.mbgx.custom.JavaTypeResolverEx" />
+		<!-- 如果数据库字段类型为char(1)或tinyint(1)，且名字以"IS_"开头，那么将Model类的相应属性映射成Boolean类型 -->
+		<javaTypeResolver type="rebue.mbgx.custom.JavaTypeResolverEx">
+			<property name="forceBigDecimals" value="true" />
+			<property name="useJSR310Types" value="true" />
+		</javaTypeResolver>
 
 		<!-- Model -->
-		<javaModelGenerator targetPackage="${symbol_dollar}{model.package}" targetProject="${symbol_dollar}{model.target}">
-			<property name="enableSubPackages" value="false" />
-		</javaModelGenerator>
+		<javaModelGenerator targetPackage="${symbol_dollar}{model.package}" targetProject="${symbol_dollar}{model.target}" />
+		<!-- <property name="enableSubPackages" value="false" /> -->
+		<!-- </javaModelGenerator> -->
 
 		<!-- Mapper的Xml映射文件(和下面的Mapper顺序不能对调) -->
-		<sqlMapGenerator targetPackage="${symbol_dollar}{mapper.package}" targetProject="${symbol_dollar}{mapper.target}">
-			<property name="enableSubPackages" value="false" />
-		</sqlMapGenerator>
+		<!-- <sqlMapGenerator targetPackage="${symbol_dollar}{mapper.package}" targetProject="${symbol_dollar}{mapper.target}"> -->
+		<!-- <property name="enableSubPackages" value="false" /> -->
+		<!-- </sqlMapGenerator> -->
 
-		<!-- Mapper -->
-		<!-- <javaClientGenerator type="MIXEDMAPPER" -->
-		<javaClientGenerator type="XMLMAPPER" targetPackage="${symbol_dollar}{mapper.package}" targetProject="${symbol_dollar}{mapper.target}">
-			<property name="enableSubPackages" value="false" />
-		</javaClientGenerator>
+		<!-- Mapper 与 DynamicSqlSupport -->
+		<javaClientGenerator targetPackage="${symbol_dollar}{mapper.package}" targetProject="${symbol_dollar}{mapper.target}" />
+		<!-- <property name="enableSubPackages" value="false" /> -->
+		<!-- </javaClientGenerator> -->
 
 		<!-- tableName:用于自动生成代码的数据库表(必须已经被建立)；domainObjectName:对应于数据库表的javaBean类名 -->
-		<table tableName="${symbol_dollar}{table.name}" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+		<table tableName="${symbol_dollar}{table.name}" />
 	</context>
 </generatorConfiguration>  
