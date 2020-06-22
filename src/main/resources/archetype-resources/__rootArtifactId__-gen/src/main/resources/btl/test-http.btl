@@ -14,8 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import ${dollar}{modulePackage}.mo.${dollar}{entityName}Mo;
 import rebue.robotech.dic.ResultDic;
-import rebue.robotech.ro.IdRo;
-import rebue.robotech.ro.PageRo;
+import rebue.robotech.ra.IdRa;
+import rebue.robotech.ra.PageRa;
 import rebue.robotech.ro.Ro;
 import rebue.wheel._httpClient;
 import rebue.wheel.RandomEx;
@@ -59,14 +59,14 @@ public class ${dollar}{entityName}HttpTests {
 			log.info("添加${dollar}{table.remarks}的参数为：" + mo);
 			final String addResult = _httpClient.postByJsonParams(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}", mo);
 			log.info("添加${dollar}{table.remarks}的返回值为：" + addResult);
-            final IdRo<${dollar}{idType}> idRo = _objectMapper.readValue(addResult, new TypeReference<IdRo<${dollar}{idType}>>() {});
+            final Ro<IdRa<${dollar}{idType}>> idRo = _objectMapper.readValue(addResult, new TypeReference<Ro<IdRa<${dollar}{idType}>>>() {});
 			log.info(idRo.toString());
         	Assertions.assertEquals(ResultDic.SUCCESS, idRo.getResult());
 			<&
 	        if (idType=="String") {
-				println("        mo.setId(idRo.getId());");
+				println("        mo.setId(idRo.getAddition().getId());");
 			} else if (idType=="Long") {
-				println("        mo.setId(Long.valueOf(idRo.getId()));");
+				println("        mo.setId(Long.valueOf(idRo.getAddition().getId()));");
 			}
 	        &>
     	}

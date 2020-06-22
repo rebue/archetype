@@ -10,13 +10,13 @@ import ${modulePackage}.svc.${entityName}Svc;
 
 import lombok.extern.slf4j.Slf4j;
 import rebue.robotech.dic.ResultDic;
-import rebue.robotech.ro.IdRo;
-import rebue.robotech.ro.PageRo;
+import rebue.robotech.ra.IdRa;
+import rebue.robotech.ra.PageRa;
 import rebue.robotech.ro.Ro;
 import rebue.wheel.RandomEx;
 
 /**
- * ${table.remarks} Serice层测试
+ * ${table.remarks} Service层测试
  *
  * @mbg.generated 自动生成的注释，如需修改本注释，请删除本行
  */
@@ -45,16 +45,16 @@ public class ${entityName}SvcTests {
             mo.setId(null);
             log.info("添加${table.remarks}的参数为：" + mo);
             @SuppressWarnings("unchecked")
-            final IdRo<${idType}> idRo = (IdRo<${idType}>) _svc.add(mo);
+            final Ro<IdRa<${idType}>> idRo = _svc.add(mo);
             log.info("添加${table.remarks}的返回值为：" + idRo);
             Assertions.assertEquals(ResultDic.SUCCESS, idRo.getResult());
-            mo.setId(idRo.getId());
+            mo.setId(idRo.getAddition().getId());
         }
-        final PageRo<${entityName}Mo> listResult = _svc.list(null, 1, 5, null, 10);
+        final Ro<PageRa<${entityName}Mo>> listResult = _svc.list(null, 1, 5, null, 10);
         log.info("查询${table.remarks}的返回值为：" + listResult);
         Assertions.assertEquals(ResultDic.SUCCESS, listResult.getResult());
         log.info("获取单个${table.remarks}的参数为：" + mo.getId());
-        final ${entityName}Mo getByIdResult = _svc.getById(mo.getId());
+        final Ro<PojoRa<${entityName}Mo>> getByIdResult = _svc.getById(mo.getId());
         log.info("获取单个${table.remarks}的返回值为：" + getByIdResult);
         log.info("修改${table.remarks}的参数为：" + mo);
         final Ro modifyResult = _svc.modify(mo);
