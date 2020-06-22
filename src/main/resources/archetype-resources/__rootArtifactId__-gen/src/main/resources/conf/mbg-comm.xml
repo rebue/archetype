@@ -39,11 +39,7 @@
         <!-- 该插件给Date类型的属性加上@DateTimeFormat注解 -->
         <!-- 如果字段名以_DATE结束，那么添加@DateTimeFormat(pattern="yyyy-MM-dd") -->
         <!-- 如果字段名以_DATETIME结束，那么添加@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") -->
-        <plugin type="rebue.mbgx.plugin.DateTimeFormatPlugin">
-            <property name="dateSuffix" value="${symbol_dollar}{field.date.suffix}"/>
-            <property name="timeSuffix" value="${symbol_dollar}{field.time.suffix}"/>
-            <property name="datetimeSuffix" value="${symbol_dollar}{field.datetime.suffix}"/>
-        </plugin>
+        <plugin type="rebue.mbgx.plugin.DateTimeFormatPlugin"/>
         <!-- 该插件可以根据模板自动生成代码 -->
         <plugin type="rebue.mbgx.plugin.CodeGenByBeetlPlugin">
             <!-- beetl的配置文件（位于classpath下的路径） -->
