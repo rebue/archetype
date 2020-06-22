@@ -4,86 +4,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
-	<properties resource="conf/mbg-comm.properties" />
+    <properties resource="conf/mbg-comm.properties"/>
 
-	<context id="comm">
-		<!-- 生成的Java文件的编码 -->
-		<property name="javaFileEncoding" value="UTF-8" />
+    <context id="comm">
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
 
-		<!-- 该插件给Model类生成继承Serializable接口 -->
-		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
-		<!-- 该插件给Model类添加toString()方法 -->
-		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
-		<!-- 该插件给Model类添加equals()和hashCode()方法 -->
-		<plugin type="rebue.mbgx.plugin.MyEqualsHashCodePlugin" />
-		<!-- 该插件给Mapper类加上selectOne()方法 -->
-		<plugin type="rebue.mbgx.plugin.SelectOnePlugin" />
-		<!-- 该插件给Mapper类加上countSelective()方法 -->
-		<plugin type="rebue.mbgx.plugin.CountSelectivePlugin" />
-		<!-- 该插件给Mapper类添加existByPrimaryKey()方法 -->
-		<plugin type="rebue.mbgx.plugin.ExistByPrimaryKeyPlugin" />
-		<!-- 该插件给Mapper类添加existSelective()方法 -->
-		<plugin type="rebue.mbgx.plugin.ExistSelectivePlugin" />
-		<!-- 该插件给Mappe类添加selectSelective()方法 -->
-		<plugin type="rebue.mbgx.plugin.SelectSelectivePlugin" />
-		<!-- 该插件给Mapper类加上继承的父接口 -->
-		<plugin type="rebue.mbgx.plugin.MapperRootIntfacePlugin" />
-		<!-- 该插件给Model类加上Swagger注解 -->
-		<plugin type="rebue.mbgx.plugin.SwaggerPlugin" />
-		<!-- 该插件给Model类加上Jackson注解 -->
-		<plugin type="rebue.mbgx.plugin.ModelJacksonPlugin" />
-		<!-- 该插件给Model类加上后缀 -->
-		<plugin type="rebue.mbgx.plugin.ModelSuffixPlugin">
-			<property name="modelSuffix" value="${symbol_dollar}{model.suffix}" />
-		</plugin>
-		<!-- 该插件给Date类型的属性加上@DateTimeFormat注解 -->
-		<!-- 如果字段名以_DATE结束，那么添加@DateTimeFormat(pattern="yyyy-MM-dd") -->
-		<!-- 如果字段名以_DATETIME结束，那么添加@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") -->
-		<plugin type="rebue.mbgx.plugin.DateTimeFormatPlugin">
-			<property name="dateSuffix" value="${symbol_dollar}{field.date.suffix}" />
-			<property name="timeSuffix" value="${symbol_dollar}{field.time.suffix}" />
-			<property name="datetimeSuffix" value="${symbol_dollar}{field.datetime.suffix}" />
-		</plugin>
-		<!-- 该插件可以根据模板自动生成代码 -->
-		<plugin type="rebue.mbgx.plugin.CodeGenByBeetlPlugin">
-			<!-- beetl的配置文件（位于classpath下的路径） -->
-			<property name="beetlCfgFile" value="${symbol_dollar}{beetl.cfg.file}" />
-			<!-- beetl的模板文件（位于模板目录下的路径），多个文件用逗号相隔 -->
-			<property name="templatesCfgFile" value="${symbol_dollar}{beetl.templates.cfg.file}" />
-			<!-- beetl模板生成文件的模块路径（用在模板的配置文件中指定java生成文件的路径） -->
-			<property name="beetlModulePath" value="${symbol_dollar}{beetl.module.path}" />
-			<!-- beetl模板生成文件的模块名称（用在模板配置文件中指定jsp/js/css等生成文件的路径） -->
-			<property name="beetlModuleName" value="${symbol_dollar}{beetl.module.name}" />
-		</plugin>
+        <!-- 该插件给Model类生成继承Serializable接口 -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <!-- 该插件给Model类添加toString()方法 -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <!-- 该插件给Model类添加equals()和hashCode()方法 -->
+        <plugin type="rebue.mbgx.plugin.MyEqualsHashCodePlugin"/>
+        <!-- 该插件给Mapper类加上selectOne()方法 -->
+        <plugin type="rebue.mbgx.plugin.SelectOnePlugin"/>
+        <!-- 该插件给Mapper类加上countSelective()方法 -->
+        <plugin type="rebue.mbgx.plugin.CountSelectivePlugin"/>
+        <!-- 该插件给Mapper类添加existByPrimaryKey()方法 -->
+        <plugin type="rebue.mbgx.plugin.ExistByPrimaryKeyPlugin"/>
+        <!-- 该插件给Mapper类添加existSelective()方法 -->
+        <plugin type="rebue.mbgx.plugin.ExistSelectivePlugin"/>
+        <!-- 该插件给Mappe类添加selectSelective()方法 -->
+        <plugin type="rebue.mbgx.plugin.SelectSelectivePlugin"/>
+        <!-- 该插件给Mapper类加上继承的父接口 -->
+        <plugin type="rebue.mbgx.plugin.MapperRootIntfacePlugin"/>
+        <!-- 该插件给Model类加上Swagger注解 -->
+        <plugin type="rebue.mbgx.plugin.SwaggerPlugin"/>
+        <!-- 该插件给Model类加上Jackson注解 -->
+        <plugin type="rebue.mbgx.plugin.ModelJacksonPlugin"/>
+        <!-- 该插件给Model类加上后缀 -->
+        <plugin type="rebue.mbgx.plugin.ModelSuffixPlugin">
+            <property name="modelSuffix" value="${symbol_dollar}{model.suffix}"/>
+        </plugin>
+        <!-- 该插件给Date类型的属性加上@DateTimeFormat注解 -->
+        <!-- 如果字段名以_DATE结束，那么添加@DateTimeFormat(pattern="yyyy-MM-dd") -->
+        <!-- 如果字段名以_DATETIME结束，那么添加@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") -->
+        <plugin type="rebue.mbgx.plugin.DateTimeFormatPlugin">
+            <property name="dateSuffix" value="${symbol_dollar}{field.date.suffix}"/>
+            <property name="timeSuffix" value="${symbol_dollar}{field.time.suffix}"/>
+            <property name="datetimeSuffix" value="${symbol_dollar}{field.datetime.suffix}"/>
+        </plugin>
+        <!-- 该插件可以根据模板自动生成代码 -->
+        <plugin type="rebue.mbgx.plugin.CodeGenByBeetlPlugin">
+            <!-- beetl的配置文件（位于classpath下的路径） -->
+            <property name="beetlCfgFile" value="${symbol_dollar}{beetl.cfg.file}"/>
+            <!-- beetl的模板文件（位于模板目录下的路径），多个文件用逗号相隔 -->
+            <property name="templatesCfgFile" value="${symbol_dollar}{beetl.templates.cfg.file}"/>
+            <!-- beetl模板生成文件的模块路径（用在模板的配置文件中指定java生成文件的路径） -->
+            <property name="beetlModulePath" value="${symbol_dollar}{beetl.module.path}"/>
+            <!-- beetl模板生成文件的模块名称（用在模板配置文件中指定jsp/js/css等生成文件的路径） -->
+            <property name="beetlModuleName" value="${symbol_dollar}{beetl.module.name}"/>
+        </plugin>
 
-		<!-- 注释 -->
-		<commentGenerator type="rebue.mbgx.custom.CommentGeneratorEx">
-		</commentGenerator>
+        <!-- 注释 -->
+        <commentGenerator type="rebue.mbgx.custom.CommentGeneratorEx"/>
 
-		<!-- jdbc -->
-		<jdbcConnection driverClass="${symbol_dollar}{jdbc.driver}" connectionURL="${symbol_dollar}{jdbc.url}" userId="${symbol_dollar}{jdbc.username}"
-			password="${symbol_dollar}{jdbc.password}">
-			<!-- 取不到数据库中字段的注释时，需配置下面的属性 -->
-			<!-- 针对oracle数据库 -->
-			<property name="remarksReporting" value="true"></property>
-			<!-- 针对mysql数据库 -->
-			<property name="useInformationSchema" value="true"></property>
-		</jdbcConnection>
+        <!-- jdbc -->
+        <jdbcConnection driverClass="${symbol_dollar}{jdbc.driver}" connectionURL="${symbol_dollar}{jdbc.url}"
+                        userId="${symbol_dollar}{jdbc.username}"
+                        password="${symbol_dollar}{jdbc.password}">
+            <!-- 取不到数据库中字段的注释时，需配置下面的属性 -->
+            <!-- 针对oracle数据库 -->
+            <property name="remarksReporting" value="true"></property>
+            <!-- 针对mysql数据库 -->
+            <property name="useInformationSchema" value="true"></property>
+        </jdbcConnection>
 
-		<!-- 扩展了默认的Java类型解析器 -->
-		<!-- 如果数据库字段类型为char(1)或tinyint(1)，且名字以"IS_"开头，那么将Model类的相应属性映射成Boolean类型 -->
-		<javaTypeResolver type="rebue.mbgx.custom.JavaTypeResolverEx">
-			<property name="forceBigDecimals" value="true" />
-			<property name="useJSR310Types" value="true" />
-		</javaTypeResolver>
+        <!-- 扩展了默认的Java类型解析器 -->
+        <!-- 如果数据库字段类型为char(1)或tinyint(1)，且名字以"IS_"开头，那么将Model类的相应属性映射成Boolean类型 -->
+        <javaTypeResolver type="rebue.mbgx.custom.JavaTypeResolverEx">
+            <property name="forceBigDecimals" value="true"/>
+            <property name="useJSR310Types" value="true"/>
+        </javaTypeResolver>
 
-		<!-- Model -->
-		<javaModelGenerator targetPackage="${symbol_dollar}{model.package}" targetProject="${symbol_dollar}{model.target}" />
+        <!-- Model -->
+        <javaModelGenerator targetPackage="${symbol_dollar}{model.package}"
+                            targetProject="${symbol_dollar}{model.target}"/>
 
-		<!-- Mapper 与 DynamicSqlSupport -->
-		<javaClientGenerator targetPackage="${symbol_dollar}{mapper.package}" targetProject="${symbol_dollar}{mapper.target}" />
+        <!-- Mapper 与 DynamicSqlSupport -->
+        <javaClientGenerator targetPackage="${symbol_dollar}{mapper.package}"
+                             targetProject="${symbol_dollar}{mapper.target}"/>
 
-		<!-- tableName:用于自动生成代码的数据库表(必须已经被建立)；domainObjectName:对应于数据库表的javaBean类名 -->
-		<table tableName="${symbol_dollar}{table.name}" />
-	</context>
+        <!-- tableName:用于自动生成代码的数据库表(必须已经被建立)；domainObjectName:对应于数据库表的javaBean类名 -->
+        <table tableName="${symbol_dollar}{table.name}"/>
+    </context>
 </generatorConfiguration>  
