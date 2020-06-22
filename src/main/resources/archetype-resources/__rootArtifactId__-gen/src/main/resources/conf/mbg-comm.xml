@@ -78,12 +78,10 @@
         </javaTypeResolver>
 
         <!-- Model -->
-        <javaModelGenerator targetPackage="${symbol_dollar}{model.package}"
-                            targetProject="${symbol_dollar}{model.target}"/>
+        <javaModelGenerator targetPackage="${symbol_dollar}{model.target.package}" targetProject="${symbol_dollar}{model.target.project}"/>
 
         <!-- Mapper 与 DynamicSqlSupport -->
-        <javaClientGenerator targetPackage="${symbol_dollar}{mapper.package}"
-                             targetProject="${symbol_dollar}{mapper.target}"/>
+        <javaClientGenerator targetPackage="${symbol_dollar}{mapper.target.package}" targetProject="${symbol_dollar}{mapper.target.project}"/>
 
         <!-- tableName:用于自动生成代码的数据库表(必须已经被建立)；domainObjectName:对应于数据库表的javaBean类名 -->
         <table tableName="${symbol_dollar}{table.name}"/>
