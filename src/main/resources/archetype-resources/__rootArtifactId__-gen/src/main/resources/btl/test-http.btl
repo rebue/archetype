@@ -10,6 +10,10 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 import lombok.extern.slf4j.Slf4j;
 import ${dollar}{modulePackage}.mo.${dollar}{entityName}Mo;
@@ -38,7 +42,12 @@ public class ${dollar}{entityName}HttpTests {
     /**
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    private final ObjectMapper _objectMapper = new ObjectMapper();
+    private final ObjectMapper _objectMapper = JsonMapper.builder() // or different mapper for other format
+            .addModule(new ParameterNamesModule())
+            .addModule(new Jdk8Module())
+            .addModule(new JavaTimeModule())
+            // and possibly other configuration, modules, then:
+            .build();
 
     /**
      * @mbg.generated 自动生成，如需修改，请删除本行
@@ -51,7 +60,7 @@ public class ${dollar}{entityName}HttpTests {
 	 * @mbg.generated 自动生成，如需修改，请删除本行
 	 */
 	@Test
-	public void testCrud() throws IOException, ReflectiveOperationException {
+	public void testCrud() throws IOException {
 		${dollar}{entityName}Mo mo = null;
 		for(int i=0;i<20;i++) {
 			mo = (${dollar}{entityName}Mo) RandomEx.randomPojo(${dollar}{entityName}Mo.class);
