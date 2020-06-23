@@ -14,14 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
 import ${moClassFullName};
 import ${modulePackage}.api.${entityName}Api;
 
@@ -50,10 +42,6 @@ public class ${entityName}Ctrl {
      *
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    @Operation(summary = "添加${entityTitle}")
-    @Parameters({ @Parameter(name = "${moClassShortName}", description = "${entityTitle}") })
-    @ApiResponses({ @ApiResponse(description = "添加${entityTitle}的结果", //
-            content = @Content(mediaType = "application/json; charset=utf-8", schema = @Schema(implementation = IdRa.class))) })
     @PostMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     public Mono<Ro<IdRa<<&
                             for(id in ids){
@@ -72,10 +60,6 @@ public class ${entityName}Ctrl {
      *
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    @Operation(summary = "修改${entityTitle}")
-    @Parameters({ @Parameter(name = "${moClassShortName}", description = "${entityTitle}") })
-    @ApiResponses({ @ApiResponse(description = "修改${entityTitle}的结果", //
-            content = @Content(mediaType = "application/json; charset=utf-8", schema = @Schema(implementation = Ro.class))) })
     @PutMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     public Mono<Ro<?>> modify(@RequestBody final ${moClassShortName} mo) {
         return Mono.create(callback -> callback.success(api.modify(mo)));
@@ -86,10 +70,6 @@ public class ${entityName}Ctrl {
      * 
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    @Operation(summary = "删除${entityTitle}")
-    @Parameters({ @Parameter(name = "id", description = "${entityTitle}ID") })
-    @ApiResponses({ @ApiResponse(description = "删除${entityTitle}的结果", //
-            content = @Content(mediaType = "application/json; charset=utf-8", schema = @Schema(implementation = Ro.class))) })
     @DeleteMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
     public Mono<Ro<?>> del(<&
         for(id in ids){
@@ -119,11 +99,6 @@ public class ${entityName}Ctrl {
      * 
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    @Operation(summary = "获取单个${entityTitle}")
-    @Parameters({ @Parameter(name = "id", description = "${entityTitle}ID") })
-    @ApiResponses({ @ApiResponse(description = "获取单个${entityTitle}的结果", //
-            content = @Content(mediaType = "application/json; charset=utf-8", schema = @Schema(implementation = ${entityName}Mo.class))) })
-    @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id")
     public Mono<Ro<PojoRa<${entityName}Mo>>> getById(<&
         for(id in ids){
             if(!idLP.first) {
@@ -145,14 +120,6 @@ public class ${entityName}Ctrl {
      * 
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    @Operation(summary = "查询${entityTitle}列表")
-    @Parameters({ //
-    	@Parameter(name = "qo", description = "查询${entityTitle}的条件"), //
-    	@Parameter(name = "pageNum", description = "查询第几页"), //
-    	@Parameter(name = "pageSize", description = "查询分页的大小"), //
-    	@Parameter(name = "orderBy", description = "查询${entityTitle}的排序规则")})
-    @ApiResponses({ @ApiResponse(description = "查询${entityTitle}列表的结果", //
-            content = @Content(mediaType = "application/json; charset=utf-8", schema = @Schema(implementation = ${entityName}Mo.class))) })
     @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/list")
     public Mono<Ro<PageRa<${moClassShortName}>>> list(final ${moClassShortName} qo, @RequestParam(value = "pageNum", required = false) final Integer pageNum, @RequestParam(value = "pageSize", required = false) final Integer pageSize, @RequestParam(value = "orderBy", required = false) final String orderBy) {
         return Mono.create(callback -> callback.success(api.list(qo, pageNum, pageSize, orderBy, 10)));
