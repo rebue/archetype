@@ -119,23 +119,24 @@
 			<fileSets>
 				<fileSet filtered="true" encoding="UTF-8">
 					<directory>src/main/java</directory>
-					<includes>
-						<include>**/*.java</include>
-						<include>**/*.xml</include>
-					</includes>
+<!-- 					<includes> -->
+<!-- 						<include>**/*.java</include> -->
+<!-- 						<include>**/*.xml</include> -->
+<!-- 					</includes> -->
 				</fileSet>
 				<fileSet filtered="true" encoding="UTF-8">
 					<directory>src/main/resources</directory>
-					<includes>
-						<include>**/*.xml</include>
-						<include>**/*.yml</include>
-					</includes>
+<!-- 					<includes> -->
+<!-- 						<include>**/*.xml</include> -->
+<!-- 						<include>**/*.yml</include> -->
+<!-- 						<include>**/*.json</include> -->
+<!-- 					</includes> -->
 				</fileSet>
 				<fileSet filtered="true" encoding="UTF-8">
 					<directory>src/test/java</directory>
-					<includes>
-						<include>**/*.java</include>
-					</includes>
+<!-- 					<includes> -->
+<!-- 						<include>**/*.java</include> -->
+<!-- 					</includes> -->
 				</fileSet>
 			</fileSets>
 		</module>

@@ -118,7 +118,11 @@ public class ${entityName}Ctrl {
 
     /**
      * 查询${entityTitle}
-     * 
+     *
+     * @param pageNum 查询页码
+     * @param pageSize 每页大小
+     * @param orderBy 排序字段
+     *
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/list")
