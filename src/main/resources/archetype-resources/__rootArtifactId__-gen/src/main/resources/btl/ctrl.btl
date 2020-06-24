@@ -99,6 +99,7 @@ public class ${entityName}Ctrl {
      * 
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
+    @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id")
     public Mono<Ro<PojoRa<${entityName}Mo>>> getById(<&
         for(id in ids){
             if(!idLP.first) {
