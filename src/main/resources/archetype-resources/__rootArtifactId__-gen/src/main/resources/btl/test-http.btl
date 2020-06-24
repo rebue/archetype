@@ -20,8 +20,8 @@ import ${dollar}{modulePackage}.mo.${dollar}{entityName}Mo;
 import rebue.robotech.dic.ResultDic;
 import rebue.robotech.ra.IdRa;
 import rebue.robotech.ra.PageRa;
+import rebue.robotech.ra.PojoRa;
 import rebue.robotech.ro.Ro;
-import rebue.wheel._httpClient;
 import rebue.wheel.RandomEx;
 import rebue.wheel.http.HttpClient;
 import rebue.wheel.http.impl.OkHttpClientImpl;
@@ -71,17 +71,11 @@ public class ${dollar}{entityName}HttpTests {
             final Ro<IdRa<${dollar}{idType}>> idRo = _objectMapper.readValue(addResult, new TypeReference<Ro<IdRa<${dollar}{idType}>>>() {});
 			log.info(idRo.toString());
         	Assertions.assertEquals(ResultDic.SUCCESS, idRo.getResult());
-			<&
-	        if (idType=="String") {
-				println("        mo.setId(idRo.getAddition().getId());");
-			} else if (idType=="Long") {
-				println("        mo.setId(Long.valueOf(idRo.getAddition().getId()));");
-			}
-	        &>
+            mo.setId(idRo.getExtra().getId());
     	}
 		final String listResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/list?pageNum=1&pageSize=5");
 		log.info("查询${dollar}{table.remarks}的返回值为：" + listResult);
-		final PageRo<${dollar}{entityName}Mo> listRo = _objectMapper.readValue(listResult, new TypeReference<PageRo<${dollar}{entityName}Mo>>() {});
+		final Ro<PageRa<${dollar}{entityName}Mo>> listRo = _objectMapper.readValue(listResult, new TypeReference<Ro<PageRa<${dollar}{entityName}Mo>>>() {});
         Assertions.assertEquals(ResultDic.SUCCESS, listRo.getResult());
 		log.info("获取单个${dollar}{table.remarks}的参数为：" + mo.getId());
 		final String getByIdResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id?id=" + mo.getId());
@@ -89,13 +83,13 @@ public class ${dollar}{entityName}HttpTests {
 		log.info("修改${dollar}{table.remarks}的参数为：" + mo);
 		final String modifyResult = _httpClient.putByJsonParams(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}", mo);
         log.info("修改${dollar}{table.remarks}的返回值为：" + modifyResult);
-		final Ro modifyRo = _objectMapper.readValue(modifyResult, Ro.class);
+		final Ro<?> modifyRo = _objectMapper.readValue(modifyResult, Ro.class);
         log.info(modifyRo.toString());
         Assertions.assertEquals(ResultDic.SUCCESS, modifyRo.getResult());
 		log.info("删除${dollar}{table.remarks}的参数为：" + mo.getId());
 		final String deleteResult = _httpClient.delete(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}?id=" + mo.getId());
 		log.info("删除${dollar}{table.remarks}的返回值为：" + deleteResult);
-        final Ro deleteRo = _objectMapper.readValue(deleteResult, Ro.class);
+        final Ro<?> deleteRo = _objectMapper.readValue(deleteResult, Ro.class);
         log.info(deleteRo.toString());
         Assertions.assertEquals(ResultDic.SUCCESS, deleteRo.getResult());
 	}

@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import rebue.robotech.dic.ResultDic;
 import rebue.robotech.ra.IdRa;
 import rebue.robotech.ra.PageRa;
+import rebue.robotech.ra.PojoRa;
 import rebue.robotech.ro.Ro;
 import rebue.wheel.RandomEx;
 
@@ -46,11 +47,10 @@ public class ${entityName}ApiTests {
             mo = (${entityName}Mo) RandomEx.randomPojo(${entityName}Mo.class);
             mo.setId(null);
             log.info("添加${table.remarks}的参数为：" + mo);
-            @SuppressWarnings("unchecked")
             final Ro<IdRa<${idType}>> idRo = _api.add(mo);
             log.info("添加${table.remarks}的返回值为：" + idRo);
             Assertions.assertEquals(ResultDic.SUCCESS, idRo.getResult());
-            mo.setId(idRo.getAddition().getId());
+            mo.setId(idRo.getExtra().getId());
         }
         final Ro<PageRa<${entityName}Mo>> listResult = _api.list(null, 1, 5, null, 10);
         log.info("查询${table.remarks}的返回值为：" + listResult);
@@ -59,11 +59,11 @@ public class ${entityName}ApiTests {
         final Ro<PojoRa<${entityName}Mo>> getByIdResult = _api.getById(mo.getId());
         log.info("获取单个${table.remarks}的返回值为：" + getByIdResult);
         log.info("修改${table.remarks}的参数为：" + mo);
-        final Ro modifyResult = _api.modify(mo);
+        final Ro<?> modifyResult = _api.modify(mo);
         log.info("修改${table.remarks}的返回值为：" + modifyResult);
         Assertions.assertEquals(ResultDic.SUCCESS, modifyResult.getResult());
         log.info("删除${table.remarks}的参数为：" + mo.getId());
-        final Ro deleteResult = _api.del(mo.getId());
+        final Ro<?> deleteResult = _api.del(mo.getId());
         log.info("删除${table.remarks}的返回值为：" + deleteResult);
         Assertions.assertEquals(ResultDic.SUCCESS, deleteResult.getResult());
     }
