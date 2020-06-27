@@ -36,12 +36,12 @@
 		<plugin type="rebue.mbgx.plugin.ModelSuffixPlugin">
 			<property name="modelSuffix" value="${symbol_dollar}{model.suffix}" />
 		</plugin>
-		<!-- 该插件给Date类型的属性加上@DateTimeFormat注解 -->
-		<!-- 如果字段名以_DATE结束，那么添加@DateTimeFormat(pattern="yyyy-MM-dd") -->
-		<!-- 如果字段名以_DATETIME结束，那么添加@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") -->
+		<!-- 该插件给时间类的属性加上@DateTimeFormat、@JsonFormat注解 -->
 		<plugin type="rebue.mbgx.plugin.DateTimeFormatPlugin" />
+		<!-- 该插件给Model类的属性加上JSR303规范的约束 -->
+		<plugin type="rebue.mbgx.plugin.Jsr303Plugin" />
 		<!-- 该插件可以根据模板自动生成代码 -->
-		<plugin type="rebue.mbgx.plugin.CodeGenByBeetlPlugin">
+		<plugin type="rebue.mbgx.plugin.codegen.CodeGenByBeetlPlugin">
 			<!-- beetl的配置文件（位于classpath下的路径） -->
 			<property name="beetlCfgFile" value="${symbol_dollar}{beetl.cfg.file}" />
 			<!-- beetl的模板文件（位于模板目录下的路径），多个文件用逗号相隔 -->
