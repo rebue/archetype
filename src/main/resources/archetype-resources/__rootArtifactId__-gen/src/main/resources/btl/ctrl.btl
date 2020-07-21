@@ -20,6 +20,7 @@ import ${modulePackage}.api.${entityName}Api;
 import rebue.robotech.dic.ResultDic;
 import reactor.core.publisher.Mono;
 import rebue.robotech.ra.IdRa;
+import rebue.robotech.ra.OkRa;
 import rebue.robotech.ra.PageRa;
 import rebue.robotech.ra.PojoRa;
 import rebue.robotech.ro.Ro;
@@ -114,6 +115,28 @@ public class ${entityName}Ctrl {
         }
     &>) {
         return Mono.create(callback -> callback.success(api.getById(id)));
+    }
+
+    /**
+     * 判断${entityTitle}是否存在
+     * 
+     * @mbg.generated 自动生成，如需修改，请删除本行
+     */
+    @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/exist-by-id")
+    public Mono<Ro<OkRa>> existById(<&
+        for(id in ids){
+            if(!idLP.first) {
+                print(', ');
+            }
+            print('@RequestParam("');
+            print(id.key);
+            print('") final ');
+            print(id.value);
+            print(' ');
+            print(id.key);
+        }
+    &>) {
+        return Mono.create(callback -> callback.success(api.existById(id)));
     }
 
     /**
