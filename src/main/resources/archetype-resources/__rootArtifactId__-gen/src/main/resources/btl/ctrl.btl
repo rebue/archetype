@@ -20,7 +20,7 @@ import ${modulePackage}.api.${entityName}Api;
 import rebue.robotech.dic.ResultDic;
 import reactor.core.publisher.Mono;
 import rebue.robotech.ra.IdRa;
-import rebue.robotech.ra.OkRa;
+import rebue.robotech.ra.BooleanRa;
 import rebue.robotech.ra.PageRa;
 import rebue.robotech.ra.PojoRa;
 import rebue.robotech.ro.Ro;
@@ -123,7 +123,7 @@ public class ${entityName}Ctrl {
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/exist-by-id")
-    public Mono<Ro<OkRa>> existById(<&
+    public Mono<Ro<BooleanRa>> existById(<&
         for(id in ids){
             if(!idLP.first) {
                 print(', ');
