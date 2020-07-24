@@ -80,7 +80,7 @@ public class ${entityName}Jo implements Serializable {
 		    print('@ManyToOne(');
 			if(!foreignKey.isNullable) print('optional = false');
 			println(')');
-		    println('private '+foreignKey.pkClassName+' '+foreignKey.pkBeanName+';');
+		    println('private '+foreignKey.pkClassName+'Jo '+foreignKey.pkBeanName+';');
 		}
 	&>
 
@@ -93,7 +93,7 @@ public class ${entityName}Jo implements Serializable {
 	        	println('* @mbg.generated 自动生成，如需修改，请删除本行');
 	        	println('*/');
 			    print('@OneToMany(cascade = CascadeType.ALL, mappedBy = "'+foreignKey.pkBeanName+'")');
-			    println('private List<'+foreignKey.fkClassName+'> '+foreignKey.fkBeanName+'List;');
+			    println('private List<'+foreignKey.fkClassName+'Jo> '+foreignKey.fkBeanName+'List;');
 		    }
 		}
 	&>

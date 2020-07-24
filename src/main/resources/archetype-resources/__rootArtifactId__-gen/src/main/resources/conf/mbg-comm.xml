@@ -27,11 +27,13 @@
 		<!-- 该插件给Mappe类添加selectSelective()方法 -->
 		<plugin type="rebue.mbgx.plugin.SelectSelectivePlugin" />
 		<!-- 该插件给Mapper类加上继承的父接口 -->
-		<plugin type="rebue.mbgx.plugin.MapperRootIntfacePlugin" />
+		<plugin type="rebue.mbgx.plugin.MapperRootInterfacePlugin" />
 		<!-- 该插件给Model类加上Swagger注解 -->
 		<!-- <plugin type="rebue.mbgx.plugin.SwaggerPlugin"/> -->
 		<!-- 该插件给Model类加上Jackson注解 -->
 		<plugin type="rebue.mbgx.plugin.ModelJacksonPlugin" />
+        <!-- 给Model类加上多对一属性的插件 -->
+        <plugin type="rebue.mbgx.plugin.ModelManyToOnePlugin"/>
 		<!-- 该插件给Model类加上后缀 -->
 		<plugin type="rebue.mbgx.plugin.ModelSuffixPlugin">
 			<property name="modelSuffix" value="${symbol_dollar}{model.suffix}" />
