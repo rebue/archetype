@@ -5,15 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.github.pagehelper.PageInfo;
 import ${modulePackage}.mo.${entityName}Mo;
 import ${modulePackage}.svc.${entityName}Svc;
 
 import lombok.extern.slf4j.Slf4j;
-import rebue.robotech.dic.ResultDic;
-import rebue.robotech.ra.IdRa;
-import rebue.robotech.ra.PageRa;
-import rebue.robotech.ra.PojoRa;
-import rebue.robotech.ro.Ro;
 import rebue.wheel.RandomEx;
 
 /**
@@ -45,24 +41,25 @@ public class ${entityName}SvcTests {
             mo = (${entityName}Mo) RandomEx.randomPojo(${entityName}Mo.class);
             mo.setId(null);
             log.info("添加${table.remarks}的参数为：" + mo);
-            final Ro<IdRa<${idType}>> idRo = _svc.add(mo);
-            log.info("添加${table.remarks}的返回值为：" + idRo);
-            Assertions.assertEquals(ResultDic.SUCCESS, idRo.getResult());
-            mo.setId(idRo.getExtra().getId());
+            final Boolean addRo = _svc.add(mo);
+            log.info("添加${table.remarks}的返回值为：" + addRo);
+            Assertions.assertTrue(addRo);
+            mo.setId(mo.getId());
         }
-        final Ro<PageRa<${entityName}Mo>> listResult = _svc.list(null, 1, 5, null, 10);
+        final PageInfo<${entityName}Mo> listResult = _svc.list(null, 1, 5, null, 10);
         log.info("查询${table.remarks}的返回值为：" + listResult);
-        Assertions.assertEquals(ResultDic.SUCCESS, listResult.getResult());
+        Assertions.assertNotNull(listResult);
         log.info("获取单个${table.remarks}的参数为：" + mo.getId());
-        final Ro<PojoRa<${entityName}Mo>> getByIdResult = _svc.getById(mo.getId());
+        ${entityName}Mo getByIdResult = _svc.getById(mo.getId());
         log.info("获取单个${table.remarks}的返回值为：" + getByIdResult);
+        Assertions.assertNotNull(getByIdResult);
         log.info("修改${table.remarks}的参数为：" + mo);
-        final Ro<?> modifyResult = _svc.modify(mo);
+        final Boolean modifyResult = _svc.modify(mo);
         log.info("修改${table.remarks}的返回值为：" + modifyResult);
-        Assertions.assertEquals(ResultDic.SUCCESS, modifyResult.getResult());
+        Assertions.assertTrue(modifyResult);
         log.info("删除${table.remarks}的参数为：" + mo.getId());
-        final Ro<?> deleteResult = _svc.del(mo.getId());
+        final Boolean deleteResult = _svc.del(mo.getId());
         log.info("删除${table.remarks}的返回值为：" + deleteResult);
-        Assertions.assertEquals(ResultDic.SUCCESS, deleteResult.getResult());
+        Assertions.assertTrue(deleteResult);
     }
 }
