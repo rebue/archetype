@@ -57,43 +57,15 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
 		}
 	&>, ${entityName}Jo, ${entityName}Dao, ${moClassShortName}, ${entityName}Mapper> implements ${entityName}Svc {
 	
-    /**
-     * 本服务的单例
-     * 注意：内部调用自己的方法，如果涉及到回滚事务的，请不要直接调用，而是通过本实例调用
-     * 
-     * @mbg.generated 自动生成，如需修改，请删除本行
-     */
+//    /**
+//     * 本服务的单例
+//     * 注意：内部调用自己的方法，如果涉及到回滚事务的，请不要直接调用，而是通过本实例调用
+//     * 
+//     * @mbg.generated 自动生成，如需修改，请删除本行
+//     */
 //    @Lazy
 //    @Resource
 //    private ${entityName}Svc thisSvc;
-
-    /**
-     * 添加${entityTitle}(自动生成ID)
-     * 
-     * @mbg.generated 自动生成，如需修改，请删除本行
-     */
-    @Override
-    @Transactional(readOnly = false, propagation = Propagation.SUPPORTS)
-    public Ro<IdRa<${idType}>> add(final ${moClassShortName} mo) {
-        // 如果id为空那么自动生成分布式id
-        <&
-        if (idType=="String") {
-			println("        if (mo.getId() == null || mo.getId().trim().isEmpty()) {");
-			println('            mo.setId(UUID.randomUUID().toString().replaceAll(\"-\", \"\"));');
-	        println("        }");
-		} else if (idType=="Long") {
-			println("        if (mo.getId() == null || mo.getId() == 0) {");
-			println("            mo.setId(_idWorker.getId());");
-	        println("        }");
-		}
-        &>
-        
-        final Ro<IdRa<${idType}>> ro = super.add(mo);
-        if (ResultDic.SUCCESS.equals(ro.getResult())) {
-			return new Ro<>(ro.getResult(), ro.getMsg(), null, new IdRa<>(mo.getId()));
-        } else {
-            return ro;
-        }
-    }
+//
 
 }
