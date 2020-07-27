@@ -73,6 +73,7 @@ public class ${dollar}{entityName}HttpTests {
         	Assertions.assertEquals(ResultDic.SUCCESS, idRo.getResult());
             mo.setId(idRo.getExtra().getId());
     	}
+    	
 		final String listResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/list?pageNum=1&pageSize=5");
 		log.info("查询${dollar}{table.remarks}的返回值为：" + listResult);
 		final Ro<PageRa<${dollar}{entityName}Mo>> listRo = _objectMapper.readValue(listResult, new TypeReference<Ro<PageRa<${dollar}{entityName}Mo>>>() {});
@@ -82,9 +83,12 @@ public class ${dollar}{entityName}HttpTests {
 		log.info("获取单个${dollar}{table.remarks}的返回值为：" + getByIdResult);
 		log.info("修改${dollar}{table.remarks}的参数为：" + mo);
 		final String modifyResult = _httpClient.putByJsonParams(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}", mo);
+        final Ro<PojoRa<${dollar}{entityName}Mo>> getByIdRo = _objectMapper.readValue(getByIdResult, new TypeReference<Ro<PojoRa<${dollar}{entityName}Mo>>>() {
+        });
+        Assertions.assertEquals(ResultDic.SUCCESS, getByIdRo.getResult());
+        mo = getByIdRo.getExtra().getOne();
         log.info("修改${dollar}{table.remarks}的返回值为：" + modifyResult);
 		final Ro<?> modifyRo = _objectMapper.readValue(modifyResult, Ro.class);
-        log.info(modifyRo.toString());
         Assertions.assertEquals(ResultDic.SUCCESS, modifyRo.getResult());
 		log.info("删除${dollar}{table.remarks}的参数为：" + mo.getId());
 		final String deleteResult = _httpClient.delete(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}?id=" + mo.getId());
