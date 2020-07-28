@@ -41,10 +41,10 @@ public class ${entityName}SvcTests {
             mo = (${entityName}Mo) RandomEx.randomPojo(${entityName}Mo.class);
             mo.setId(null);
             log.info("添加${table.remarks}的参数为：" + mo);
-            final Boolean addRo = _svc.add(mo);
+            final ${idType} addRo = _svc.add(mo);
             log.info("添加${table.remarks}的返回值为：" + addRo);
-            Assertions.assertTrue(addRo);
-            mo.setId(mo.getId());
+            Assertions.assertNotNull(addRo);
+            mo.setId(addRo);
         }
         final PageInfo<${entityName}Mo> listResult = _svc.list(null, 1, 5, null, 10);
         log.info("查询${table.remarks}的返回值为：" + listResult);
