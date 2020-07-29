@@ -57,14 +57,15 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
 		}
 	&>, ${entityName}Jo, ${entityName}Dao, ${moClassShortName}, ${entityName}Mapper> implements ${entityName}Svc {
 
-//	
-//    /**
-//     * 本服务的单例
-//     * 注意：内部调用自己的方法，如果涉及到回滚事务的，请不要直接调用，而是通过本实例调用
-//     */
-//    @Lazy
-//    @Resource
-//    private ${entityName}Svc thisSvc;
-//
+	
+    /**
+     * 本服务的单例
+     * 注意：内部调用自己的方法，如果涉及到回滚事务的，请不要直接调用，而是通过本实例调用
+     *
+	 * @mbg.generated 自动生成，如需修改，请删除本行
+     */
+    @Lazy
+    @Resource
+    private ${entityName}Svc thisSvc;
 
 }
