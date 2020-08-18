@@ -16,6 +16,8 @@
 		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
 		<!-- 该插件给Model类添加equals()和hashCode()方法 -->
 		<plugin type="rebue.mbgx.plugin.MyEqualsHashCodePlugin" />
+        <!-- 该插件给Mapper类添加deleteSelective()方法 -->
+        <plugin type="rebue.mbgx.plugin.DeleteSelectivePlugin"/>
 		<!-- 该插件给Mapper类加上selectOne()方法 -->
 		<plugin type="rebue.mbgx.plugin.SelectOnePlugin" />
 		<!-- 该插件给Mapper类加上countSelective()方法 -->
