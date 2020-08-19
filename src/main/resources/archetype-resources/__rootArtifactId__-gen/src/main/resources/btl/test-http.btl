@@ -22,6 +22,7 @@ import rebue.robotech.ra.IdRa;
 import rebue.robotech.ra.PageRa;
 import rebue.robotech.ra.PojoRa;
 import rebue.robotech.ro.Ro;
+import rebue.wheel.JacksonUtils;
 import rebue.wheel.RandomEx;
 import rebue.wheel.http.HttpClient;
 import rebue.wheel.http.impl.OkHttpClientImpl;
@@ -42,12 +43,7 @@ public class ${dollar}{entityName}HttpTests {
     /**
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    private final ObjectMapper _objectMapper = JsonMapper.builder() // or different mapper for other format
-            .addModule(new ParameterNamesModule())
-            .addModule(new Jdk8Module())
-            .addModule(new JavaTimeModule())
-            // and possibly other configuration, modules, then:
-            .build();
+    private final ObjectMapper _objectMapper = JacksonUtils.getObjectMapper();
 
     /**
      * @mbg.generated 自动生成，如需修改，请删除本行
