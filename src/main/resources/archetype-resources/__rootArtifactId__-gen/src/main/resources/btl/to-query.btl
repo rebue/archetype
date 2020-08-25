@@ -53,20 +53,6 @@ public class ${entityName}QueryTo implements Serializable {
 	        }
 	        
 	        println('private ' + props[i].type + ' ' + props[i].code + ';');
-	        
-
-//	        if(props[i].type != 'BigDecimal') {
-//	        	println('@Column(name = "' + props[i].sourceCode + '", nullable = ' + props[i].isNullable + ', length=' + props[i].length + ')');
-//	        } else {
-//	        	println('@Column(name = "' + props[i].sourceCode + '", nullable = ' + props[i].isNullable + ', precision=' + props[i].length + ', scale = ' + props[i].scale + ' )');
-//	        }
-	        
-//	        if(props[i].type != 'Time') {
-//	        	println('private ' + props[i].type + ' ' + props[i].code + ';');
-//	        } else {
-//	        	println('@Temporal(TemporalType.DATE)');
-//	        	println('private Date ' + props[i].code + ';');
-//	        }
 		}
 	&>
 	

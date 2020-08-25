@@ -43,6 +43,9 @@ public class ${entityName}Jo implements Serializable {
 
 	<&
 		for(var i=0;i<props.~size;i++){
+			// 如果是外键先不处理
+			if(props[i].isForeignKey) continue;
+
         	println('/**');
         	println('* ' + props[i].name);
         	println('*');
