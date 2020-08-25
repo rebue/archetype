@@ -71,6 +71,11 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
     @Resource
     private ${entityName}Svc thisSvc;
     
+    /**
+     * 泛型MO的class(应为java中泛型擦除，JVM无法智能获取泛型的class)
+     *
+	 * @mbg.generated 自动生成，如需修改，请删除本行
+     */
     @Override
     protected Class<${moClassShortName}> getMoClass() {
         return ${moClassShortName}.class;
