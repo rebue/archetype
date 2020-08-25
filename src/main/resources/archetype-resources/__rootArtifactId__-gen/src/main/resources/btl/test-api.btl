@@ -2,12 +2,17 @@ package ${modulePackage}.test.api;
 
 import java.io.IOException;
 
+import com.github.dozermapper.core.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import ${modulePackage}.mo.${entityName}Mo;
+import ${modulePackage}.to.${entityName}AddTo;
+import ${modulePackage}.to.${entityName}ModifyTo;
+import ${modulePackage}.to.${entityName}QueryTo;
 import ${modulePackage}.api.${entityName}Api;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +33,18 @@ import rebue.wheel.RandomEx;
 public class ${entityName}ApiTests {
 
     /**
-     * 要测试的微服务
+     * 要测试的API
      * 
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     @DubboReference
     private ${entityName}Api _api;
+
+    /**
+     * @mbg.generated 自动生成，如需修改，请删除本行
+     */
+    @Autowired
+    private Mapper        dozerMapper;
 
     /**
      * 测试基本的增删改查
@@ -42,28 +53,32 @@ public class ${entityName}ApiTests {
      */
     @Test
     public void testCrud() {
-        ${entityName}Mo mo = null;
+        ${entityName}AddTo addTo = null;
+        ${idType} id = null;        
         for (int i = 0; i < 20; i++) {
-            mo = (${entityName}Mo) RandomEx.randomPojo(${entityName}Mo.class);
-            mo.setId(null);
-            log.info("添加${table.remarks}的参数为：" + mo);
-            final Ro<IdRa<${idType}>> idRo = _api.add(mo);
+            addTo = (${entityName}AddTo) RandomEx.randomPojo(${entityName}AddTo.class);
+            log.info("添加${table.remarks}的参数为：" + addTo);
+            final Ro<IdRa<${idType}>> idRo = _api.add(addTo);
             log.info("添加${table.remarks}的返回值为：" + idRo);
             Assertions.assertEquals(ResultDic.SUCCESS, idRo.getResult());
-            mo.setId(idRo.getExtra().getId());
+            id = idRo.getExtra().getId();
         }
         final Ro<PageRa<${entityName}Mo>> listResult = _api.list(null, 1, 5, null, 10);
         log.info("查询${table.remarks}的返回值为：" + listResult);
         Assertions.assertEquals(ResultDic.SUCCESS, listResult.getResult());
-        log.info("获取单个${table.remarks}的参数为：" + mo.getId());
-        final Ro<PojoRa<${entityName}Mo>> getByIdResult = _api.getById(mo.getId());
+        log.info("获取单个${table.remarks}的参数为：" + id);
+        final Ro<PojoRa<${entityName}Mo>> getByIdResult = _api.getById(id);
         log.info("获取单个${table.remarks}的返回值为：" + getByIdResult);
-        log.info("修改${table.remarks}的参数为：" + mo);
-        final Ro<?> modifyResult = _api.modify(mo);
+        
+        final ${entityName}ModifyTo modifyTo = dozerMapper.map(addTo, ${entityName}ModifyTo.class);
+        modifyTo.setId(id);
+        log.info("修改${table.remarks}的参数为：" + modifyTo);
+        final Ro<?> modifyResult = _api.modify(modifyTo);
         log.info("修改${table.remarks}的返回值为：" + modifyResult);
         Assertions.assertEquals(ResultDic.SUCCESS, modifyResult.getResult());
-        log.info("删除${table.remarks}的参数为：" + mo.getId());
-        final Ro<?> deleteResult = _api.del(mo.getId());
+        
+        log.info("删除${table.remarks}的参数为：" + id);
+        final Ro<?> deleteResult = _api.del(id);
         log.info("删除${table.remarks}的返回值为：" + deleteResult);
         Assertions.assertEquals(ResultDic.SUCCESS, deleteResult.getResult());
     }

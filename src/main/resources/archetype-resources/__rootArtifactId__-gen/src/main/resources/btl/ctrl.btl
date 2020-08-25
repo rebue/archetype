@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ${moClassFullName};
+import ${modulePackage}.to.${entityName}AddTo;
+import ${modulePackage}.to.${entityName}ModifyTo;
+import ${modulePackage}.to.${entityName}QueryTo;
 import ${modulePackage}.api.${entityName}Api;
 
 import rebue.robotech.dic.ResultDic;
@@ -52,8 +55,8 @@ public class ${entityName}Ctrl {
                                 print(id.value);
                             }
                         &>
-                        >>> add(@RequestBody final ${moClassShortName} mo) {
-        return Mono.create(callback -> callback.success(api.add(mo)));
+                        >>> add(@RequestBody final ${entityName}AddTo to) {
+        return Mono.create(callback -> callback.success(api.add(to)));
     }
 
     /**
@@ -62,8 +65,8 @@ public class ${entityName}Ctrl {
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     @PutMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
-    public Mono<Ro<?>> modify(@RequestBody final ${moClassShortName} mo) {
-        return Mono.create(callback -> callback.success(api.modify(mo)));
+    public Mono<Ro<?>> modify(@RequestBody final ${entityName}ModifyTo to) {
+        return Mono.create(callback -> callback.success(api.modify(to)));
     }
 
     /**
@@ -149,7 +152,7 @@ public class ${entityName}Ctrl {
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/list")
-    public Mono<Ro<PageRa<${moClassShortName}>>> list(final ${moClassShortName} qo, @RequestParam(value = "pageNum", required = false) final Integer pageNum, @RequestParam(value = "pageSize", required = false) final Integer pageSize, @RequestParam(value = "orderBy", required = false) final String orderBy) {
+    public Mono<Ro<PageRa<${moClassShortName}>>> list(final ${entityName}QueryTo qo, @RequestParam(value = "pageNum", required = false) final Integer pageNum, @RequestParam(value = "pageSize", required = false) final Integer pageSize, @RequestParam(value = "orderBy", required = false) final String orderBy) {
         return Mono.create(callback -> callback.success(api.list(qo, pageNum, pageSize, orderBy, 100)));
     }
 

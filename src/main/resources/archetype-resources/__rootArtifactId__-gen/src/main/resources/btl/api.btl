@@ -1,6 +1,9 @@
 package ${modulePackage}.api;
 
 import ${modulePackage}.mo.${entityName}Mo;
+import ${modulePackage}.to.${entityName}AddTo;
+import ${modulePackage}.to.${entityName}ModifyTo;
+import ${modulePackage}.to.${entityName}QueryTo;
 
 import rebue.robotech.api.BaseApi;
 
@@ -16,5 +19,5 @@ public interface ${entityName}Api extends BaseApi<<&
 			}
 		    print(id.value);
 		}
-	&>, ${entityName}Mo>{
+	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}QueryTo, ${entityName}Mo>{
 }

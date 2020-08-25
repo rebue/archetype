@@ -1,0 +1,85 @@
+package ${modulePackage}.to;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import lombok.Data;
+
+/**
+ * ${table.remarks}
+ *
+ * @mbg.generated 自动生成，如需修改，请删除本行
+ */
+@Data
+@JsonInclude(Include.NON_NULL)
+public class ${entityName}AddTo implements Serializable {
+
+	/**
+     * @mbg.generated 自动生成，如需修改，请删除本行
+     */
+	private static final long serialVersionUID = 1L;
+
+	<&
+		for(var i=0;i<props.~size;i++){
+			// 添加时主键可由后端生成不用填
+			if(props[i].isPrimaryKey) continue;
+			
+        	println('/**');
+        	println('* ' + props[i].name);
+        	println('*');
+        	println('* @mbg.generated 自动生成，如需修改，请删除本行');
+        	println('*/');
+        	
+	        // 如果字段要求非空
+	        if(!props[i].isNullable) {
+                // 如果是字符串类型，添加 @NotBlank 注解
+	            if (props[i].type == 'String') {
+	                println('@NotBlank(message = "' + props[i].name + '不能为空")');
+	            }
+	            // 如果是非字符串类型，添加 @NotNull 注解
+	            else {
+	                println('@NotNull(message = "' + props[i].name + '不能为空")');
+	            }
+	        }
+
+	        // 如果是字符串且有长度限制，添加 @Length 注解
+	        if (props[i].type == 'String' && props[i].length > 0) {
+	            println('@Length(max = ' + props[i].length + ', message = "' + props[i].name + '的长度不能大于' + props[i].length + '")');
+	        }
+	
+	        // 如果是无符号类型，添加 @Min(...) 符号，限制为非负数
+	        if (props[i].isUnsigned) {
+	            println('@PositiveOrZero(message = "' + props[i].name + '不能为负数")');
+	        }
+	        
+	        println('private ' + props[i].type + ' ' + props[i].code + ';');
+	        
+
+//	        if(props[i].type != 'BigDecimal') {
+//	        	println('@Column(name = "' + props[i].sourceCode + '", nullable = ' + props[i].isNullable + ', length=' + props[i].length + ')');
+//	        } else {
+//	        	println('@Column(name = "' + props[i].sourceCode + '", nullable = ' + props[i].isNullable + ', precision=' + props[i].length + ', scale = ' + props[i].scale + ' )');
+//	        }
+	        
+//	        if(props[i].type != 'Time') {
+//	        	println('private ' + props[i].type + ' ' + props[i].code + ';');
+//	        } else {
+//	        	println('@Temporal(TemporalType.DATE)');
+//	        	println('private Date ' + props[i].code + ';');
+//	        }
+		}
+	&>
+	
+}

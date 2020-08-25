@@ -10,6 +10,27 @@
 		"backup": false
 	},
 	{
+		"templateName": "to-add.btl",
+		"targetDir": "${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/to/",
+		"targetFile": "${symbol_dollar}{entityName}AddTo.java",
+		"isGenTargetOnMiddleTable": false,
+		"backup": false
+	},
+	{
+		"templateName": "to-modify.btl",
+		"targetDir": "${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/to/",
+		"targetFile": "${symbol_dollar}{entityName}ModifyTo.java",
+		"isGenTargetOnMiddleTable": false,
+		"backup": false
+	},
+	{
+		"templateName": "to-query.btl",
+		"targetDir": "${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/to/",
+		"targetFile": "${symbol_dollar}{entityName}QueryTo.java",
+		"isGenTargetOnMiddleTable": false,
+		"backup": false
+	},
+	{
 		"templateName": "api.btl",
 		"targetDir": "${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/api/",
 		"targetFile": "${symbol_dollar}{entityName}Api.java",

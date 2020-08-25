@@ -3,6 +3,9 @@ package ${modulePackage}.api.impl;
 import org.apache.dubbo.config.annotation.DubboService;
 
 import ${moClassFullName};
+import ${modulePackage}.to.${entityName}AddTo;
+import ${modulePackage}.to.${entityName}ModifyTo;
+import ${modulePackage}.to.${entityName}QueryTo;
 import ${modulePackage}.api.${entityName}Api;
 import ${modulePackage}.jo.${entityName}Jo;
 import ${modulePackage}.svc.${entityName}Svc;
@@ -22,6 +25,6 @@ public class ${entityName}ApiImpl extends BaseApiImpl<<&
 			}
 		    print(id.value);
 		}
-	&>, ${moClassShortName}, ${entityName}Jo, ${entityName}Svc> implements ${entityName}Api {
+	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}QueryTo, ${moClassShortName}, ${entityName}Jo, ${entityName}Svc> implements ${entityName}Api {
 	
 }

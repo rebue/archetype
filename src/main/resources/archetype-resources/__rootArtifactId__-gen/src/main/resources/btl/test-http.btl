@@ -8,6 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.dozermapper.core.DozerBeanMapperBuilder;
+import com.github.dozermapper.core.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -17,6 +21,9 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 import lombok.extern.slf4j.Slf4j;
 import ${dollar}{modulePackage}.mo.${dollar}{entityName}Mo;
+import ${dollar}{modulePackage}.to.${dollar}{entityName}AddTo;
+import ${dollar}{modulePackage}.to.${dollar}{entityName}ModifyTo;
+import ${dollar}{modulePackage}.to.${dollar}{entityName}QueryTo;
 import rebue.robotech.dic.ResultDic;
 import rebue.robotech.ra.IdRa;
 import rebue.robotech.ra.PageRa;
@@ -38,12 +45,18 @@ public class ${dollar}{entityName}HttpTests {
     /**
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-	private final String _hostUrl 			  = "http://127.0.0.1:${microServerPort}";
+	private final String _hostUrl 			 = "http://127.0.0.1:${microServerPort}";
 
     /**
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     private final HttpClient   _httpClient   = new OkHttpClientImpl();
+
+    /**
+     * @mbg.generated 自动生成，如需修改，请删除本行
+     */
+    @Autowired
+    private final Mapper       dozerMapper   = DozerBeanMapperBuilder.buildDefault();
 
 	/**
 	 * 测试基本的增删改查
@@ -52,35 +65,40 @@ public class ${dollar}{entityName}HttpTests {
 	 */
 	@Test
 	public void testCrud() throws IOException {
-		${dollar}{entityName}Mo mo = null;
+        ${dollar}{entityName}AddTo addTo = null;
+        ${dollar}{idType} id = null;        
 		for(int i=0;i<20;i++) {
-			mo = (${dollar}{entityName}Mo) RandomEx.randomPojo(${dollar}{entityName}Mo.class);
-			mo.setId(null);
-			log.info("添加${dollar}{table.remarks}的参数为：" + mo);
-			final String addResult = _httpClient.postByJsonParams(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}", mo);
+            addTo = (${dollar}{entityName}AddTo) RandomEx.randomPojo(${dollar}{entityName}AddTo.class);
+			log.info("添加${dollar}{table.remarks}的参数为：" + addTo);
+			final String addResult = _httpClient.postByJsonParams(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}", addTo);
 			log.info("添加${dollar}{table.remarks}的返回值为：" + addResult);
             final Ro<IdRa<${dollar}{idType}>> idRo = JacksonUtils.deserialize(addResult, new TypeReference<Ro<IdRa<${dollar}{idType}>>>() {});
 			log.info(idRo.toString());
         	Assertions.assertEquals(ResultDic.SUCCESS, idRo.getResult());
-            mo.setId(idRo.getExtra().getId());
+            id = idRo.getExtra().getId();
     	}
     	
 		final String listResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/list?pageNum=1&pageSize=5");
 		log.info("查询${dollar}{table.remarks}的返回值为：" + listResult);
 		final Ro<PageRa<${dollar}{entityName}Mo>> listRo = JacksonUtils.deserialize(listResult, new TypeReference<Ro<PageRa<${dollar}{entityName}Mo>>>() {});
         Assertions.assertEquals(ResultDic.SUCCESS, listRo.getResult());
-		log.info("获取单个${dollar}{table.remarks}的参数为：" + mo.getId());
-		final String getByIdResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id?id=" + mo.getId());
+		log.info("获取单个${dollar}{table.remarks}的参数为：" + id);
+		final String getByIdResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id?id=" + id);
 		log.info("获取单个${dollar}{table.remarks}的返回值为：" + getByIdResult);
-		log.info("修改${dollar}{table.remarks}的参数为：" + mo);
-		final String modifyResult = _httpClient.putByJsonParams(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}", mo);
+		
+        final ${entityName}ModifyTo modifyTo = dozerMapper.map(addTo, ${entityName}ModifyTo.class);
+        modifyTo.setId(id);
+		log.info("修改${dollar}{table.remarks}的参数为：" + modifyTo);
+		final String modifyResult = _httpClient.putByJsonParams(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}", modifyTo);
         final Ro<PojoRa<${dollar}{entityName}Mo>> getByIdRo = JacksonUtils.deserialize(getByIdResult, new TypeReference<Ro<PojoRa<${dollar}{entityName}Mo>>>() {
         });
         Assertions.assertEquals(ResultDic.SUCCESS, getByIdRo.getResult());
+        ${dollar}{entityName}Mo mo = getByIdRo.getExtra().getOne();
         mo = getByIdRo.getExtra().getOne();
         log.info("修改${dollar}{table.remarks}的返回值为：" + modifyResult);
 		final Ro<?> modifyRo = JacksonUtils.deserialize(modifyResult, Ro.class);
         Assertions.assertEquals(ResultDic.SUCCESS, modifyRo.getResult());
+
 		log.info("删除${dollar}{table.remarks}的参数为：" + mo.getId());
 		final String deleteResult = _httpClient.delete(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}?id=" + mo.getId());
 		log.info("删除${dollar}{table.remarks}的返回值为：" + deleteResult);
