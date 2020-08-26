@@ -47,7 +47,7 @@ public class ${entityName}Jo implements Serializable {
 			if(props[i].isForeignKey) continue;
 
         	println('/**');
-        	println('* ' + props[i].name);
+        	println('* ' + props[i].remark);
         	println('*');
         	println('* @mbg.generated 自动生成，如需修改，请删除本行');
         	println('*/');

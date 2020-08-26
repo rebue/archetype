@@ -34,7 +34,7 @@ public class ${entityName}ModifyTo implements Serializable {
 	<&
 		for(var i=0;i<props.~size;i++){
         	println('/**');
-        	println('* ' + props[i].name);
+        	println('* ' + props[i].remark);
         	println('*');
         	println('* @mbg.generated 自动生成，如需修改，请删除本行');
         	println('*/');

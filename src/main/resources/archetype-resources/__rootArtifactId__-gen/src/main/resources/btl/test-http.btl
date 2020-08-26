@@ -56,7 +56,7 @@ public class ${dollar}{entityName}HttpTests {
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
     @Autowired
-    private final Mapper       dozerMapper   = DozerBeanMapperBuilder.buildDefault();
+    private final Mapper       _dozerMapper   = DozerBeanMapperBuilder.buildDefault();
 
 	/**
 	 * 测试基本的增删改查
@@ -86,7 +86,7 @@ public class ${dollar}{entityName}HttpTests {
 		final String getByIdResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id?id=" + id);
 		log.info("获取单个${dollar}{table.remarks}的返回值为：" + getByIdResult);
 		
-        final ${entityName}ModifyTo modifyTo = dozerMapper.map(addTo, ${entityName}ModifyTo.class);
+        final ${entityName}ModifyTo modifyTo = _dozerMapper.map(addTo, ${entityName}ModifyTo.class);
         modifyTo.setId(id);
 		log.info("修改${dollar}{table.remarks}的参数为：" + modifyTo);
 		final String modifyResult = _httpClient.putByJsonParams(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}", modifyTo);
