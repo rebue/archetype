@@ -16,6 +16,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import rebue.robotech.to.ListTo;
 
 /**
  * ${table.remarks}
@@ -23,8 +25,9 @@ import lombok.Data;
  * @mbg.generated 自动生成，如需修改，请删除本行
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @JsonInclude(Include.NON_NULL)
-public class ${entityName}ModifyTo implements Serializable {
+public class ${entityName}ListTo extends ListTo implements Serializable {
 
 	/**
      * @mbg.generated 自动生成，如需修改，请删除本行
@@ -33,24 +36,15 @@ public class ${entityName}ModifyTo implements Serializable {
 
 	<&
 		for(var i=0;i<props.~size;i++){
+			// 查询列表时不会以主键为条件
+			if(props[i].isPrimaryKey) continue;
+
         	println('/**');
         	println('* ' + props[i].remark);
         	println('*');
         	println('* @mbg.generated 自动生成，如需修改，请删除本行');
         	println('*/');
         	
-	        // 如果是关键字段
-	        if(props[i].isPrimaryKey) {
-                // 如果是字符串类型，添加 @NotBlank 注解
-	            if (props[i].type == 'String') {
-	                println('@NotBlank(message = "' + props[i].name + '不能为空")');
-	            }
-	            // 如果是非字符串类型，添加 @NotNull 注解
-	            else {
-	                println('@NotNull(message = "' + props[i].name + '不能为空")');
-	            }
-	        }
-
 	        // 如果是字符串且有长度限制，添加 @Length 注解
 	        if (props[i].type == 'String' && props[i].length > 0) {
 	            println('@Length(max = ' + props[i].length + ', message = "' + props[i].name + '的长度不能大于' + props[i].length + '")');

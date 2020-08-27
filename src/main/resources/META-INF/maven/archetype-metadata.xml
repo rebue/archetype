@@ -6,6 +6,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
 	<requiredProperties>
+		<!-- 项目中文名称 -->
+		<requiredProperty key="projectChineseName">
+			<defaultValue>${artifactId.toUpperCase()}微服务</defaultValue>
+		</requiredProperty>
 		<!-- 项目描述 -->
 		<requiredProperty key="projectDescription">
 			<defaultValue>基于Spring CLoud构建微服务的演示项目</defaultValue>

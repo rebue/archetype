@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import ${dollar}{modulePackage}.mo.${dollar}{entityName}Mo;
 import ${dollar}{modulePackage}.to.${dollar}{entityName}AddTo;
 import ${dollar}{modulePackage}.to.${dollar}{entityName}ModifyTo;
-import ${dollar}{modulePackage}.to.${dollar}{entityName}QueryTo;
 import rebue.robotech.dic.ResultDic;
 import rebue.robotech.ra.IdRa;
 import rebue.robotech.ra.PageRa;
@@ -78,7 +77,7 @@ public class ${dollar}{entityName}HttpTests {
             id = idRo.getExtra().getId();
     	}
     	
-		final String listResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/list?pageNum=1&pageSize=5");
+		final String listResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/list");
 		log.info("查询${dollar}{table.remarks}的返回值为：" + listResult);
 		final Ro<PageRa<${dollar}{entityName}Mo>> listRo = JacksonUtils.deserialize(listResult, new TypeReference<Ro<PageRa<${dollar}{entityName}Mo>>>() {});
         Assertions.assertEquals(ResultDic.SUCCESS, listRo.getResult());

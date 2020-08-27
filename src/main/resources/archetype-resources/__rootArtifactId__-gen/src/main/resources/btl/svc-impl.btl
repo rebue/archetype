@@ -23,7 +23,8 @@ import ${moClassFullName};
 import ${modulePackage}.jo.${entityName}Jo;
 import ${modulePackage}.to.${entityName}AddTo;
 import ${modulePackage}.to.${entityName}ModifyTo;
-import ${modulePackage}.to.${entityName}QueryTo;
+import ${modulePackage}.to.${entityName}OneTo;
+import ${modulePackage}.to.${entityName}ListTo;
 import ${modulePackage}.dao.${entityName}Dao;
 import ${modulePackage}.mapper.${entityName}Mapper;
 import ${modulePackage}.svc.${entityName}Svc;
@@ -58,7 +59,7 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
 			}
 		    print(id.value);
 		}
-	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}QueryTo, ${moClassShortName}, ${entityName}Jo, ${entityName}Mapper, ${entityName}Dao> implements ${entityName}Svc {
+	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}OneTo, ${entityName}ListTo, ${moClassShortName}, ${entityName}Jo, ${entityName}Mapper, ${entityName}Dao> implements ${entityName}Svc {
 
 	
     /**

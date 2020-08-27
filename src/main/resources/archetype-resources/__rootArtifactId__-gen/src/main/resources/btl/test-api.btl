@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ${modulePackage}.mo.${entityName}Mo;
 import ${modulePackage}.to.${entityName}AddTo;
 import ${modulePackage}.to.${entityName}ModifyTo;
-import ${modulePackage}.to.${entityName}QueryTo;
+import ${modulePackage}.to.${entityName}ListTo;
 import ${modulePackage}.api.${entityName}Api;
 
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +63,7 @@ public class ${entityName}ApiTests {
             Assertions.assertEquals(ResultDic.SUCCESS, idRo.getResult());
             id = idRo.getExtra().getId();
         }
-        final Ro<PageRa<${entityName}Mo>> listResult = _api.list(null, 1, 5, null, 10);
+        final Ro<PageRa<${entityName}Mo>> listResult = _api.list(new ${entityName}ListTo());
         log.info("查询${table.remarks}的返回值为：" + listResult);
         Assertions.assertEquals(ResultDic.SUCCESS, listResult.getResult());
         log.info("获取单个${table.remarks}的参数为：" + id);

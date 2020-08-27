@@ -24,9 +24,16 @@
 		"backup": false
 	},
 	{
-		"templateName": "to-query.btl",
+		"templateName": "to-one.btl",
 		"targetDir": "${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/to/",
-		"targetFile": "${symbol_dollar}{entityName}QueryTo.java",
+		"targetFile": "${symbol_dollar}{entityName}OneTo.java",
+		"isGenTargetOnMiddleTable": false,
+		"backup": false
+	},
+	{
+		"templateName": "to-list.btl",
+		"targetDir": "${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/to/",
+		"targetFile": "${symbol_dollar}{entityName}ListTo.java",
 		"isGenTargetOnMiddleTable": false,
 		"backup": false
 	},

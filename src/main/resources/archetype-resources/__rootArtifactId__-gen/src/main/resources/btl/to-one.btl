@@ -24,7 +24,7 @@ import lombok.Data;
  */
 @Data
 @JsonInclude(Include.NON_NULL)
-public class ${entityName}QueryTo implements Serializable {
+public class ${entityName}OneTo implements Serializable {
 
 	/**
      * @mbg.generated 自动生成，如需修改，请删除本行
