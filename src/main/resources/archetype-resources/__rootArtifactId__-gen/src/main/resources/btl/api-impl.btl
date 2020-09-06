@@ -5,6 +5,7 @@ import org.apache.dubbo.config.annotation.DubboService;
 import ${moClassFullName};
 import ${modulePackage}.to.${entityName}AddTo;
 import ${modulePackage}.to.${entityName}ModifyTo;
+import ${modulePackage}.to.${entityName}DelTo;
 import ${modulePackage}.to.${entityName}OneTo;
 import ${modulePackage}.to.${entityName}ListTo;
 import ${modulePackage}.api.${entityName}Api;
@@ -26,6 +27,6 @@ public class ${entityName}ApiImpl extends BaseApiImpl<<&
 			}
 		    print(id.value);
 		}
-	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}OneTo, ${entityName}ListTo, ${moClassShortName}, ${entityName}Jo, ${entityName}Svc> implements ${entityName}Api {
+	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}DelTo, ${entityName}OneTo, ${entityName}ListTo, ${moClassShortName}, ${entityName}Jo, ${entityName}Svc> implements ${entityName}Api {
 	
 }

@@ -24,6 +24,13 @@
 		"backup": false
 	},
 	{
+		"templateName": "to-del.btl",
+		"targetDir": "${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/to/",
+		"targetFile": "${symbol_dollar}{entityName}DelTo.java",
+		"isGenTargetOnMiddleTable": false,
+		"backup": false
+	},
+	{
 		"templateName": "to-one.btl",
 		"targetDir": "${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/to/",
 		"targetFile": "${symbol_dollar}{entityName}OneTo.java",
