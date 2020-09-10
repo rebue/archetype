@@ -67,12 +67,12 @@ public class ${entityName}SvcTests {
         final ${entityName}ModifyTo modifyTo = dozerMapper.map(addTo, ${entityName}ModifyTo.class);
         modifyTo.setId(id);
         log.info("修改${table.remarks}的参数为：" + modifyTo);
-        final Boolean modifyResult = _svc.modify(modifyTo);
+        final Boolean modifyResult = _svc.modifyById(modifyTo);
         log.info("修改${table.remarks}的返回值为：" + modifyResult);
         Assertions.assertTrue(modifyResult);
         
         log.info("删除${table.remarks}的参数为：" + id);
-        final Boolean deleteResult = _svc.del(id);
+        final Boolean deleteResult = _svc.delById(id);
         log.info("删除${table.remarks}的返回值为：" + deleteResult);
         Assertions.assertTrue(deleteResult);
     }
