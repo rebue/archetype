@@ -63,11 +63,11 @@ public class ${entityName}Jo implements Serializable {
 	        	println('@Column(name = "' + props[i].sourceCode + '", nullable = ' + props[i].isNullable + ', precision=' + props[i].length + ', scale = ' + props[i].scale + ' )');
 	        }
 	        
-	        if(props[i].type != 'Time') {
-	        	println('private ' + props[i].type + ' ' + props[i].code + ';');
-	        } else {
+            if (props[i].type=='LocalTime' || (props[i].type=='Date' && strutil.endWith(props[i].code,'Time'))) {
 	        	println('@Temporal(TemporalType.DATE)');
 	        	println('private Date ' + props[i].code + ';');
+	        } else {
+	        	println('private ' + props[i].type + ' ' + props[i].code + ';');
 	        }
 		}
 	&>
