@@ -36,7 +36,7 @@ import rebue.robotech.ro.Ro;
 import rebue.robotech.svc.impl.BaseSvcImpl;
 
 /**
- * ${table.remarks}
+ * ${table.remarks}服务实现
  *
  * <pre>
  * 注意：
