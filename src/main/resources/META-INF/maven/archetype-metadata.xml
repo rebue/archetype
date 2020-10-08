@@ -12,7 +12,7 @@
 		</requiredProperty>
 		<!-- 项目描述 -->
 		<requiredProperty key="projectDescription">
-			<defaultValue>基于Spring CLoud构建微服务的演示项目</defaultValue>
+			<defaultValue>基于Spring Cloud构建微服务的演示项目</defaultValue>
 		</requiredProperty>
 		<!-- 微服务端口号 -->
 		<requiredProperty key="microServerPort">
