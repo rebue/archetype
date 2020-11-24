@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archetype-descriptor
-	xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
-	name="hlw"
-	xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd" name="hlw"
+	xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
 	<requiredProperties>
 		<!-- 项目中文名称 -->
@@ -81,8 +79,7 @@
 		</fileSet>
 	</fileSets>
 	<modules>
-		<module id="${rootArtifactId}-gen" dir="__rootArtifactId__-gen"
-			name="${rootArtifactId}-gen">
+		<module id="${rootArtifactId}-gen" dir="__rootArtifactId__-gen" name="${rootArtifactId}-gen">
 			<fileSets>
 				<fileSet filtered="true" encoding="UTF-8">
 					<directory>src/main/java</directory>
@@ -106,13 +103,13 @@
 						<include>**/*.btl</include>
 					</includes>
 					<excludes>
+						<!-- 此文件要取属性来设置微服务的端口 -->
 						<exclude>btl/test-http.btl</exclude>
 					</excludes>
 				</fileSet>
 			</fileSets>
 		</module>
-		<module id="${rootArtifactId}-api" dir="__rootArtifactId__-api"
-			name="${rootArtifactId}-api">
+		<module id="${rootArtifactId}-api" dir="__rootArtifactId__-api" name="${rootArtifactId}-api">
 			<fileSets>
 				<fileSet filtered="true" encoding="UTF-8">
 					<directory>src/main/java</directory>
@@ -123,8 +120,7 @@
 				</fileSet>
 			</fileSets>
 		</module>
-		<module id="${rootArtifactId}-svr" dir="__rootArtifactId__-svr"
-			name="${rootArtifactId}-svr">
+		<module id="${rootArtifactId}-svr" dir="__rootArtifactId__-svr" name="${rootArtifactId}-svr">
 			<fileSets>
 				<fileSet filtered="true" encoding="UTF-8">
 					<directory>src/main/java</directory>
