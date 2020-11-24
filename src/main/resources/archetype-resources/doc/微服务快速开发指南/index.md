@@ -62,6 +62,7 @@ Rebue是一套基于 **SpringCloud** 微服务架构的快速开发框架，特�
 
 - 运行 **xxx-gen** 项目下的 `XxxGen.java` 主程序(右击文件 > `Run As` > `Java Application`)
 - 只要数据结构有改动既可反复生成，但是要**注意，如果代码有过修改，请在修改的时候去掉其上方有注解 `@mbg.generated` 的行，否则重新生成代码时会被覆盖**
+- 生成代码后，imports部分并没有organize。这时可以打开 `Package Explorer` 视图 > 选择项目(可以多选) > 按 **Cmd+Shift+O** 即可。
 
 ### 2.5. 运行
 
