@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import rebue.robotech.to.ListTo;
+import rebue.robotech.to.PageTo;
 
 /**
  * ${table.remarks}
@@ -29,7 +29,7 @@ import rebue.robotech.to.ListTo;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(Include.NON_NULL)
-public class ${entityName}ListTo extends ListTo implements Serializable {
+public class ${entityName}PageTo extends PageTo implements Serializable {
 
 	/**
      * @mbg.generated 自动生成，如需修改，请删除本行

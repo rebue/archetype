@@ -10,7 +10,7 @@ import com.github.pagehelper.PageInfo;
 import ${modulePackage}.mo.${entityName}Mo;
 import ${modulePackage}.to.${entityName}AddTo;
 import ${modulePackage}.to.${entityName}ModifyTo;
-import ${modulePackage}.to.${entityName}ListTo;
+import ${modulePackage}.to.${entityName}PageTo;
 import ${modulePackage}.svc.${entityName}Svc;
 
 import lombok.extern.slf4j.Slf4j;
@@ -56,9 +56,9 @@ public class ${entityName}SvcTests {
             Assertions.assertNotNull(addRo);
             id = addRo;
         }
-        final PageInfo<${entityName}Mo> listResult = _svc.list(new ${entityName}ListTo());
-        log.info("查询${table.remarks}的返回值为：" + listResult);
-        Assertions.assertNotNull(listResult);
+        final PageInfo<${entityName}Mo> pageResult = _svc.page(new ${entityName}PageTo());
+        log.info("查询${table.remarks}的返回值为：" + pageResult);
+        Assertions.assertNotNull(pageResult);
         log.info("获取单个${table.remarks}的参数为：" + id);
         ${entityName}Mo getByIdResult = _svc.getById(id);
         log.info("获取单个${table.remarks}的返回值为：" + getByIdResult);

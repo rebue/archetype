@@ -38,9 +38,9 @@
 		"backup": false
 	},
 	{
-		"templateName": "to-list.btl",
+		"templateName": "to-page.btl",
 		"targetDir": "${parentArtifactId}-api/src/main/java/${symbol_dollar}{modulePath}/to/",
-		"targetFile": "${symbol_dollar}{entityName}ListTo.java",
+		"targetFile": "${symbol_dollar}{entityName}PageTo.java",
 		"isGenTargetOnMiddleTable": false,
 		"backup": false
 	},

@@ -77,10 +77,10 @@ public class ${dollar}{entityName}HttpTests {
             id = idRo.getExtra().getId();
     	}
     	
-		final String listResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/list");
-		log.info("查询${dollar}{table.remarks}的返回值为：" + listResult);
-		final Ro<PageRa<${dollar}{entityName}Mo>> listRo = JacksonUtils.deserialize(listResult, new TypeReference<Ro<PageRa<${dollar}{entityName}Mo>>>() {});
-        Assertions.assertEquals(ResultDic.SUCCESS, listRo.getResult());
+		final String pageResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/page");
+		log.info("查询${dollar}{table.remarks}的返回值为：" + pageResult);
+		final Ro<PageRa<${dollar}{entityName}Mo>> pageRo = JacksonUtils.deserialize(pageResult, new TypeReference<Ro<PageRa<${dollar}{entityName}Mo>>>() {});
+        Assertions.assertEquals(ResultDic.SUCCESS, pageRo.getResult());
 		log.info("获取单个${dollar}{table.remarks}的参数为：" + id);
 		final String getByIdResult = _httpClient.get(_hostUrl + "/${dollar}{strutil.toLowerCase(entityNamePrefix)}/${dollar}{kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id?id=" + id);
 		log.info("获取单个${dollar}{table.remarks}的返回值为：" + getByIdResult);

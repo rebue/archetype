@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ${moClassFullName};
 import ${modulePackage}.to.${entityName}AddTo;
 import ${modulePackage}.to.${entityName}ModifyTo;
-import ${modulePackage}.to.${entityName}ListTo;
+import ${modulePackage}.to.${entityName}PageTo;
 import ${modulePackage}.api.${entityName}Api;
 
 import rebue.robotech.dic.ResultDic;
@@ -159,9 +159,9 @@ public class ${entityName}Ctrl {
      *
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
-    @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/list")
-    public Mono<Ro<PageRa<${moClassShortName}>>> list(final ${entityName}ListTo qo) {
-        return Mono.create(callback -> callback.success(api.list(qo)));
+    @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/page")
+    public Mono<Ro<PageRa<${moClassShortName}>>> page(final ${entityName}PageTo qo) {
+        return Mono.create(callback -> callback.success(api.page(qo)));
     }
 
 }
