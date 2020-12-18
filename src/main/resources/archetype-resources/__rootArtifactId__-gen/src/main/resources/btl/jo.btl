@@ -89,20 +89,6 @@ public class ${entityName}Jo implements Serializable {
 		}
 	&>
 
-	<&
-		for(foreignKey in fkPks) {
-			if (!foreignKey.isMiddleTableOnFk || isGenTargetOnMiddleTable) {
-				println('/**');
-				println('* ' + foreignKey.title + '列表');
-	        	println('*');
-	        	println('* @mbg.generated 自动生成，如需修改，请删除本行');
-	        	println('*/');
-			    print('@OneToMany(cascade = CascadeType.ALL, mappedBy = "'+foreignKey.pkBeanName+'")');
-			    println('private List<'+foreignKey.fkClassName+'Jo> '+foreignKey.fkBeanName+'List;');
-		    }
-		}
-	&>
-
 	/**
      * @mbg.generated 自动生成，如需修改，请删除本行
      */
