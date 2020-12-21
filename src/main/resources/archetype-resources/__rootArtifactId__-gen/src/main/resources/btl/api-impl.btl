@@ -7,6 +7,7 @@ import ${modulePackage}.to.${entityName}AddTo;
 import ${modulePackage}.to.${entityName}ModifyTo;
 import ${modulePackage}.to.${entityName}DelTo;
 import ${modulePackage}.to.${entityName}OneTo;
+import ${modulePackage}.to.${entityName}ListTo;
 import ${modulePackage}.to.${entityName}PageTo;
 import ${modulePackage}.api.${entityName}Api;
 import ${modulePackage}.jo.${entityName}Jo;
@@ -27,6 +28,6 @@ public class ${entityName}ApiImpl extends BaseApiImpl<<&
 			}
 		    print(id.value);
 		}
-	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}DelTo, ${entityName}OneTo, ${entityName}PageTo, ${moClassShortName}, ${entityName}Jo, ${entityName}Svc> implements ${entityName}Api {
+	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}DelTo, ${entityName}OneTo, ${entityName}ListTo, ${entityName}PageTo, ${moClassShortName}, ${entityName}Jo, ${entityName}Svc> implements ${entityName}Api {
 	
 }

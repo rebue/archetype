@@ -1,0 +1,80 @@
+package ${modulePackage}.to;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+/**
+ * ${table.remarks}
+ *
+ * @mbg.generated 自动生成，如需修改，请删除本行
+ */
+@Data
+@EqualsAndHashCode
+@JsonInclude(Include.NON_NULL)
+public class ${entityName}ListTo implements Serializable {
+
+	/**
+     * @mbg.generated 自动生成，如需修改，请删除本行
+     */
+	private static final long serialVersionUID = 1L;
+
+	<&
+		for(var i=0;i<props.~size;i++){
+			// 查询列表时不会以主键为条件
+			if(props[i].isPrimaryKey) continue;
+
+        	println('/**');
+        	println('* ' + props[i].remark);
+        	println('*');
+        	println('* @mbg.generated 自动生成，如需修改，请删除本行');
+        	println('*/');
+        	
+	        // 如果是字符串且有长度限制，添加 @Length 注解
+	        if (props[i].type == 'String') {
+	            if (props[i].length > 0) {
+	                println('@Length(max = ' + props[i].length + ', message = "' + props[i].name + '的长度不能大于' + props[i].length + '")');
+	            }
+	        }
+	        // 如果是DateTime类型
+	        else if (props[i].type=='LocalDateTime' || (props[i].type=='Date' && strutil.endWith(props[i].code,'DateTime'))) {
+                println('@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")');
+                println('@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")');
+	        }
+	        // 如果是Date类型
+	        else if (props[i].type=='LocalDate' || (props[i].type=='Date' && strutil.endWith(props[i].code,'Date'))) {
+                println('@DateTimeFormat(pattern = "yyyy-MM-dd")');
+                println('@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")');
+	        }
+	        // 如果是Time类型
+	        else if (props[i].type=='LocalTime' || (props[i].type=='Date' && strutil.endWith(props[i].code,'Time'))) {
+                println('@DateTimeFormat(pattern = "HH:mm:ss")');
+                println('@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "GMT+8")');
+	        }
+
+	        // 如果是无符号类型，添加 @Min(...) 符号，限制为非负数
+	        if (props[i].isUnsigned) {
+	            println('@PositiveOrZero(message = "' + props[i].name + '不能为负数")');
+	        }
+	        
+	        println('private ' + props[i].type + ' ' + props[i].code + ';');
+		}
+	&>
+	
+}

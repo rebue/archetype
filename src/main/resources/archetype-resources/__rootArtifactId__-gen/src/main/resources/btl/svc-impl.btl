@@ -25,6 +25,7 @@ import ${modulePackage}.to.${entityName}AddTo;
 import ${modulePackage}.to.${entityName}ModifyTo;
 import ${modulePackage}.to.${entityName}DelTo;
 import ${modulePackage}.to.${entityName}OneTo;
+import ${modulePackage}.to.${entityName}ListTo;
 import ${modulePackage}.to.${entityName}PageTo;
 import ${modulePackage}.dao.${entityName}Dao;
 import ${modulePackage}.mapper.${entityName}Mapper;
@@ -60,7 +61,7 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
 			}
 		    print(id.value);
 		}
-	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}DelTo, ${entityName}OneTo, ${entityName}PageTo, ${moClassShortName}, ${entityName}Jo, ${entityName}Mapper, ${entityName}Dao> implements ${entityName}Svc {
+	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}DelTo, ${entityName}OneTo, ${entityName}ListTo, ${entityName}PageTo, ${moClassShortName}, ${entityName}Jo, ${entityName}Mapper, ${entityName}Dao> implements ${entityName}Svc {
 
 	
     /**

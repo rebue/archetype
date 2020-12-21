@@ -5,6 +5,7 @@ import ${modulePackage}.to.${entityName}AddTo;
 import ${modulePackage}.to.${entityName}ModifyTo;
 import ${modulePackage}.to.${entityName}DelTo;
 import ${modulePackage}.to.${entityName}OneTo;
+import ${modulePackage}.to.${entityName}ListTo;
 import ${modulePackage}.to.${entityName}PageTo;
 import ${modulePackage}.jo.${entityName}Jo;
 
@@ -31,6 +32,6 @@ public interface ${entityName}Svc extends BaseSvc<<&
 			}
 		    print(id.value);
 		}
-	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}DelTo, ${entityName}OneTo, ${entityName}PageTo, ${entityName}Mo, ${entityName}Jo> {
+	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}DelTo, ${entityName}OneTo, ${entityName}ListTo, ${entityName}PageTo, ${entityName}Mo, ${entityName}Jo> {
 
 }
