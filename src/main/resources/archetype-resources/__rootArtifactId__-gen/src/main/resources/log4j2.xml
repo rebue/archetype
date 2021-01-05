@@ -10,7 +10,7 @@
 		<Console name="console" target="SYSTEM_OUT">
 			<!-- 需要记录的级别 -->
 			<!-- <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" /> -->
-			<PatternLayout pattern="%d{hh:mm:ss,sss}[%5p]%m %t %c (%F:%L)%n" />
+			<PatternLayout pattern="%d{HH:mm:ss,sss}[%5p]%m %t %c (%F:%L)%n" />
 		</Console>
 
 		<!-- 输出debug/warn/error到文件，按天或者超过5MB分割 -->
