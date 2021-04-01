@@ -51,10 +51,10 @@ public class ${entityName}SvcTests {
         for (int i = 0; i < 20; i++) {
             addTo = (${entityName}AddTo) RandomEx.randomPojo(${entityName}AddTo.class);
             log.info("添加${table.remarks}的参数为：" + addTo);
-            final ${idType} addRo = _svc.add(addTo);
+            final ${entityName}Mo addRo = _svc.add(addTo);
             log.info("添加${table.remarks}的返回值为：" + addRo);
             Assertions.assertNotNull(addRo);
-            id = addRo;
+            id = addRo.getId();
         }
         final PageInfo<${entityName}Mo> pageResult = _svc.page(new ${entityName}PageTo());
         log.info("查询${table.remarks}的返回值为：" + pageResult);

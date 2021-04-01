@@ -75,7 +75,24 @@ public class ${entityName}SvcImpl extends BaseSvcImpl<<&
     private ${entityName}Svc thisSvc;
     
     /**
-     * 泛型MO的class(应为java中泛型擦除，JVM无法智能获取泛型的class)
+     * 从接口获取本服务的单例(提供给基类调用)
+     *
+     * @mbg.generated 自动生成，如需修改，请删除本行
+     */
+    @Override
+    protected BaseSvc<<&
+		for(id in ids){
+			if(!idLP.first) {
+				print(', ');
+			}
+		    print(id.value);
+		}
+	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}DelTo, ${entityName}OneTo, ${entityName}ListTo, ${entityName}PageTo, ${entityName}Mo, ${entityName}Jo> getThisSvc() {
+        return thisSvc;
+    }
+
+    /**
+     * 泛型MO的class(提供给基类调用-因为java中泛型擦除，JVM无法智能获取泛型的class)
      *
 	 * @mbg.generated 自动生成，如需修改，请删除本行
      */
