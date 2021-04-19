@@ -10,6 +10,10 @@ server:
   port: ${microServerPort}
 
 spring:
+  datasource:
+    url: ${jdbcUrl}
+    username: ${jdbcUser}
+    password: ${jdbcPswd}
   cloud:
     nacos:
       config:
