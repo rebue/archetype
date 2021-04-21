@@ -37,7 +37,7 @@ Rebue是一套基于 **SpringCloud** 微服务架构的快速开发框架，特�
 
 1. `File` > `New` > `Maven Project`
 2. `Next >` > 选择 `rebue-archetype` > `Next >`
-   ![选择archetype](选择archetype.png)
+  ![选择archetype](选择archetype.png)
 3. 填写下面几项，然后 `Finish`
    - Group Id
    - Artifact Id
