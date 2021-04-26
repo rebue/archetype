@@ -66,6 +66,7 @@
 
 	<build>
 		<plugins>
+			<!-- SpringBoot服务项目打包插件，会分全包和原始包，并且会配置MANIFEST.MF文件设置运行的主类 -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
