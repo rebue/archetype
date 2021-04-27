@@ -27,7 +27,17 @@
                 - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
     ```
 
-4. **Spring Cache** 注解
+4. 配置application-prod.yml文件
+
+   ```yaml
+    spring:
+        redis:
+            host: 127.0.0.1
+            port: 6379
+            password: xxxxx
+   ```
+
+5. **Spring Cache** 注解
 
 | 名称         | 说明                                                         |
 | :----------- | ------------------------------------------------------------ |
