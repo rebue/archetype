@@ -14,7 +14,7 @@ import ${modulePackage}.to.${entityName}PageTo;
 import ${modulePackage}.svc.${entityName}Svc;
 
 import lombok.extern.slf4j.Slf4j;
-import rebue.wheel.RandomEx;
+import rebue.wheel.core.RandomEx;
 
 /**
  * ${table.remarks} Service层测试
