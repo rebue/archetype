@@ -146,8 +146,8 @@ AcknowledgeMode有三种模式
 
 ```xml
 <dependency>
-    <groupId>org.springframework.cloud</groupId>
-    <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+  <groupId>com.github.rebue.sbs</groupId>
+  <artifactId>amqp-spring-boot-starter</artifactId>
 </dependency>
 ```
 
@@ -193,38 +193,57 @@ AcknowledgeMode有三种模式
 
 ### 3.4. 订阅者程序
 
-- 
-
 - 监听器
   
   ```java
   @Service
   public class XxxSub {
 
-      /**
-      * 添加请求日志
-      *
-      * @param to 添加请求日志的消息体
-      */
-      @RabbitListener(bindings = @QueueBinding(//
-          value = @Queue(name = RrlAmpqCo.ADD_REQ_LOG_QUEUE), //
-          exchange = @Exchange(value = RrlAmpqCo.ADD_REQ_LOG_EXCHANGE, type = ExchangeTypes.TOPIC), //
-          key = RrlAmpqCo.ADD_REQ_LOG_BINDING_KEY), //
-          ackMode = "AUTO")
-      public void addReqLog(final RrlReqLogAddTo to) {
-          rrlReqLogSvc.add(to);
-      }
+    /**
+    * 添加请求日志
+    *
+    * @param to 添加请求日志的消息体
+    */
+    @RabbitListener(bindings = @QueueBinding(//
+        value = @Queue(XxxAmpqCo.XXXXX), //
+        exchange = @Exchange(XxxAmpqCo.XXXXX), //
+        key = XxxAmpqCo.XXXXX), //
+        ackMode = "AUTO")
+    public void addXxx(final XxxTo to) {
+        xxxSvc.add(to);
+    }
 
   ```
 
-### 3.5. 发布者程序
+### 3.5. 发布者工具
 
 ```java
-@Component
-public class XxxPub {
-    @Resource
-    private AmqpTemplate amqpTemplate;
+public class XxxPubUtils {
+    public static void addXxx(final RabbitTemplate rabbitTemplate, final XxxTo to, final Long sendTimeout) {
+        // 发送消息
+        if (!RabbitTemplateUtils.send(rabbitTemplate, XxxAmpqCo.XXXXX, XxxAmpqCo.XXXXX, to, sendTimeout)) {
+            final String msg = "发送XXXXX的消息失败";
+            log.error(msg);
+            throw new RuntimeException(msg);
+        }
+    }
+}
+```
 
-    
+### 3.6. 调用发布者工具的程序
+
+```java
+@Service
+public class XxxPub {
+
+    @Value("${xxx:5000}")
+    private Long           sendTimeout;
+
+    @Resource
+    private RabbitTemplate rabbitTemplate;
+
+    public void addXxx(final XxxTo to) {
+        RrlPubUtils.addXxx(rabbitTemplate, to, sendTimeout);
+    }
 }
 ```

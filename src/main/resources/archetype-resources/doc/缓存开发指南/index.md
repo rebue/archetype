@@ -7,8 +7,8 @@
 
     ```xml
     <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-cache</artifactId>
+        <groupId>com.github.rebue.sbs</groupId>
+        <artifactId>cache-spring-boot-starter</artifactId>
     </dependency>
     ```
 
