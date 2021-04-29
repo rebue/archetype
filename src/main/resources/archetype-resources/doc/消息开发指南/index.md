@@ -236,7 +236,7 @@ public class XxxPubUtils {
 @Service
 public class XxxPub {
 
-    @Value("${xxx:5000}")
+    @Value("${xxx.send-timeout:5000}")
     private Long           sendTimeout;
 
     @Resource
