@@ -29,7 +29,7 @@ import rebue.robotech.ra.PojoRa;
 import rebue.robotech.ro.Ro;
 
 /**
- * ${table.remarks}控制器
+ * ${table.remarks}
  *
  * @mbg.generated 自动生成的注释，如需修改本注释，请删除本行
  */
