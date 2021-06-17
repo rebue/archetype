@@ -78,6 +78,10 @@ Rebue是一套基于 **SpringCloud** 微服务架构的快速开发框架，特�
 
 Maven Build时，设置Goals为 `clean smart-doc:html` 或 `clean smart-doc:markdown`
 
+### 2.8. 管理API文档
+
+- torna 使用指南请参考: <https://github.com/rebue/archetype/blob/1.2.3/src/main/resources/archetype-resources/doc/torna%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/index.md>
+
 ## 3. 常见问题
 
 ### 3.1. 数据库的配置文件在哪里
