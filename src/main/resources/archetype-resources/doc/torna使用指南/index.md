@@ -75,8 +75,8 @@ docker run --name torna -dp 7700:7700 -v /opt/torna/config:/torna/config --resta
        "appToken": "98ee93e2bfb747658fa818572f60cc50",  // torna平台appToken，在 项目->模块->OpenAPI 中查看
        "openUrl": "http://127.0.0.1:7700/api",          // torna平台地址，填写自己的私有化部署地址
        "debugEnvName": "测试环境",                      // torna测试环境
-       "debugEnvUrl": "http://127.0.0.1:xxxxx"          // torna测试调用微微服务的地址
+       "debugEnvUrl": "http://127.0.0.1:xxxxx"          // torna测试调用微服务的地址
    }
    ```
 
-6. 使用 `Maven Build`，`Goals` 的参数填 `smart-doc:torna-rest`，编译出文档并推送到 `torna` 服务器
+6. 使用 `Maven Build` 编译 `xxx` 项目，`Goals` 的参数填 `smart-doc:torna-rest`，编译出文档并推送到 `torna` 服务器
