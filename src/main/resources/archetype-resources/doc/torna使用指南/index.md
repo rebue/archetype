@@ -25,6 +25,8 @@ mysql.username=torna
 mysql.password=torna
 ```
 
+**注意:** 如果MySQL也是装在docker容器中，查询docker0的IP是什么(我这里是172.17.0.1)，然后修改 `mysql.host` 项的值
+
 ## 3. 创建并运行 `norta` 容器
 
 ```sh
