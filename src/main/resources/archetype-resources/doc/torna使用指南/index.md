@@ -10,7 +10,7 @@
 
 ## 2. 配置数据库链接
 
-复制 [server/boot/src/main/resources/application.properties文件到/opt/torna/config](https://gitee.com/durcframework/torna/blob/master/server/boot/src/main/resources/application.properties) 下，修改数据库连接配置，其内容如下
+复制 [server/boot/src/main/resources/application.properties 文件](https://gitee.com/durcframework/torna/blob/master/server/boot/src/main/resources/application.properties) 到 `/opt/torna/config/` 目录下，修改数据库连接配置，其内容如下
 
 ```ini
 # Server port
