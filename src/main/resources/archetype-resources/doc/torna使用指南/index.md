@@ -10,7 +10,7 @@
 
 ## 2. 配置数据库链接
 
-复制 [server/boot/src/main/resources/application.properties 文件](https://gitee.com/durcframework/torna/blob/master/server/boot/src/main/resources/application.properties) 到 `/opt/torna/config/` 目录下，修改数据库连接配置，其内容如下
+复制 [server/boot/src/main/resources/application.properties](https://gitee.com/durcframework/torna/blob/master/server/boot/src/main/resources/application.properties) 文件到 `/opt/torna/config/` 目录下，修改数据库连接配置，其内容如下
 
 ```ini
 # Server port
@@ -25,7 +25,7 @@ mysql.username=torna
 mysql.password=torna
 ```
 
-**注意:** 如果MySQL也是装在docker容器中，查询docker0的IP是什么(我这里是172.17.0.1)，然后修改 `mysql.host` 项的值
+**注意:** 如果MySQL也是装在docker容器中，查询docker0的IP是什么(我这里是172.17.0.1)，然后修改到 `mysql.host` 项的IP值
 
 ## 3. 创建并运行 `norta` 容器
 
