@@ -35,7 +35,9 @@ docker run --name torna -dp 7700:7700 -v /opt/torna/config:/torna/config --resta
 
 ## 4. 浏览器访问
 
-<http://ip:7700>
+<http://127.0.0.1:7700>
+
+**注意:** 如果是部署到了其它服务器上，请将 `127.0.0.1` 改为相应的服务器地址
 
 ## 5. 体验账号
 
