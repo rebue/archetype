@@ -8,7 +8,7 @@ import ${modulePackage}.to.${entityName}PageTo;
 import rebue.robotech.api.BaseApi;
 
 /**
- * ${table.remarks}API
+ * ${table.remarks}的API
  *
  * @mbg.generated 自动生成的注释，如需修改本注释，请删除本行
  */
