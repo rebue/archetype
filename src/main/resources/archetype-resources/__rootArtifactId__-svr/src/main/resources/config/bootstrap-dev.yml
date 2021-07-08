@@ -1,10 +1,6 @@
 # 开发环境的配置
 debug: true
 
-robotech:
-  # 用于生成ID，多服务实例情况下不要设置为0，应不同实例分配一个唯一的id，这样以此生成的ID才不会重复 
-  appid: 1
-
 server:
   # 自定义端口号，方便开发测试
   port: ${microServerPort}
