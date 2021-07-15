@@ -1,6 +1,15 @@
 # 配置中心中的配置
+curator:
+  connect-string: zookeeper_zoo1:2181,zookeeper_zoo2:2181,zookeeper_zoo3:2181
+
 spring:
   datasource:
     url: ${jdbcUrl}
     username: ${jdbcUser}
     password: ${jdbcPswd}
+  rabbitmq:
+    host: rabbitmq_rabbitmq
+    port: 5672
+    username: guest
+    password: xxxxxx
+    virtual-host: /

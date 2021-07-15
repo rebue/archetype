@@ -1,6 +1,6 @@
 # 生成环境的配置
 logging:
-  config: classpath:config/log4j2.xml
+  config: config/log4j2.xml
   level:
     root: info
     rebue: trace
@@ -15,9 +15,9 @@ spring:
   cloud:
     nacos:
       config:
-        server-addr: ${nacosUrl}
+        server-addr: nacos_nacos1:8848,nacos_nacos2:8848,nacos_nacos3:8848
       discovery:
-        server-addr: ${nacosUrl}
+        server-addr: nacos_nacos1:8848,nacos_nacos2:8848,nacos_nacos3:8848
     sentinel:
       enabled: false
   zipkin:

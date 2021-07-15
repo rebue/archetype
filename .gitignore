@@ -18,3 +18,4 @@ gradlew
 gradlew.bat
 settings.gradle
 *.iml
+maven-local.properties
