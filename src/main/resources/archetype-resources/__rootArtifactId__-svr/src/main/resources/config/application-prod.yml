@@ -6,10 +6,10 @@ spring:
   datasource:
     url: ${jdbcUrl}
     username: ${jdbcUser}
-    password: ${jdbcPswd}
+    password: ******
   rabbitmq:
     host: rabbitmq_rabbitmq
     port: 5672
     username: guest
-    password: xxxxxx
+    password: ******
     virtual-host: /
