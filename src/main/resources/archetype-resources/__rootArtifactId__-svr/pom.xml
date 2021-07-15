@@ -80,6 +80,40 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default</id>
+						<!-- 绑定到install阶段执行 -->
+						<!-- <phase>install</phase> -->
+						<!-- 绑定到deploy阶段执行 -->
+						<!-- <phase>deploy</phase> -->
+						<!-- 不绑定到任何阶段，也就不会执行 -->
+						<phase></phase>
+						<goals>
+							<goal>build</goal>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- 此选项指定在settings.xml文件中设置的server -->
+					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+					<!-- 部署到私服，${my-docker.host}在settins.xml中统一配置 -->
+					<repository>${my-docker.host}/${docker.image.prefix}/${project.artifactId}</repository>
+					<!-- 部署到hub.docker.com -->
+					<!-- <repository>${docker.image.prefix}/${project.artifactId}</repository> -->
+					<tag>${project.version}</tag>
+					<buildArgs>
+						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
+					<verbose>true</verbose>
+					<googleContainerRegistryEnabled>false</googleContainerRegistryEnabled>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
