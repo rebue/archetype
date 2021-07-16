@@ -40,8 +40,8 @@ RUN sed -i 's/active: dev/active: prod/' config/bootstrap.yml
 ### 1.2. `xxx-svr` 项目的 `maven-local.properties`
 
 ```ini
-# 主机名:端口号/xxx
-my-docker.host=xxxxx:xxxxx/xxxx
+# 主机名:端口号
+my-docker.host=xxxxx:xxxxx
 # Docker镜像的前缀(镜像的组织)
 docker.image.prefix=rebue
 ```
@@ -99,10 +99,10 @@ vi ~/.m2/settings.xml
 
     <!-- Docker私服 -->
     <server>
-      <!-- 主机名(可带端口号) -->
-      <id>xxxxx</id>
+      <!-- 主机名:端口号 -->
+      <id>xxxxx:xxxxx</id>
       <username>my-deployment</username>
-      <password>xxxxxx</password>
+      <password>********</password>
     </server>
 
     ....
@@ -111,35 +111,38 @@ vi ~/.m2/settings.xml
 
 ## 2. 项目打包制作镜像并上传Docker仓库(hubdocker或私服)
 
-启用上节 `pom.xml` 文件中的 `<phase>install</phase>` 节点，然后用 `Maven Build`，`clean install`
-
-- MacOS 注意: 如果报 `java.io.IOException: Cannot run program "docker-credential-osxkeychain"`,
-  请 `vi ~/.docker/config.json` 并删除 `"credsStore": "osxkeychain",` 这一行
-- 如果报 `Get https://xxxxxx:xxxxx/v2/: http: server gave HTTP response to HTTPS client`
-  - MacOS: 请 `vi ~/.docker/daemon.json`
-  - 其它Linux: 请 `/etc/docker/daemon.json`
+- 步骤:
+  - 启用上节 `pom.xml` 文件中的 `<phase>install</phase>` 节点
+    - 注意: 打开注释后让只要编译有 `install` 阶段就会开启制作镜像并上传，所以记得在完成后再重新注释起来
+  - 然后用 `Maven Build`，`clean install`
+- 报错:
+  - MacOS 注意: 如果报 `java.io.IOException: Cannot run program "docker-credential-osxkeychain"`,
+    请 `vi ~/.docker/config.json` 并删除 `"credsStore": "osxkeychain",` 这一行
+  - 如果报 `Get https://xxxxxx:xxxxx/v2/: http: server gave HTTP response to HTTPS client`
+    - MacOS: 请 `vi ~/.docker/daemon.json`
+    - 其它Linux: 请 `/etc/docker/daemon.json`
   
-  并添加内容如下:
+    并添加内容如下:
 
-  ```json
-  {
-    ....
+    ```json
+    {
+      ....
 
-    "insecure-registries": [
-      "xxxxxx:xxxx",
-      "xxxxxx:xxxx",
-    ]
+      "insecure-registries": [
+        "xxxxxx:xxxx",
+        "xxxxxx:xxxx"
+      ]
 
-    ....
-  }
-  ```
+      ....
+    }
+    ```
 
-  然后重启 Docker
+    然后重启 Docker
 
-  ```sh
-  systemctl daemon-reload
-  systemctl restart docker
-  ```
+    ```sh
+    systemctl daemon-reload
+    systemctl restart docker
+    ```
 
 ## 3. 准备服务器环境
 
