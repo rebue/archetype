@@ -1,4 +1,6 @@
 # 配置中心中的配置
+
+# 生成workid使用
 curator:
   connect-string: zookeeper_zoo1:2181,zookeeper_zoo2:2181,zookeeper_zoo3:2181
 
