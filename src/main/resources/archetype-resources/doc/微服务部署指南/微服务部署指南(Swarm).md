@@ -146,56 +146,7 @@ vi ~/.m2/settings.xml
 
 ## 3. 准备服务器环境
 
-### 3.1. 安装Docker及相关环境
-
-- Docker
-  <https://github.com/nnzbz/notes/blob/master/docker/Docker%E5%85%A5%E9%97%A8.md>
-- Swarm
-  <https://github.com/nnzbz/notes/blob/master/docker/Swarm/Swarm%E7%AE%80%E4%BB%8B.md>
-
-### 3.2. 创建并运行 `Docker` 私服
-
-**注意:** 请使用文档中的 `Swarm` 安装方案
-<https://github.com/nnzbz/notes/blob/master/docker/%E5%B8%B8%E7%94%A8%E9%95%9C%E5%83%8F%E4%B8%8E%E5%AE%B9%E5%99%A8/Nexus.md>
-<https://github.com/nnzbz/notes/blob/master/docker/Docker%E7%A7%81%E6%9C%8D.md>
-
-### 3.3. 创建虚拟网络
-
-提供给docker容器互联使用
-
-```sh
-docker network create -d overlay --attachable rebue
-```
-
-### 3.4. 创建并运行常用容器
-
-**注意:** 请使用文档中的 `Swarm` 安装方案，在 Docker Compose文件中加入如下内容
-
-```yaml
-networks:
-  default:
-    external: true
-    name: rebue
-```
-
-- Nginx
-  <https://github.com/nnzbz/notes/blob/master/docker/%E5%B8%B8%E7%94%A8%E9%95%9C%E5%83%8F%E4%B8%8E%E5%AE%B9%E5%99%A8/nginx.md>
-- ZooKeeper
-  <https://github.com/nnzbz/notes/blob/master/docker/%E5%B8%B8%E7%94%A8%E9%95%9C%E5%83%8F%E4%B8%8E%E5%AE%B9%E5%99%A8/Zookeeper.md>
-- MySQL
-  <https://github.com/nnzbz/notes/blob/master/docker/%E5%B8%B8%E7%94%A8%E9%95%9C%E5%83%8F%E4%B8%8E%E5%AE%B9%E5%99%A8/MySQL.md>
-- Redis
-  <https://github.com/nnzbz/notes/blob/master/docker/%E5%B8%B8%E7%94%A8%E9%95%9C%E5%83%8F%E4%B8%8E%E5%AE%B9%E5%99%A8/Redis.md>
-- RabbitMQ
-  <https://github.com/nnzbz/notes/blob/master/docker/%E5%B8%B8%E7%94%A8%E9%95%9C%E5%83%8F%E4%B8%8E%E5%AE%B9%E5%99%A8/RabbitMQ.md>
-- MinIO
-  <https://github.com/nnzbz/notes/blob/master/docker/%E5%B8%B8%E7%94%A8%E9%95%9C%E5%83%8F%E4%B8%8E%E5%AE%B9%E5%99%A8/MinIO.md>
-- xxl-job-admin
-  <https://github.com/nnzbz/notes/blob/master/docker/%E5%B8%B8%E7%94%A8%E9%95%9C%E5%83%8F%E4%B8%8E%E5%AE%B9%E5%99%A8/xxl-job-admin.md>
-- Nacos
-  <https://github.com/nnzbz/notes/blob/master/docker/%E5%B8%B8%E7%94%A8%E9%95%9C%E5%83%8F%E4%B8%8E%E5%AE%B9%E5%99%A8/Nacos.md>
-
-### 3.5. 创建数据库
+### 3.1. 创建项目数据库
 
 1. 创建 `schema`
 2. 创建账户并授权
@@ -211,7 +162,7 @@ networks:
 
 - 创建数据库的脚本在 项目下的 `db/script/create-table.sql` 文件中
 
-### 3.6. 在配置中心中配置项目的信息
+### 3.2. 在配置中心中配置项目的信息
 
 1. 进入配置中心
   <http://xxxxx:8848/nacos/>
@@ -227,7 +178,7 @@ networks:
    - 配置内容
      `xxx-svr` 项目的 `application-prod.yml` 文件的内容，并根据实际情况修改相应内容
 
-### 3.7. `Docker configs`
+### 3.3. `Docker configs`
 
 - 准备 `bootstrap-prod.yml` 文件
   
@@ -237,7 +188,7 @@ networks:
 
   内容与项目中的同名文件相同
 
-### 3.8. `Docker Compose`
+### 3.4. `Docker Compose`
 
 ```sh
 mkdir -p /usr/local/xxx-svr
