@@ -22,5 +22,5 @@ spring:
       probability: 1
   # 链路追踪可视化服务器
   zipkin:
-    # 服务器启动地址
+    # 服务器地址
     base-url: http://zipkin:9411
