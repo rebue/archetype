@@ -20,10 +20,6 @@
 		<requiredProperty key="nacosUrl">
 			<defaultValue>127.0.0.1:8848</defaultValue>
 		</requiredProperty>
-		<!-- Zipkin服务访问URL -->
-		<requiredProperty key="zipkinUrl">
-			<defaultValue>127.0.0.1:9411</defaultValue>
-		</requiredProperty>
 		<!-- jdbc数据库驱动 -->
 		<requiredProperty key="jdbcDriver">
 			<defaultValue>com.mysql.cj.jdbc.Driver</defaultValue>

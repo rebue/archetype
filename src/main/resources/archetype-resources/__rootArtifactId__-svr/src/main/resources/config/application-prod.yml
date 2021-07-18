@@ -15,3 +15,12 @@ spring:
     username: guest
     password: ******
     virtual-host: /
+  # 链路追踪采集器
+  sleuth:
+    sampler:
+      # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
+      probability: 1
+  # 链路追踪可视化服务器
+  zipkin:
+    # 服务器启动地址
+    base-url: http://zipkin:9411

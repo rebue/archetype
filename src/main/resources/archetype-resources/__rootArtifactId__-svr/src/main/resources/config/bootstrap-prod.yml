@@ -15,19 +15,8 @@ spring:
   cloud:
     nacos:
       config:
-        server-addr: nacos_nacos1:8848,nacos_nacos2:8848,nacos_nacos3:8848
+        server-addr: nacos1:8848,nacos2:8848,nacos3:8848
       discovery:
-        server-addr: nacos_nacos1:8848,nacos_nacos2:8848,nacos_nacos3:8848
+        server-addr: nacos1:8848,nacos2:8848,nacos3:8848
     sentinel:
       enabled: false
-  zipkin:
-    base-url: ${zipkinUrl}
-  sleuth:
-    sampler:
-      # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
-      probability: 1
-
-# 是否提供在线API文档服务
-springdoc:
-  api-docs:
-    enabled: false
