@@ -1,45 +1,15 @@
 # torna使用指南
 
-[TOC]
+## 1. 部署
 
-## 1. 创建 `torna` 数据库
 
-<https://gitee.com/durcframework/torna/blob/master/mysql.sql>
-如果上面的地址失效，可以使用下面的地址
-<https://github.com/rebue/archetype/blob/1.2.3/src/main/resources/archetype-resources/doc/torna使用指南/torna.sql>
-
-## 2. 配置数据库链接
-
-复制 [server/boot/src/main/resources/application.properties](https://gitee.com/durcframework/torna/blob/master/server/boot/src/main/resources/application.properties) 文件到 `/opt/torna/config/` 目录下，修改数据库连接配置，其内容如下
-
-```ini
-# Server port
-server.port=7700
-
-# MySQL host
-mysql.host=127.0.0.1:3306
-# Schema name
-mysql.schema=torna
-# Insure the account can run CREATE/ALTER sql.
-mysql.username=torna
-mysql.password=torna
-```
-
-**注意:** 如果MySQL也是装在docker容器中，查询docker0的IP是什么(我这里是172.17.0.1)，然后修改到 `mysql.host` 项的IP值
-
-## 3. 创建并运行 `norta` 容器
-
-```sh
-docker run --name torna -dp 7700:7700 -v /opt/torna/config:/torna/config --restart=always tanghc2020/torna
-```
-
-## 4. 浏览器访问
+## 2. 浏览器访问
 
 <http://127.0.0.1:7700>
 
 **注意:** 如果是部署到了其它服务器上，请将 `127.0.0.1` 改为相应的服务器地址
 
-## 5. 体验账号
+## 3. 体验账号
 
 ```ini
 密码均为：123456
@@ -59,12 +29,12 @@ docker run --name torna -dp 7700:7700 -v /opt/torna/config:/torna/config --resta
 研发二部-访客赵六：dev2guest_zhaoliu@torna.cn
 ```
 
-## 6. 使用指南
+## 4. 使用指南
 
 1. 使用上面的超级管理员账号登录系统
 2. 创建空间(一般以公司名称或小组名称命名)
 3. 进入空间，创建项目
-4. 进入项目，创建模块
+4. 进入项目，创建模块 `xxx-svr`
 5. 在 `xxx-svr` 的 `smart-doc.json` 文件中添加内容如下:
 
    ```json
