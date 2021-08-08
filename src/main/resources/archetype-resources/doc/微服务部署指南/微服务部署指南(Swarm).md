@@ -6,9 +6,9 @@
 
 ### 1.1. Dockerfile
 
-在 `xxx-svr` 项目的的 `Dockerfile` 文件，内容如下
+在 `xxx-svr` 项目的 `Dockerfile` 文件，内容如下
 
-```Dockerfile
+```Dockerfile{.line-numbers}
 # 基础镜像
 FROM nnzbz/spring-boot-app:latest
 # 镜像的作者和邮箱
@@ -40,7 +40,7 @@ RUN sed -i 's/active: dev/active: prod/' config/bootstrap.yml
 ### 1.2. `xxx-svr` 项目的 `maven-local.properties`
 
 ```ini
-# 主机名:端口号
+# Docker私服的主机名:端口号
 my-docker.host=xxxxx:xxxxx
 # Docker镜像的前缀(镜像的组织)
 docker.image.prefix=rebue
@@ -73,10 +73,10 @@ docker.image.prefix=rebue
   <configuration>
     <!-- 此选项指定在settings.xml文件中设置的server -->
     <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
-    <!-- 部署到私服，${my-docker.host}在settins.xml中统一配置 -->
-    <repository>${my-docker.host}/${docker.image.prefix}/${project.artifactId}</repository>
+    <!-- 部署到私服 -->
+    <!-- <repository>${my-docker.host}/${docker.image.prefix}/${project.artifactId}</repository> -->
     <!-- 部署到hub.docker.com -->
-    <!-- <repository>{docker.image.prefix}/${project.artifactId}</repository> -->
+    <repository>${docker.image.prefix}/${project.artifactId}</repository>
     <tag>${project.version}</tag>
     <buildArgs>
       <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
@@ -105,6 +105,13 @@ vi ~/.m2/settings.xml
       <password>********</password>
     </server>
 
+    <!-- hub.docker.com -->
+    <server>
+        <id>docker.io</id>
+        <username>nnzbz</username>
+        <password>xxxxxxxx</password>
+    </server>
+
     ....
 <servers>
 ```
@@ -115,7 +122,16 @@ vi ~/.m2/settings.xml
   - 启用上节 `pom.xml` 文件中的 `<phase>install</phase>` 节点
     - 注意: 打开注释后让只要编译有 `install` 阶段就会开启制作镜像并上传，所以记得在完成后再重新注释起来
   - 然后用 `Maven Build`，`clean install`
-- 报错:
+  - 上传latest
+
+    ```sh
+    docker tag xxx/xxx-svr:1.2.4 xxx/xxx-svr:latest
+    docker push xxx/xxx-svr:latest
+    docker tag rebue/gateway-server:1.2.4 rebue/gateway-server:latest
+    docker push rebue/gateway-server:latest
+    ```
+
+- 常见报错:
   - MacOS 注意: 如果报 `java.io.IOException: Cannot run program "docker-credential-osxkeychain"`,
     请 `vi ~/.docker/config.json` 并删除 `"credsStore": "osxkeychain",` 这一行
   - 如果报 `Get https://xxxxxx:xxxxx/v2/: http: server gave HTTP response to HTTPS client`
@@ -178,12 +194,13 @@ vi ~/.m2/settings.xml
    - 配置内容
      `xxx-svr` 项目的 `application-prod.yml` 文件的内容，并根据实际情况修改相应内容
 
-### 3.3. `Docker configs`
+### 3.3. `Docker Volume` 配置文件
 
 - 准备 `bootstrap-prod.yml` 文件
   
   ```sh
-  vi /usr/local/xxx-svr/bootstrap-prod.yml
+  mkdir -p /usr/local/xxx-svr/config
+  vi /usr/local/xxx-svr/config/bootstrap-prod.yml
   ```
 
   内容与项目中的同名文件相同
@@ -191,24 +208,22 @@ vi ~/.m2/settings.xml
 ### 3.4. `Docker Compose`
 
 ```sh
-mkdir -p /usr/local/xxx-svr
 vi /usr/local/xxx-svr/stack.yml
 ```
+
+**注意:** 修改配置中的 `xxxx` 为实际的值
 
 ```yml{.line-numbers}
 version: "3.9"
 services:
   xxx-svr:
-    image: xxx/xxx-svr:x.x.x
+    image: xxxx/xxx-svr
     environment:
       # 最好使用此设定时区，其它镜像也可以使用
       - TZ=CST-8
-    configs:
-      - source: bootstrap-prod.yml
-        target: /usr/local/myservice/config/bootstrap-prod.yml
-configs:
-  bootstrap-prod.yml:
-    file: /usr/local/xxx-svr/bootstrap-prod.yml
+    volumes:
+      # 配置文件目录
+      - /usr/local/xxx-svr/config/bootstrap-prod.yml:/usr/local/myservice/config/bootstrap-prod.yml
 networks:
   default:
     external: true
@@ -226,4 +241,16 @@ docker stack deploy -c /usr/local/xxx-svr/stack.yml xxx-svr
 
 ```sh
 docker service logs -f xxx-svr_xxx-svr
+```
+
+## 6. 强制重启服务
+
+```sh
+docker service update --force xxx-svr_xxx-svr
+```
+
+## 7. 升级微服务版本
+
+```sh
+docker pull xxxx/xxx-svr && docker service update --force xxx-svr_xxx-svr
 ```
