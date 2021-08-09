@@ -2,7 +2,7 @@
 
 [TOC]
 
-## 1. 准备项目环境
+## 1. 检查项目环境
 
 ### 1.1. Dockerfile
 
@@ -116,7 +116,7 @@ vi ~/.m2/settings.xml
 <servers>
 ```
 
-## 2. 项目打包制作镜像并上传Docker仓库(hubdocker或私服)
+## 2. 制作镜像并上传
 
 - 步骤:
   - 启用上节 `pom.xml` 文件中的 `<phase>install</phase>` 节点
@@ -125,10 +125,8 @@ vi ~/.m2/settings.xml
   - 上传latest
 
     ```sh
-    docker tag xxx/xxx-svr:1.2.4 xxx/xxx-svr:latest
-    docker push xxx/xxx-svr:latest
-    docker tag rebue/gateway-server:1.2.4 rebue/gateway-server:latest
-    docker push rebue/gateway-server:latest
+    docker tag xxxxx/xxx-svr:1.2.4 xxxxx/xxx-svr:latest
+    docker push xxxxx/xxx-svr:latest
     ```
 
 - 常见报错:
@@ -207,17 +205,20 @@ vi ~/.m2/settings.xml
 
 ### 3.4. `Docker Compose`
 
+**注意:** 修改 `xxxx` 和 `xxx` 为实际的值
+
+- xxxxx 镜像组织
+- xxx-svr 微服务名称
+
 ```sh
 vi /usr/local/xxx-svr/stack.yml
 ```
-
-**注意:** 修改配置中的 `xxxx` 为实际的值
 
 ```yml{.line-numbers}
 version: "3.9"
 services:
   xxx-svr:
-    image: xxxx/xxx-svr
+    image: xxxxx/xxx-svr
     environment:
       # 最好使用此设定时区，其它镜像也可以使用
       - TZ=CST-8
@@ -229,7 +230,6 @@ networks:
     external: true
     name: rebue
 ```
-
 
 ## 4. 服务器部署微服务
 
@@ -252,5 +252,5 @@ docker service update --force xxx-svr_xxx-svr
 ## 7. 升级微服务版本
 
 ```sh
-docker pull xxxx/xxx-svr && docker service update --force xxx-svr_xxx-svr
+docker pull xxxxx/xxx-svr && docker service update --force xxx-svr_xxx-svr
 ```
