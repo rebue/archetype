@@ -2,25 +2,38 @@
 
 # 生成workid使用
 curator:
-  connect-string: zookeeper_zoo1:2181,zookeeper_zoo2:2181,zookeeper_zoo3:2181
+  connect-string: zoo1:2181,zoo2:2181,zoo3:2181
 
 spring:
   datasource:
-    url: ${jdbcUrl}
+    url: jdbc:mysql://mysql:3306/${artifactId}?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
     username: ${jdbcUser}
-    password: ******
+    password: xxxxxxxx
   rabbitmq:
-    host: rabbitmq_rabbitmq
+    host: rabbitmq
     port: 5672
     username: guest
-    password: ******
+    password: xxxxxxxx
     virtual-host: /
+  cloud:
+    sentinel:
+      enabled: false
+  # 链路追踪可视化服务器
+  zipkin:
+    base-url: zipkin:9411
   # 链路追踪采集器
   sleuth:
     sampler:
       # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
       probability: 1
-  # 链路追踪可视化服务器
-  zipkin:
-    # 服务器地址
-    base-url: http://zipkin:9411
+
+logging:
+  level:
+    root: info
+    rebue: trace
+    '[org.apache.http]': warn
+    '[com.netflix.discovery]': warn
+    '[org.springframework.context.event.SimpleApplicationEventMulticaster]': warn
+    '[org.springframework.dao]': debug
+    '[org.springframework.cloud]': warn
+    '[com.alibaba.nacos.client.config.impl.ClientWorker]': warn

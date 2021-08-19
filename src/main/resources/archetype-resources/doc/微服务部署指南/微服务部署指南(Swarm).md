@@ -170,8 +170,7 @@ vi ~/.m2/settings.xml
    ```
 
    ```sh
-   grant all privileges on xxx.* to 'xxx'@'%' identified by '********';
-   FLUSH PRIVILEGES;
+   grant all privileges on xxx.* to 'xxx'@'%' identified by '密码';
    ```
 
 - 创建数据库的脚本在 项目下的 `db/script/create-table.sql` 文件中
