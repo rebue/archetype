@@ -18,7 +18,7 @@
 		</requiredProperty>
 		<!-- Nacos服务访问URL -->
 		<requiredProperty key="nacosUrl">
-			<defaultValue>127.0.0.1:8848</defaultValue>
+			<defaultValue>nacos:8848</defaultValue>
 		</requiredProperty>
 		<!-- jdbc数据库驱动 -->
 		<requiredProperty key="jdbcDriver">
@@ -26,7 +26,7 @@
 		</requiredProperty>
 		<!-- jdbc链接 -->
 		<requiredProperty key="jdbcUrl">
-			<defaultValue>jdbc:mysql://127.0.0.1:3306/${artifactId}?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true</defaultValue>
+			<defaultValue>jdbc:mysql://mysql:3306/${artifactId}?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true</defaultValue>
 		</requiredProperty>
 		<!-- jdbc用户名称 -->
 		<requiredProperty key="jdbcUser">
@@ -68,7 +68,7 @@
 			</includes>
 		</fileSet>
 		<fileSet encoding="UTF-8">
-			<directory></directory>
+			<directory>.</directory>
 			<includes>
 				<include>.gitignore</include>
 			</includes>
@@ -119,7 +119,7 @@
 		<module id="${rootArtifactId}-svr" dir="__rootArtifactId__-svr" name="${rootArtifactId}-svr">
 			<fileSets>
 				<fileSet filtered="true" encoding="UTF-8">
-					<directory></directory>
+					<directory>.</directory>
 					<includes>
 						<include>Dockerfile</include>
 						<include>maven-local.properties</include>

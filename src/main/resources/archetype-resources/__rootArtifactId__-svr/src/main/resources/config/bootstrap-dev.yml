@@ -5,7 +5,12 @@ server:
   # 自定义端口号，方便开发测试
   port: ${microServerPort}
 
+curator:
+  connect-string: zoo:2181
+
 spring:
+  shardingsphere:
+    enabled: false
   datasource:
     url: ${jdbcUrl}
     username: ${jdbcUser}
