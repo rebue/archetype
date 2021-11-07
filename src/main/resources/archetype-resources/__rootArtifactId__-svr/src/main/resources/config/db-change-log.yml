@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0
+      author: zbz
+      comments: 初始化数据库
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: classpath:db-change-log/000-create-table.sql
+        - sqlFile:
+            encoding: utf8
+            path: classpath:db-change-log/000-init.sql

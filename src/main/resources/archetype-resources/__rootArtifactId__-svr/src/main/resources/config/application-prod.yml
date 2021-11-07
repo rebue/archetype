@@ -5,10 +5,27 @@ curator:
   connect-string: zoo1:2181,zoo2:2181,zoo3:2181
 
 spring:
-  datasource:
-    url: jdbc:mysql://mysql:3306/${artifactId}?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
-    username: ${jdbcUser}
-    password: xxxxxxxx
+  shardingsphere:
+    datasource:
+      names: master,slave
+      master:
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://mysql1:3316/${artifactId}
+        type: com.zaxxer.hikari.HikariDataSource
+        username: ${artifactId}
+        password: xxxxxxxx
+      slave:
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://mysql2:3326/${artifactId}
+        type: com.zaxxer.hikari.HikariDataSource
+        username: ${artifactId}
+        password: xxxxxxxx
+    rules:
+      readwrite-splitting:
+        data-sources:
+          masterslave:
+            write-data-source-name: master
+            read-data-source-names: slave
   rabbitmq:
     host: rabbitmq
     port: 5672

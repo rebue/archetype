@@ -11,6 +11,12 @@ curator:
 spring:
   shardingsphere:
     enabled: false
+  liquibase:
+    # 升级数据库的配置文件的地址
+    change-log: classpath:config/db-change-log.yml
+    url: ${jdbcUrl}
+    user: ${jdbcUser}
+    password: ${jdbcPswd}
   datasource:
     url: ${jdbcUrl}
     username: ${jdbcUser}
