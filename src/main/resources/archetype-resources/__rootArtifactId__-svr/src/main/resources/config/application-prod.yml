@@ -5,18 +5,24 @@ curator:
   connect-string: zoo1:2181,zoo2:2181,zoo3:2181
 
 spring:
+  liquibase:
+    # 升级数据库的配置文件的地址
+    change-log: classpath:config/db-change-log.yml
+    url: jdbc:mysql://mysql1:3306/${artifactId}?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    user: ${artifactId}
+    password: xxxxxxxx
   shardingsphere:
     datasource:
       names: master,slave
       master:
         driver-class-name: com.mysql.jdbc.Driver
-        jdbc-url: jdbc:mysql://mysql1:3316/${artifactId}
+        jdbc-url: jdbc:mysql://mysql1:3316/${artifactId}?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
         type: com.zaxxer.hikari.HikariDataSource
         username: ${artifactId}
         password: xxxxxxxx
       slave:
         driver-class-name: com.mysql.jdbc.Driver
-        jdbc-url: jdbc:mysql://mysql2:3326/${artifactId}
+        jdbc-url: jdbc:mysql://mysql2:3326/${artifactId}?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
         type: com.zaxxer.hikari.HikariDataSource
         username: ${artifactId}
         password: xxxxxxxx
