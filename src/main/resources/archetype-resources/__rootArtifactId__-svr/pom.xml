@@ -22,6 +22,17 @@
 			<artifactId>robotech-bll</artifactId>
 		</dependency>
 
+		<!-- 读写分离 -->
+		<dependency>
+			<groupId>com.github.rebue.sbs</groupId>
+			<artifactId>shardingsphere-spring-boot-starter</artifactId>
+		</dependency>
+		<!-- 将shardingsphere中的curator-client的版本进行统一管理 -->
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-client</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>com.github.rebue.sbs</groupId>
 			<artifactId>sb-spring-boot-starter</artifactId>
@@ -44,11 +55,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 
 		<dependency>
