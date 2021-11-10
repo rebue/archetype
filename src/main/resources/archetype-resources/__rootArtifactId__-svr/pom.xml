@@ -33,6 +33,18 @@
 			<artifactId>curator-client</artifactId>
 		</dependency>
 
+		<!-- 数据库版本控制 -->
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>
+		<!-- 经测试，liquibase目前不能使用8.0.23~8.0.27版本的mysql的jdbc库 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.22</version><!--$NO-MVN-MAN-VER$ -->
+		</dependency>
+
 		<dependency>
 			<groupId>com.github.rebue.sbs</groupId>
 			<artifactId>sb-spring-boot-starter</artifactId>
