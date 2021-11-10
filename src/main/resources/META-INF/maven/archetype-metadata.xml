@@ -51,21 +51,7 @@
 			<directory>doc</directory>
 		</fileSet>
 		<fileSet encoding="UTF-8">
-			<directory>db/script</directory>
-			<includes>
-				<include>**/*.sql</include>
-			</includes>
-		</fileSet>
-		<fileSet encoding="UTF-8">
-			<directory>db/model</directory>
-			<includes>
-			</includes>
-		</fileSet>
-		<fileSet encoding="UTF-8">
-			<directory>db</directory>
-			<includes>
-				<include>**/*.md</include>
-			</includes>
+			<directory>model</directory>
 		</fileSet>
 		<fileSet encoding="UTF-8">
 			<directory>.</directory>
