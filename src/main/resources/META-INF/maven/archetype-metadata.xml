@@ -54,7 +54,8 @@
 			<directory>model</directory>
 		</fileSet>
 		<fileSet encoding="UTF-8">
-			<directory>.</directory>
+			<!-- 这里如果填.或./都会导致.gitignore不能生成在新项目 -->
+			<directory></directory>
 			<includes>
 				<include>.gitignore</include>
 			</includes>
@@ -105,7 +106,7 @@
 		<module id="${rootArtifactId}-svr" dir="__rootArtifactId__-svr" name="${rootArtifactId}-svr">
 			<fileSets>
 				<fileSet filtered="true" encoding="UTF-8">
-					<directory>.</directory>
+					<directory>./</directory>
 					<includes>
 						<include>Dockerfile</include>
 						<include>maven-local.properties</include>
