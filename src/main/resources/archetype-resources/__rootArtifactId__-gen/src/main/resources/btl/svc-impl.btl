@@ -34,6 +34,7 @@ import ${modulePackage}.svc.${entityName}Svc;
 import rebue.robotech.dic.ResultDic;
 import rebue.robotech.ra.IdRa;
 import rebue.robotech.ro.Ro;
+import rebue.robotech.svc.BaseSvc;
 import rebue.robotech.svc.impl.BaseSvcImpl;
 
 /**
