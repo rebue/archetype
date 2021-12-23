@@ -70,6 +70,9 @@ st->op1->op2->op3->op4->op5->op6->op7->op8->e
   ![排除比较unique2.png](排除比较unique2.png)
 
 - 可以在生成脚本后查找脚本中是否有 `   key ` 来检查
+### 物理模型中设置unique字段
+
+- MySQL物理模型中，双击表，设置Keys，选择要修改的key，编辑 -> MySQL -> Unique key
 
 ### 6.2. 如果是非负数必须设置无符号的unsigned
 
