@@ -40,8 +40,6 @@
    ```json
    {
        ....
-       "appKey": "20210617855105369637126144",              // torna平台对接appKey，在 空间->开放用户 中查看
-       "secret": "71T56-65R2Hc>Afu2YfBRcogROjezZTD",        // torna平台secret，在 空间->开放用户 中查看
        "appToken": "98ee93e2bfb747658fa818572f60cc50",      // torna平台appToken，在 项目->模块->OpenAPI 中查看
        "openUrl": "http://127.0.0.1:7700/api",              // torna平台地址，填写自己的私有化部署地址
        "debugEnvName": "测试环境",                           // torna环境名称(正式/测试)
