@@ -2,6 +2,7 @@
 CURRENT_PATH=$(cd "$(dirname "$0")";pwd)
 cd $CURRENT_PATH
 SVR_NAME=$(basename `pwd`)
+VERSION=$(echo $(perl -lne 'if (/<version>(.*?)<\/version>/){print $1;last;}' pom.xml))
 read -p  "请输入远程主机地址：" REMOTE_HOST
 read -p  "请输入登录远程主机地址的账号：" REMOTE_LOGIN_NAME
 if [ -n "${REMOTE_LOGIN_NAME}" ];then
@@ -40,37 +41,37 @@ done
 
 echo ===============================
 echo 参数详情
-echo 远程主机地址：$REMOTE_HOST
-echo 远程登录账户：$REMOTE_LOGIN_NAME
-echo 微服务的名称：$SVR_NAME
-echo nacos部署模式:$NACOS_MODLE
+echo 远程主机地址  ：$REMOTE_HOST
+echo 远程登录账户  ：$REMOTE_LOGIN_NAME
+echo 微服务的名称  ：$SVR_NAME
+echo 微服务的版本  ：$VERSION
+echo nacos部署模式 ：$NACOS_MODLE
 echo ===============================
 
-#判断服务器是否存在stack.yml文件
-if  ssh ${REMOTE_LOGIN_NAME}${REMOTE_HOST} test -e ${SVR_FILE};then
-	echo "服务器已经存在${SVR_FILE}"
+# 判断本地是否存在stack.yml
+if [  -f "$LOC_FILE" ];then
+	echo "本地已存在${LOC_FILE}"
 else
-	#判断本地是否存在stack.yml
-	if [  -f "$LOC_FILE" ];then
-		echo "本地已存在${LOC_FILE}"
-	else
-		touch $LOC_FILE
-		echo "version: "3.9"" >>$LOC_FILE
-		echo "services:" >>$LOC_FILE
-		echo "  $SVR_NAME:" >>$LOC_FILE
-		read -p "请输入image（xxxx/${SVR_NAME}）：" IMAGE_NAME
-		IMAGE="$IMAGE_NAME/$SVR_NAME"
-		echo "    image: $IMAGE" >>$LOC_FILE
-		echo "    environment:" >>$LOC_FILE
-		echo "      - TZ=CST-8" >> $LOC_FILE
-		echo "    volumes:" >> $LOC_FILE
-		echo "      - /usr/local/$SVR_NAME/config/bootstrap-prod.yml:/usr/local/myservice/config/bootstrap-prod.yml" >> $LOC_FILE
-		echo "networks:" >> $LOC_FILE
-		echo "  default:" >> $LOC_FILE
-		echo "    external: true" >> $LOC_FILE
-		echo "    name: rebue" >> $LOC_FILE
-		echo "创建本地${LOC_FILE}文件成功！"
-	fi
+	touch $LOC_FILE
+	echo "version: \"3.9\"" >>$LOC_FILE
+	echo "services:" >>$LOC_FILE
+	echo "  $SVR_NAME:" >>$LOC_FILE
+	echo "    image: nnzbz/spring-boot-app" >>$LOC_FILE
+	echo "    hostname: $SVR_NAME" >>$LOC_FILE
+	echo "    init: true" >>$LOC_FILE
+	echo "    environment:" >>$LOC_FILE
+	echo "      - PROG_ARGS=--spring.profiles.active=prod" >> $LOC_FILE
+	echo "      #- JAVA_OPTS=-Xms100M -Xmx100M" >> $LOC_FILE
+	echo "    volumes:" >> $LOC_FILE
+	echo "      - /usr/local/$SVR_NAME/config/:/usr/local/myservice/config/:z" >> $LOC_FILE
+	echo "      - /usr/local/$SVR_NAME/$SVR_NAME-$VERSION.jar:/usr/local/myservice/myservice.jar:z" >> $LOC_FILE
+	echo "    deploy:" >> $LOC_FILE
+	echo "      replicas: 1" >> $LOC_FILE
+	echo "networks:" >> $LOC_FILE
+	echo "  default:" >> $LOC_FILE
+	echo "    external: true" >> $LOC_FILE
+	echo "    name: rebue" >> $LOC_FILE
+	echo "创建本地${LOC_FILE}文件成功！"
 fi
 
 rsync --progress -z target/${SVR_NAME}-*.jar ${REMOTE_LOGIN_NAME}${REMOTE_HOST}:/usr/local/${SVR_NAME}/ --exclude='*-javadoc.jar' --exclude='*-sources.jar'
@@ -100,8 +101,12 @@ case ${NACOS_MODLE} in
 	;;
 esac
 
-if [ -f "$LOC_FILE" ];then
- 	rsync --progress -z $LOC_FILE ${REMOTE_LOGIN_NAME}${REMOTE_HOST}:/usr/local/${SVR_NAME}/
-	rm -f $LOC_FILE
+
+# 判断服务器是否存在stack.yml文件
+if  ssh ${REMOTE_LOGIN_NAME}${REMOTE_HOST} test -e ${SVR_FILE};then
+	echo "服务器已经存在${SVR_FILE}"
+else
+	rsync --progress -z $LOC_FILE ${REMOTE_LOGIN_NAME}${REMOTE_HOST}:/usr/local/${SVR_NAME}/
 fi
+
 echo ===============================
