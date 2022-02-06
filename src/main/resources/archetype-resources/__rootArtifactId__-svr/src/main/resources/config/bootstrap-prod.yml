@@ -1,15 +1,6 @@
-# 生成环境的配置
+# 生产环境的配置
 logging:
   config: config/log4j2.xml
-  level:
-    root: info
-    rebue: trace
-    org.apache.http: warn
-    com.netflix.discovery: warn
-    org.springframework.context.event.SimpleApplicationEventMulticaster: warn
-    org.springframework.dao: debug
-    org.springframework.cloud: warn
-    com.alibaba.nacos.client.config.impl.ClientWorker: warn
 
 spring:
   cloud:
