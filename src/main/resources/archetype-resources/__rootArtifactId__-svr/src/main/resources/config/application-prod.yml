@@ -1,49 +1,10 @@
 # 配置中心中的配置
-
-# 生成workid使用
-curator:
-  connect-string: zoo1:2181,zoo2:2181,zoo3:2181
-
+database:
+  schema: ${jdbcUser}
+  user: ${jdbcUser}
+  password: xxxxxxxx
+  
 spring:
-  liquibase:
-    # 升级数据库的配置文件的地址
-    change-log: classpath:config/db-change-log.yml
-    url: jdbc:mysql://mysql1:3306/${artifactId}?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
-    user: ${artifactId}
-    password: xxxxxxxx
-  shardingsphere:
-    datasource:
-      names: master,slave
-      master:
-        driver-class-name: com.mysql.jdbc.Driver
-        jdbc-url: jdbc:mysql://mysql1:3316/${artifactId}?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
-        type: com.zaxxer.hikari.HikariDataSource
-        username: ${artifactId}
-        password: xxxxxxxx
-      slave:
-        driver-class-name: com.mysql.jdbc.Driver
-        jdbc-url: jdbc:mysql://mysql2:3326/${artifactId}?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
-        type: com.zaxxer.hikari.HikariDataSource
-        username: ${artifactId}
-        password: xxxxxxxx
-    rules:
-      readwrite-splitting:
-        data-sources:
-          masterslave:
-            write-data-source-name: master
-            read-data-source-names: slave
-  rabbitmq:
-    host: rabbitmq
-    port: 5672
-    username: guest
-    password: xxxxxxxx
-    virtual-host: /
-  cloud:
-    sentinel:
-      enabled: false
-  # 链路追踪可视化服务器
-  zipkin:
-    base-url: zipkin:9411
   # 链路追踪采集器
   sleuth:
     sampler:
