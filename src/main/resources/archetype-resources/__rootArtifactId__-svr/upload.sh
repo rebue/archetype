@@ -66,6 +66,9 @@ else
 	echo "      - /usr/local/$SVR_NAME/config/:/usr/local/myservice/config/:z" >> $LOC_FILE
 	echo "      - /usr/local/$SVR_NAME/$SVR_NAME-$VERSION.jar:/usr/local/myservice/myservice.jar:z" >> $LOC_FILE
 	echo "    deploy:" >> $LOC_FILE
+	echo "      placement:" >> $LOC_FILE
+	echo "        constraints:" >> $LOC_FILE
+	echo "          - node.labels.role==app" >> $LOC_FILE
 	echo "      replicas: 1" >> $LOC_FILE
 	echo "networks:" >> $LOC_FILE
 	echo "  default:" >> $LOC_FILE
