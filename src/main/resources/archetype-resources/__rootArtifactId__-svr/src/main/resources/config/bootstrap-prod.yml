@@ -8,13 +8,11 @@ spring:
       config:
         server-addr: nacos1:8848,nacos2:8848,nacos3:8848
         shared-configs:
-          - data-id: comm-zoo.yaml
+          - data-id: comm-base.yaml
             refresh: true
           - data-id: comm-redis.yaml
             refresh: true
           - data-id: comm-rabbitmq.yaml
-            refresh: true
-          - data-id: comm-zipkin.yaml
             refresh: true
           - data-id: comm-db.yaml
             refresh: true
