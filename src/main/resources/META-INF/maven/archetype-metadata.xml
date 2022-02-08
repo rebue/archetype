@@ -108,7 +108,7 @@
 				<fileSet filtered="true" encoding="UTF-8">
 					<directory>./</directory>
 					<includes>
-						<include>upload.sh</include>
+						<!-- <include>upload.sh</include> -->
 						<include>maven-local.properties</include>
 						<include>pom.xml</include>
 					</includes>
@@ -116,6 +116,7 @@
 				<fileSet filtered="false" encoding="UTF-8">
 					<directory>./</directory>
 					<includes>
+						<include>docker-container-init.sh</include>
 						<include>upload.sh</include>
 					</includes>
 				</fileSet>

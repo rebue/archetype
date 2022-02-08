@@ -3,6 +3,12 @@ CURRENT_PATH=$(cd "$(dirname "$0")";pwd)
 cd $CURRENT_PATH
 SVR_NAME=$(basename `pwd`)
 VERSION=$(echo $(perl -lne 'if (/<version>(.*?)<\/version>/){print $1;last;}' pom.xml))
+# SkyWalking Agent在容器中的目录
+SKYWALKING_AGENT_DIR=/usr/local/skywalking/agent
+# SkyWalking Agent的trace-ignore插件的配置文件名
+SKYWALKING_TRACE_IGNORE_CONFIG_FILE_NAME=apm-trace-ignore-plugin.config
+SKYWALKING_TRACE_IGNORE_CONFIG_FILE=/usr/local/${SVR_NAME}/config/${SKYWALKING_TRACE_IGNORE_CONFIG_FILE_NAME}
+
 read -p  "请输入远程主机地址：" REMOTE_HOST
 read -p  "请输入登录远程主机地址的账号：" REMOTE_LOGIN_NAME
 if [ -n "${REMOTE_LOGIN_NAME}" ];then
@@ -61,13 +67,21 @@ else
 	echo "    init: true" >>$LOC_FILE
 	echo "    environment:" >>$LOC_FILE
 	echo "      - PROG_ARGS=--spring.profiles.active=prod" >> $LOC_FILE
+	echo "      - ENABLE_SKYWALKING_AGENT=true" >> $LOC_FILE
 	echo "      #- JAVA_OPTS=-Xms100M -Xmx100M" >> $LOC_FILE
 	echo "    volumes:" >> $LOC_FILE
+	echo "      # 初始化脚本" >> $LOC_FILE
+	echo "      - /usr/local/$SVR_NAME/init.sh:/usr/local/myservice/init.sh:z" >> $LOC_FILE
+	echo "      # SkyWalking Agent的配置文件" >> $LOC_FILE
+	echo "      - ${SKYWALKING_TRACE_IGNORE_CONFIG_FILE}:${SKYWALKING_AGENT_DIR}/config/${SKYWALKING_TRACE_IGNORE_CONFIG_FILE_NAME}:z" >> $LOC_FILE
+	echo "      # 配置文件目录" >> $LOC_FILE
 	echo "      - /usr/local/$SVR_NAME/config/:/usr/local/myservice/config/:z" >> $LOC_FILE
+	echo "      # 运行的jar包" >> $LOC_FILE
 	echo "      - /usr/local/$SVR_NAME/$SVR_NAME-$VERSION.jar:/usr/local/myservice/myservice.jar:z" >> $LOC_FILE
 	echo "    deploy:" >> $LOC_FILE
 	echo "      placement:" >> $LOC_FILE
 	echo "        constraints:" >> $LOC_FILE
+	echo "          # 部署的节点指定是app角色的" >> $LOC_FILE
 	echo "          - node.labels.role==app" >> $LOC_FILE
 	echo "      replicas: 1" >> $LOC_FILE
 	echo "networks:" >> $LOC_FILE
@@ -82,6 +96,8 @@ rsync --progress -z target/${SVR_NAME}-*.jar ${REMOTE_LOGIN_NAME}${REMOTE_HOST}:
 rsync --progress -z src/main/resources/config/bootstrap-prod.yml ${REMOTE_LOGIN_NAME}${REMOTE_HOST}:/usr/local/${SVR_NAME}/config/
 
 rsync --progress -z src/main/resources/config/log4j2.xml ${REMOTE_LOGIN_NAME}${REMOTE_HOST}:/usr/local/${SVR_NAME}/config/
+
+rsync --progress -z docker-container-init.sh ${REMOTE_LOGIN_NAME}${REMOTE_HOST}:/usr/local/${SVR_NAME}/config/init.sh
 
 TEMP_FILE="src/main/resources/config/smart-doc.json"
 if [ -f "$TEMP_FILE" ];then
@@ -104,6 +120,12 @@ case ${NACOS_MODLE} in
 	;;
 esac
 
+# 判断服务器是否存在SkyWalking Agent的trace-ignore插件的配置文件
+if  ssh ${REMOTE_LOGIN_NAME}${REMOTE_HOST} test -e ${SKYWALKING_TRACE_IGNORE_CONFIG_FILE_NAME};then
+	echo "服务器已经存在${SKYWALKING_TRACE_IGNORE_CONFIG_FILE}"
+else
+	ssh $REMOTE_LOGIN_NAME$REMOTE_HOST touch ${SKYWALKING_TRACE_IGNORE_CONFIG_FILE}
+fi
 
 # 判断服务器是否存在stack.yml文件
 if  ssh ${REMOTE_LOGIN_NAME}${REMOTE_HOST} test -e ${SVR_FILE};then
