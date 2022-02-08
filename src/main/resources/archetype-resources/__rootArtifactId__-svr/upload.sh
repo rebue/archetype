@@ -55,7 +55,7 @@ else
 	touch $LOC_FILE
 	echo "version: \"3.9\"" >>$LOC_FILE
 	echo "services:" >>$LOC_FILE
-	echo "  $SVR_NAME:" >>$LOC_FILE
+	echo "  svr:" >>$LOC_FILE
 	echo "    image: nnzbz/spring-boot-app" >>$LOC_FILE
 	echo "    hostname: $SVR_NAME" >>$LOC_FILE
 	echo "    init: true" >>$LOC_FILE
