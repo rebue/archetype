@@ -67,7 +67,12 @@ else
 	echo "    init: true" >>$LOC_FILE
 	echo "    environment:" >>$LOC_FILE
 	echo "      - PROG_ARGS=--spring.profiles.active=prod" >> $LOC_FILE
+    echo "      # 启用SkyWalking Agent" >> $LOC_FILE
 	echo "      - ENABLE_SKYWALKING_AGENT=true" >> $LOC_FILE
+	echo "      # Agent的项目名称" >> $LOC_FILE
+	echo "      - SW_AGENT_NAME=${SVR_NAME}" >> $LOC_FILE
+	echo "      # SkyWalking OAP 服务器的地址" >> $LOC_FILE
+	echo "      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=skywalking-oap:11800" >> $LOC_FILE
 	echo "      #- JAVA_OPTS=-Xms100M -Xmx100M" >> $LOC_FILE
 	echo "    volumes:" >> $LOC_FILE
 	echo "      # 初始化脚本" >> $LOC_FILE
@@ -97,7 +102,7 @@ rsync --progress -z src/main/resources/config/bootstrap-prod.yml ${REMOTE_LOGIN_
 
 rsync --progress -z src/main/resources/config/log4j2.xml ${REMOTE_LOGIN_NAME}${REMOTE_HOST}:/usr/local/${SVR_NAME}/config/
 
-rsync --progress -z docker-container-init.sh ${REMOTE_LOGIN_NAME}${REMOTE_HOST}:/usr/local/${SVR_NAME}/config/init.sh
+rsync --progress -z docker-container-init.sh ${REMOTE_LOGIN_NAME}${REMOTE_HOST}:/usr/local/${SVR_NAME}/init.sh
 
 TEMP_FILE="src/main/resources/config/smart-doc.json"
 if [ -f "$TEMP_FILE" ];then
