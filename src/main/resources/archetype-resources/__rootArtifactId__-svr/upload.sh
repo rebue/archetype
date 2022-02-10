@@ -8,6 +8,9 @@ SKYWALKING_AGENT_DIR=/usr/local/skywalking/agent
 # SkyWalking Agent的trace-ignore插件的配置文件名
 SKYWALKING_TRACE_IGNORE_CONFIG_FILE_NAME=apm-trace-ignore-plugin.config
 SKYWALKING_TRACE_IGNORE_CONFIG_FILE=/usr/local/${SVR_NAME}/config/${SKYWALKING_TRACE_IGNORE_CONFIG_FILE_NAME}
+# SkyWalking Agent的自定义配置文件名
+SKYWALKING_CUSTOM_CONFIG_FILE_NAME=custom.config
+SKYWALKING_CUSTOM_CONFIG_FILE=/usr/local/${SVR_NAME}/config/${SKYWALKING_CUSTOM_CONFIG_FILE_NAME}
 
 read -p  "请输入远程主机地址：" REMOTE_HOST
 read -p  "请输入登录远程主机地址的账号：" REMOTE_LOGIN_NAME
@@ -78,6 +81,7 @@ else
 	echo "      # 初始化脚本" >> $LOC_FILE
 	echo "      - /usr/local/$SVR_NAME/init.sh:/usr/local/myservice/init.sh:z" >> $LOC_FILE
 	echo "      # SkyWalking Agent的配置文件" >> $LOC_FILE
+	echo "      - ${SKYWALKING_CUSTOM_CONFIG_FILE}:${SKYWALKING_AGENT_DIR}/config/${SKYWALKING_CUSTOM_CONFIG_FILE_NAME}:z" >> $LOC_FILE
 	echo "      - ${SKYWALKING_TRACE_IGNORE_CONFIG_FILE}:${SKYWALKING_AGENT_DIR}/config/${SKYWALKING_TRACE_IGNORE_CONFIG_FILE_NAME}:z" >> $LOC_FILE
 	echo "      # 配置文件目录" >> $LOC_FILE
 	echo "      - /usr/local/$SVR_NAME/config/:/usr/local/myservice/config/:z" >> $LOC_FILE
@@ -125,8 +129,15 @@ case ${NACOS_MODLE} in
 	;;
 esac
 
+# 判断服务器是否存在SkyWalking Agent的自定义配置文件
+if  ssh ${REMOTE_LOGIN_NAME}${REMOTE_HOST} test -e ${SKYWALKING_CUSTOM_CONFIG_FILE_NAME};then
+	echo "服务器已经存在${SKYWALKING_CUSTOM_CONFIG_FILE}"
+else
+	ssh $REMOTE_LOGIN_NAME$REMOTE_HOST "echo \"plugin.toolkit.log.grpc.reporter.server_host=skywalking-oap\" >> ${SKYWALKING_CUSTOM_CONFIG_FILE}"
+fi
+
 # 判断服务器是否存在SkyWalking Agent的trace-ignore插件的配置文件
-if  ssh ${REMOTE_LOGIN_NAME}${REMOTE_HOST} test -e ${SKYWALKING_TRACE_IGNORE_CONFIG_FILE_NAME};then
+if  ssh ${REMOTE_LOGIN_NAME}${REMOTE_HOST} test -e ${SKYWALKING_TRACE_IGNORE_CONFIG_FILE};then
 	echo "服务器已经存在${SKYWALKING_TRACE_IGNORE_CONFIG_FILE}"
 else
 	ssh $REMOTE_LOGIN_NAME$REMOTE_HOST touch ${SKYWALKING_TRACE_IGNORE_CONFIG_FILE}

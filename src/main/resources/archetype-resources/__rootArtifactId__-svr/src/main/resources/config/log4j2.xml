@@ -1,27 +1,24 @@
+
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
 <!-- Log4j 2.x 配置文件。每5秒自动检查配置文件是否更新； -->
-<Configuration monitorInterval="5" strict="true"
-	schema="log4j-core-2.8.2.jar/Log4j-config.xsd">
+<Configuration monitorInterval="5" strict="true" schema="log4j-core-2.8.2.jar/Log4j-config.xsd">
 	<Appenders>
 		<!-- 输出到控制台 -->
 		<Console name="console" target="SYSTEM_OUT">
 			<!-- 需要记录的级别 -->
-			<!-- <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" 
-				/> -->
-			<PatternLayout pattern="%d{HH:mm:ss,sss}[%5p]%m[%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-B3-ParentSpanId},%X{X-Span-Export}]---%l %t%n" />
+			<!-- <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" /> -->
+			<PatternLayout pattern="%d{HH:mm:ss,sss}[%5p]%m[%traceId]---%l %t%n" />
 		</Console>
 
 		<!-- 输出debug/info/warn/error到文件，按天或者超过5MB分割 -->
-		<RollingFile name="logfile" filename="logs/current.log"
-			filepattern="logs/${symbol_dollar}${symbol_dollar}{date:yyyyMM}/%d{yyyyMMddHH}-%i.log.gz">
+		<RollingFile name="logfile" filename="logs/current.log" filepattern="logs/${symbol_dollar}${symbol_dollar}{date:yyyyMM}/%d{yyyyMMddHH}-%i.log.gz">
 			<!-- 需要记录的级别 -->
-			<!-- <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" 
-				/> -->
-			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}[%5p]%m[%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-B3-ParentSpanId},%X{X-Span-Export}]---%l %t%n" />
+			<!-- <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" /> -->
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}[%5p]%m[%traceId]---%l %t%n" />
 			<Policies>
 				<!-- <OnStartupTriggeringPolicy /> -->
 				<TimeBasedTriggeringPolicy />
@@ -30,12 +27,10 @@
 		</RollingFile>
 
 		<!-- 只输出warn/error到文件，按天或者超过5MB分割 -->
-		<RollingFile name="errfile" filename="logs/current.error"
-			filepattern="logs/${symbol_dollar}${symbol_dollar}{date:yyyyMM}/%d{yyyyMMddHH}-%i.error.gz">
+		<RollingFile name="errfile" filename="logs/current.error" filepattern="logs/${symbol_dollar}${symbol_dollar}{date:yyyyMM}/%d{yyyyMMddHH}-%i.error.gz">
 			<!-- 需要记录的级别 -->
-			<ThresholdFilter level="warn" onMatch="ACCEPT"
-				onMismatch="DENY" />
-			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}[%5p]%m[%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-B3-ParentSpanId},%X{X-Span-Export}]---%l %t%n" />
+			<ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY" />
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}[%5p]%m[%traceId]---%l %t%n" />
 			<Policies>
 				<!-- <OnStartupTriggeringPolicy /> -->
 				<TimeBasedTriggeringPolicy />
@@ -44,15 +39,18 @@
 		</RollingFile>
 
 		<!-- 只输出SQL到文件，按天或者超过5MB分割 -->
-		<RollingFile name="sqlfile" filename="logs/current.sql"
-			filepattern="logs/${symbol_dollar}${symbol_dollar}{date:yyyyMM}/%d{yyyyMMddHH}-%i.sql.gz">
-			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}[%5p]%m[%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-B3-ParentSpanId},%X{X-Span-Export}]---%t%n" />
+		<RollingFile name="sqlfile" filename="logs/current.sql" filepattern="logs/${symbol_dollar}${symbol_dollar}{date:yyyyMM}/%d{yyyyMMddHH}-%i.sql.gz">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}[%5p]%m[%traceId]---%t%n" />
 			<Policies>
 				<!-- <OnStartupTriggeringPolicy /> -->
 				<TimeBasedTriggeringPolicy />
 				<SizeBasedTriggeringPolicy size="5 MB" />
 			</Policies>
 		</RollingFile>
+
+		<GRPCLogClientAppender name="grpc-log">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}[%5p]%m---%l %t%n" />
+		</GRPCLogClientAppender>
 	</Appenders>
 	<Loggers>
 		<!-- 全局配置 -->
@@ -60,10 +58,10 @@
 			<AppenderRef ref="console" />
 			<AppenderRef ref="logfile" />
 			<AppenderRef ref="errfile" />
+			<AppenderRef ref="grpc-log" />
 		</Root>
 
-		<logger name="org.apache.ibatis.logging.jdbc.BaseJdbcLogger.debug"
-			level="debug">
+		<logger name="org.apache.ibatis.logging.jdbc.BaseJdbcLogger.debug" level="debug">
 			<AppenderRef ref="sqlfile" />
 		</logger>
 
