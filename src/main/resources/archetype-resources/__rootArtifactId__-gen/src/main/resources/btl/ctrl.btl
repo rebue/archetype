@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ${moClassFullName};
 import ${modulePackage}.to.${entityName}AddTo;
 import ${modulePackage}.to.${entityName}ModifyTo;
+import ${modulePackage}.to.${entityName}OneTo;
 import ${modulePackage}.to.${entityName}PageTo;
 import ${modulePackage}.api.${entityName}Api;
 
@@ -105,7 +106,19 @@ public class ${entityName}Ctrl {
     }
 
     /**
-     * 获取单个${entityTitle}的信息
+     * 通过条件获取单个${entityTitle}的信息
+     *
+     * @param id ${entityTitle}ID
+     * 
+     * @mbg.generated 自动生成，如需修改，请删除本行
+     */
+    @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/get-one")
+    public Mono<Ro<PojoRa<${entityName}Mo>>> getOne(final ${entityName}OneTo qo) {
+        return Mono.create(callback -> callback.success(api.getOne(qo)));
+    }
+
+    /**
+     * 通过ID获取单个${entityTitle}的信息
      *
      * @param id ${entityTitle}ID
      * 
