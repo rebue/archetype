@@ -38,6 +38,10 @@ public class ${entityName}AddTo implements Serializable {
 			// 添加时主键可由后端生成不用填
 			if(props[i].isPrimaryKey) continue;
 			
+			// 添加时创建时间戳和修改时间戳不用填
+			if(props[i].code=="createTimestamp") continue;
+			if(props[i].code=="updateTimestamp") continue;
+			
         	println('/**');
         	println('* ' + props[i].remark);
         	println('*');

@@ -35,6 +35,10 @@ public class ${entityName}ModifyTo implements Serializable {
 
 	<&
 		for(var i=0;i<props.~size;i++){
+			// 修改时创建时间戳和修改时间戳不用填
+			if(props[i].code=="createTimestamp") continue;
+			if(props[i].code=="updateTimestamp") continue;
+
         	println('/**');
         	println('* ' + props[i].remark);
         	println('*');
