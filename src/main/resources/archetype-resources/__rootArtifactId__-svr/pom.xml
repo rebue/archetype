@@ -1,138 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>${groupId}</groupId>
-		<artifactId>${rootArtifactId}</artifactId>
-		<version>${version}</version>
-	</parent>
+    <parent>
+        <groupId>${groupId}</groupId>
+        <artifactId>${rootArtifactId}</artifactId>
+        <version>${version}</version>
+    </parent>
 
-	<artifactId>${artifactId}</artifactId>
+    <artifactId>${artifactId}</artifactId>
 
-	<dependencies>
-		<dependency>
-			<groupId>${groupId}</groupId>
-			<artifactId>${rootArtifactId}-api</artifactId>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>${groupId}</groupId>
+            <artifactId>${rootArtifactId}-api</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>com.github.rebue.robotech</groupId>
-			<artifactId>robotech-bll</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>com.github.rebue.robotech</groupId>
+            <artifactId>robotech-bll</artifactId>
+        </dependency>
 
-		<!-- 读写分离 -->
-		<dependency>
-			<groupId>com.github.rebue.sbs</groupId>
-			<artifactId>shardingsphere-spring-boot-starter</artifactId>
-		</dependency>
-		<!-- 将shardingsphere中的curator-client的版本进行统一管理 -->
-		<dependency>
-			<groupId>org.apache.curator</groupId>
-			<artifactId>curator-client</artifactId>
-		</dependency>
+        <!-- 读写分离 -->
+        <dependency>
+            <groupId>com.github.rebue.sbs</groupId>
+            <artifactId>shardingsphere-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- 将shardingsphere中的curator-client的版本进行统一管理 -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-client</artifactId>
+        </dependency>
 
-		<!-- 数据库版本控制 -->
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-		</dependency>
-		<!-- 经测试，liquibase目前不能使用8.0.23~8.0.27版本的mysql的jdbc库 -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.22</version><!--$NO-MVN-MAN-VER$ -->
-		</dependency>
+        <!-- 数据库版本控制 -->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <!-- 经测试，liquibase目前不能使用8.0.23~8.0.27版本的mysql的jdbc库 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.22</version><!--$NO-MVN-MAN-VER$ -->
+        </dependency>
 
-		<dependency>
-			<groupId>com.github.rebue.sbs</groupId>
-			<artifactId>sb-spring-boot-starter</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>com.github.rebue.sbs</groupId>
+            <artifactId>sb-spring-boot-starter</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>com.github.rebue.sbs</groupId>
-			<artifactId>sc-spring-boot-starter</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>com.github.rebue.sbs</groupId>
+            <artifactId>sc-spring-boot-starter</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.github.pagehelper</groupId>
-			<artifactId>pagehelper-spring-boot-starter</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.github.rebue.wheel</groupId>
-			<artifactId>wheel-net</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.squareup.okhttp3</groupId>
-			<artifactId>okhttp</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.rebue.wheel</groupId>
+            <artifactId>wheel-net</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<plugins>
-			<!-- SpringBoot服务项目打包插件，会分全包和原始包，并且会配置MANIFEST.MF文件设置运行的主类 -->
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+    <build>
+        <plugins>
+            <!-- SpringBoot服务项目打包插件，会分全包和原始包，并且会配置MANIFEST.MF文件设置运行的主类 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
 
-			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>dockerfile-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>default</id>
-						<!-- 绑定到install阶段执行 -->
-						<!-- <phase>install</phase> -->
-						<!-- 绑定到deploy阶段执行 -->
-						<!-- <phase>deploy</phase> -->
-						<!-- 不绑定到任何阶段，也就不会执行 -->
-						<phase></phase>
-						<goals>
-							<goal>build</goal>
-							<goal>push</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<!-- 此选项指定在settings.xml文件中设置的server -->
-					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
-					<!-- 部署到私服，${my-docker.host}在settins.xml中统一配置 -->
-					<repository>${my-docker.host}/${docker.image.prefix}/${project.artifactId}</repository>
-					<!-- 部署到hub.docker.com -->
-					<!-- <repository>${docker.image.prefix}/${project.artifactId}</repository> -->
-					<tag>${project.version}</tag>
-					<buildArgs>
-						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
-					</buildArgs>
-					<verbose>true</verbose>
-					<googleContainerRegistryEnabled>false</googleContainerRegistryEnabled>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <!-- 绑定到install阶段执行 -->
+                        <!-- <phase>install</phase> -->
+                        <!-- 绑定到deploy阶段执行 -->
+                        <!-- <phase>deploy</phase> -->
+                        <!-- 不绑定到任何阶段，也就不会执行 -->
+                        <phase></phase>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- 此选项指定在settings.xml文件中设置的server -->
+                    <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+                    <!-- 部署到私服，${my-docker.host}在settins.xml中统一配置 -->
+                    <repository>${my-docker.host}/${docker.image.prefix}/${project.artifactId}</repository>
+                    <!-- 部署到hub.docker.com -->
+                    <!-- <repository>${docker.image.prefix}/${project.artifactId}</repository> -->
+                    <tag>${project.version}</tag>
+                    <buildArgs>
+                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                    <verbose>true</verbose>
+                    <googleContainerRegistryEnabled>false</googleContainerRegistryEnabled>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

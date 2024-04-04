@@ -1,150 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archetype-descriptor
-	xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd" name="hlw"
-	xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
+        name="hlw"
+        xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-	<requiredProperties>
-		<!-- 项目中文名称 -->
-		<requiredProperty key="projectChineseName">
-			<defaultValue>${artifactId.toUpperCase()}微服务</defaultValue>
-		</requiredProperty>
-		<!-- 项目描述 -->
-		<requiredProperty key="projectDescription">
-			<defaultValue>基于Spring Cloud构建微服务的演示项目</defaultValue>
-		</requiredProperty>
-		<!-- 微服务端口号 -->
-		<requiredProperty key="microServerPort">
-			<defaultValue>9${package.getClass().forName("java.util.Random").newInstance().nextInt(10)}${package.getClass().forName("java.util.Random").newInstance().nextInt(10)}${package.getClass().forName("java.util.Random").newInstance().nextInt(10)}</defaultValue>
-		</requiredProperty>
-		<!-- Nacos服务访问URL -->
-		<requiredProperty key="nacosUrl">
-			<defaultValue>nacos:8848</defaultValue>
-		</requiredProperty>
-		<!-- jdbc数据库驱动 -->
-		<requiredProperty key="jdbcDriver">
-			<defaultValue>com.mysql.cj.jdbc.Driver</defaultValue>
-		</requiredProperty>
-		<!-- jdbc链接 -->
-		<requiredProperty key="jdbcUrl">
-			<defaultValue>jdbc:mysql://mysql:3306/${artifactId}?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true&amp;useSSL=false</defaultValue>
-		</requiredProperty>
-		<!-- jdbc用户名称 -->
-		<requiredProperty key="jdbcUser">
-			<defaultValue>${artifactId}</defaultValue>
-		</requiredProperty>
-		<!-- jdbc密码 -->
-		<requiredProperty key="jdbcPswd">
-			<defaultValue>${artifactId}</defaultValue>
-		</requiredProperty>
-		<!-- 项目名称首字母大写 -->
-		<requiredProperty key="projectNameCapitalise">
-			<defaultValue>${artifactId.substring(0,1).toUpperCase().concat(${artifactId.substring(1)})}</defaultValue>
-		</requiredProperty>
-		<!-- 项目名称大写 -->
-		<requiredProperty key="projectNameUpperCase">
-			<defaultValue>${artifactId.toUpperCase()}</defaultValue>
-		</requiredProperty>
-	</requiredProperties>
+    <requiredProperties>
+        <!-- 项目中文名称 -->
+        <requiredProperty key="projectChineseName">
+            <defaultValue>${artifactId.toUpperCase()}微服务</defaultValue>
+        </requiredProperty>
+        <!-- 项目描述 -->
+        <requiredProperty key="projectDescription">
+            <defaultValue>基于Spring Cloud构建微服务的演示项目</defaultValue>
+        </requiredProperty>
+        <!-- 微服务端口号 -->
+        <requiredProperty key="microServerPort">
+            <defaultValue>
+                9${package.getClass().forName("java.util.Random").newInstance().nextInt(10)}${package.getClass().forName("java.util.Random").newInstance().nextInt(10)}${package.getClass().forName("java.util.Random").newInstance().nextInt(10)}
+            </defaultValue>
+        </requiredProperty>
+        <!-- Nacos服务访问URL -->
+        <requiredProperty key="nacosUrl">
+            <defaultValue>nacos:8848</defaultValue>
+        </requiredProperty>
+        <!-- jdbc数据库驱动 -->
+        <requiredProperty key="jdbcDriver">
+            <defaultValue>com.mysql.cj.jdbc.Driver</defaultValue>
+        </requiredProperty>
+        <!-- jdbc链接 -->
+        <requiredProperty key="jdbcUrl">
+            <defaultValue>jdbc:mysql://mysql:3306/${artifactId}?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true&amp;useSSL=false</defaultValue>
+        </requiredProperty>
+        <!-- jdbc用户名称 -->
+        <requiredProperty key="jdbcUser">
+            <defaultValue>${artifactId}</defaultValue>
+        </requiredProperty>
+        <!-- jdbc密码 -->
+        <requiredProperty key="jdbcPswd">
+            <defaultValue>${artifactId}</defaultValue>
+        </requiredProperty>
+        <!-- 项目名称首字母大写 -->
+        <requiredProperty key="projectNameCapitalise">
+            <defaultValue>${artifactId.substring(0,1).toUpperCase().concat(${artifactId.substring(1)})}</defaultValue>
+        </requiredProperty>
+        <!-- 项目名称大写 -->
+        <requiredProperty key="projectNameUpperCase">
+            <defaultValue>${artifactId.toUpperCase()}</defaultValue>
+        </requiredProperty>
+    </requiredProperties>
 
-	<fileSets>
-		<fileSet encoding="UTF-8">
-			<directory>doc</directory>
-		</fileSet>
-		<fileSet encoding="UTF-8">
-			<directory>model</directory>
-		</fileSet>
-		<fileSet encoding="UTF-8">
-			<!-- 这里如果填.或./都会导致.gitignore不能生成在新项目 -->
-			<directory></directory>
-			<includes>
-				<include>.gitignore</include>
-			</includes>
-		</fileSet>
-	</fileSets>
-	<modules>
-		<module id="${rootArtifactId}-gen" dir="__rootArtifactId__-gen" name="${rootArtifactId}-gen">
-			<fileSets>
-				<fileSet filtered="true" encoding="UTF-8">
-					<directory>src/main/java</directory>
-					<includes>
-						<include>**/*.java</include>
-					</includes>
-				</fileSet>
-				<fileSet filtered="true" encoding="UTF-8">
-					<directory>src/main/resources</directory>
-					<includes>
-						<include>**/*.xml</include>
-						<include>**/*.properties</include>
-						<include>**/*.json</include>
-						<!-- 此文件要取属性来设置微服务的端口 -->
-						<include>btl/test-http.btl</include>
-					</includes>
-				</fileSet>
-				<fileSet filtered="false" encoding="UTF-8">
-					<directory>src/main/resources</directory>
-					<includes>
-						<include>**/*.btl</include>
-					</includes>
-					<excludes>
-						<!-- 此文件要取属性来设置微服务的端口 -->
-						<exclude>btl/test-http.btl</exclude>
-					</excludes>
-				</fileSet>
-			</fileSets>
-		</module>
-		<module id="${rootArtifactId}-api" dir="__rootArtifactId__-api" name="${rootArtifactId}-api">
-			<fileSets>
-				<fileSet filtered="true" encoding="UTF-8">
-					<directory>src/main/java</directory>
-					<includes>
-						<include>**/*.java</include>
-						<include>**/*.xml</include>
-					</includes>
-				</fileSet>
-			</fileSets>
-		</module>
-		<module id="${rootArtifactId}-svr" dir="__rootArtifactId__-svr" name="${rootArtifactId}-svr">
-			<fileSets>
-				<fileSet filtered="true" encoding="UTF-8">
-					<directory>./</directory>
-					<includes>
-						<!-- <include>upload.sh</include> -->
-						<include>maven-local.properties</include>
-						<include>pom.xml</include>
-					</includes>
-				</fileSet>
-				<fileSet filtered="false" encoding="UTF-8">
-					<directory>./</directory>
-					<includes>
-						<include>docker-container-init.sh</include>
-						<include>upload.sh</include>
-					</includes>
-				</fileSet>
-				<fileSet filtered="true" encoding="UTF-8">
-					<directory>src/main/java</directory>
-					<!-- <includes> -->
-					<!-- <include>**/*.java</include> -->
-					<!-- <include>**/*.xml</include> -->
-					<!-- </includes> -->
-				</fileSet>
-				<fileSet filtered="true" encoding="UTF-8">
-					<directory>src/main/resources</directory>
-					<!-- <includes> -->
-					<!-- <include>**/*.xml</include> -->
-					<!-- <include>**/*.yml</include> -->
-					<!-- <include>**/*.json</include> -->
-					<!-- </includes> -->
-				</fileSet>
-				<fileSet filtered="true" encoding="UTF-8">
-					<directory>src/test/java</directory>
-					<!-- <includes> -->
-					<!-- <include>**/*.java</include> -->
-					<!-- </includes> -->
-				</fileSet>
-				<fileSet encoding="UTF-8">
-					<directory>src/test/resources</directory>
-				</fileSet>
-			</fileSets>
-		</module>
-	</modules>
+    <fileSets>
+        <fileSet encoding="UTF-8">
+            <directory>doc</directory>
+        </fileSet>
+        <fileSet encoding="UTF-8">
+            <directory>model</directory>
+        </fileSet>
+        <fileSet encoding="UTF-8">
+            <!-- 这里如果填.或./都会导致.gitignore不能生成在新项目 -->
+            <directory></directory>
+            <includes>
+                <include>.gitignore</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+    <modules>
+        <module id="${rootArtifactId}-gen" dir="__rootArtifactId__-gen" name="${rootArtifactId}-gen">
+            <fileSets>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/main/java</directory>
+                    <includes>
+                        <include>**/*.java</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/main/resources</directory>
+                    <includes>
+                        <include>**/*.xml</include>
+                        <include>**/*.properties</include>
+                        <include>**/*.json</include>
+                        <!-- 此文件要取属性来设置微服务的端口 -->
+                        <include>btl/test-http.btl</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" encoding="UTF-8">
+                    <directory>src/main/resources</directory>
+                    <includes>
+                        <include>**/*.btl</include>
+                    </includes>
+                    <excludes>
+                        <!-- 此文件要取属性来设置微服务的端口 -->
+                        <exclude>btl/test-http.btl</exclude>
+                    </excludes>
+                </fileSet>
+            </fileSets>
+        </module>
+        <module id="${rootArtifactId}-api" dir="__rootArtifactId__-api" name="${rootArtifactId}-api">
+            <fileSets>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/main/java</directory>
+                    <includes>
+                        <include>**/*.java</include>
+                        <include>**/*.xml</include>
+                    </includes>
+                </fileSet>
+            </fileSets>
+        </module>
+        <module id="${rootArtifactId}-svr" dir="__rootArtifactId__-svr" name="${rootArtifactId}-svr">
+            <fileSets>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>./</directory>
+                    <includes>
+                        <!-- <include>upload.sh</include> -->
+                        <include>maven-local.properties</include>
+                        <include>pom.xml</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" encoding="UTF-8">
+                    <directory>./</directory>
+                    <includes>
+                        <include>docker-container-init.sh</include>
+                        <include>upload.sh</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/main/java</directory>
+                    <!-- <includes> -->
+                    <!-- <include>**/*.java</include> -->
+                    <!-- <include>**/*.xml</include> -->
+                    <!-- </includes> -->
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/main/resources</directory>
+                    <!-- <includes> -->
+                    <!-- <include>**/*.xml</include> -->
+                    <!-- <include>**/*.yml</include> -->
+                    <!-- <include>**/*.json</include> -->
+                    <!-- </includes> -->
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/test/java</directory>
+                    <!-- <includes> -->
+                    <!-- <include>**/*.java</include> -->
+                    <!-- </includes> -->
+                </fileSet>
+                <fileSet encoding="UTF-8">
+                    <directory>src/test/resources</directory>
+                </fileSet>
+            </fileSets>
+        </module>
+    </modules>
 </archetype-descriptor>

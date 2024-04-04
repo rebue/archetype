@@ -3,7 +3,7 @@ database:
   schema: ${jdbcUser}
   user: ${jdbcUser}
   password: xxxxxxxx
-  
+
 spring:
   # 链路追踪采集器
   sleuth:

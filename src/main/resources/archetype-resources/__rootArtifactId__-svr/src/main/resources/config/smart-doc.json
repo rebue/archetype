@@ -1,7 +1,7 @@
 {
-	"projectName": "${projectChineseName}",
-	"outPath": "./src/main/resources/static/doc",
-	"allInOne": true,
-	"replace": true,
-	"serverUrl": "http://{{server}}"
+  "projectName": "${projectChineseName}",
+  "outPath": "./src/main/resources/static/doc",
+  "allInOne": true,
+  "replace": true,
+  "serverUrl": "http://{{server}}"
 }
