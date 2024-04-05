@@ -1,7 +1,17 @@
 {
-  "projectName": "${projectChineseName}",
+  "projectName": "${projectDescription}",
   "outPath": "./src/main/resources/static/doc",
-  "allInOne": true,
+  "isStrict": false,
+  "appToken": "dfd1c47d09ca4d909b8f8d76f577298e",
+  "openUrl": "http://torna:7700/api",
+  "debugEnvName": "测试环境",
+  "debugEnvUrl": "http://127.0.0.1:${microServerPort}",
   "replace": true,
-  "serverUrl": "http://{{server}}"
+  "dataDictionaries": [
+    {
+      "enumClassName": "rebue.wheel.api.dic.Dic",
+      "codeField": "code",
+      "descField": "desc"
+    }
+  ]
 }

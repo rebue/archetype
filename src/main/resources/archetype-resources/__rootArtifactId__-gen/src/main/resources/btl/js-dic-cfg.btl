@@ -1,0 +1,28 @@
+/**
+* 自动生成字典类型 ADD BY YHC 2024-04-02
+**/
+<%
+    for(property in pojoMeta.properties) {
+         if (strutil.endWith(property.name,'Dic')) {
+              for(dicMeta in dicMetas) {
+                  var dicClassName = capitalize(property.name);
+                   if(dicClassName == dicMeta.className ) {
+                        println('export const ' + dicMeta.name + '= [');
+                        for(item in dicMeta.items) {
+                            println('{ id: ' + item.code + ', name: ' + '\'' +item.desc + '\'' + '},');
+                        }
+                        println('];');
+                        break;
+                   }
+              }
+         }
+    }
+%>
+
+export const keywordColumns = [
+    <%
+        for(property in pojoMeta.properties) {
+            println('\'' + property.name + '\',');
+        }
+    %>
+];

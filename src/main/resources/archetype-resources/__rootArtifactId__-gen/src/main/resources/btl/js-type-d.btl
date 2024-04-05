@@ -1,0 +1,8 @@
+// edit form 数据类型
+export interface EditFormData {
+<%
+    for(property in pojoMeta.properties) {
+        println(property.name + ':' + property.jsType + ' | undefined;');
+    }
+%>
+}

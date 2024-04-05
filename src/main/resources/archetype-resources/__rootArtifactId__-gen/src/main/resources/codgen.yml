@@ -1,0 +1,135 @@
+# groupTemplate的配置选项(生成template时使用)
+# 如果未配置default，会自动创建一个default配置
+groupTemplate:
+  default:
+    # 添加脱敏注解
+    FN.addDesensitizeAnnotation: rebue.wheel.core.beetl.function.AddDesensitizeAnnotationFunction
+    # 首字母大写
+    FN.capitalize: rebue.wheel.core.beetl.function.CapitalizeFunction
+  # 与Spring表达式语言不冲突的配置
+  spel:
+    # 左定位符
+    DELIMITER_PLACEHOLDER_START: '@{'
+    # 右定位符
+    DELIMITER_PLACEHOLDER_END: '}'
+    # 添加脱敏注解
+    FN.addDesensitizeAnnotation: rebue.wheel.core.beetl.function.AddDesensitizeAnnotationFunction
+    # 首字母大写
+    FN.capitalize: rebue.wheel.core.beetl.function.CapitalizeFunction
+# 模板要绑定全局变量的配置选项
+globalVariable:
+  default:
+    # 项目名称
+    project: ${rootArtifactId}
+    # 包名(根据packageName可自动计算包路径packagePath)
+    packageName: ${package}
+    # 微服务端口
+    microServerPort: ${microServerPort}
+  # 数据库信息的配置选项
+  dbMeta:
+    connect:
+      # 数据库连接字符串(MySQL5要想获取表的注释，必须设置useInformationSchema=true，据说8可以不设置)
+      url: jdbc:${dbDriver}://%s:%s/%s?useInformationSchema=true
+      # 数据库连接字符串要插入的参数
+      params:
+        # 主机地址
+        - ${dbHost}
+        # 端口号
+        - ${dbPort}
+        # 数据库名称
+        - ${dbName}
+      # 数据库的连接属性
+      properties:
+        # 用户名
+        user: ${jdbcUser}
+        # 密码
+        password: ${jdbcPswd}
+    # 表名过滤的模式(不设置则获取所有的表)
+    tableName: ${projectNameUpperCase}_%
+# 获取模板的配置选项
+template:
+  # 分组模板
+  groupTemplate:
+    # 使用用了Spring表达式语言的文件
+    spel:
+      - btl/svc-impl.btl
+  # 配置模板触发的规则(不配置的默认触发template_default规则)
+  rule:
+    # DefaultTemplate规则的配置选项
+    default:
+      - inFilePath: mbgx/
+        outFilePath: ${dollar}{project}-gen/target/
+    # DicTemplate规则的配置选项
+    #     值是Map列表，程序会将其中的每一项绑定到模板中
+    dic:
+      - moduleName: dic # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/dic.btl
+        outFilePath: ${dollar}{project}-api/src/main/java/${dollar}{modulePath}/${dollar}{moduleClassName}.java
+      - inFilePath: btl/jsdic.btl
+        outFilePath: ${dollar}{project}-web/src/dic/${dollar}{project}/${dollar}{dicMeta.className}.ts
+    # PojoTemplate规则的配置选项
+    #     值是Map列表，程序会将其中的每一项绑定到模板中
+    pojo:
+      - moduleName: vo # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/vo.btl
+        outFilePath: ${dollar}{project}-api/src/main/java/${dollar}{modulePath}/${dollar}{moduleClassName}.java
+      - moduleName: api # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/api.btl
+        outFilePath: ${dollar}{project}-api/src/main/java/${dollar}{modulePath}/${dollar}{moduleClassName}.java
+      - moduleName: clone # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/clone.btl
+        outFilePath: ${dollar}{project}-svr/src/main/java/${dollar}{modulePath}/${dollar}{moduleClassName}.java
+      - moduleName: ctrl # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/ctrl.btl
+        outFilePath: ${dollar}{project}-svr/src/main/java/${dollar}{modulePath}/${dollar}{moduleClassName}.java
+      - moduleName: svc # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/svc.btl
+        outFilePath: ${dollar}{project}-svr/src/main/java/${dollar}{modulePath}/${dollar}{moduleClassName}.java
+      - moduleName: svc.impl # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/svc-impl.btl
+        outFilePath: ${dollar}{project}-svr/src/main/java/${dollar}{modulePath}/${dollar}{moduleClassName}.java
+      - moduleName: test.api # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/test-api.btl
+        outFilePath: ${dollar}{project}-svr/src/test/java/${dollar}{modulePath}/${dollar}{pojoMeta.className}ApiTests.java
+      - moduleName: test.http # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/test-http.btl
+        outFilePath: ${dollar}{project}-svr/src/test/java/${dollar}{modulePath}/${dollar}{pojoMeta.className}HttpTests.java
+      - moduleName: test.svc # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/test-svc.btl
+        outFilePath: ${dollar}{project}-svr/src/test/java/${dollar}{modulePath}/${dollar}{pojoMeta.className}SvcTests.java
+      - moduleName: to # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/to-add.btl
+        outFilePath: ${dollar}{project}-api/src/main/java/${dollar}{modulePath}/${dollar}{pojoMeta.className}AddTo.java
+      - moduleName: to # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/to-del.btl
+        outFilePath: ${dollar}{project}-api/src/main/java/${dollar}{modulePath}/${dollar}{pojoMeta.className}DelTo.java
+      - moduleName: to # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/to-list.btl
+        outFilePath: ${dollar}{project}-api/src/main/java/${dollar}{modulePath}/${dollar}{pojoMeta.className}ListTo.java
+      - moduleName: to # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/to-modify.btl
+        outFilePath: ${dollar}{project}-api/src/main/java/${dollar}{modulePath}/${dollar}{pojoMeta.className}ModifyTo.java
+      - moduleName: to # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/to-one.btl
+        outFilePath: ${dollar}{project}-api/src/main/java/${dollar}{modulePath}/${dollar}{pojoMeta.className}OneTo.java
+      - moduleName: to # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
+        inFilePath: btl/to-page.btl
+        outFilePath: ${dollar}{project}-api/src/main/java/${dollar}{modulePath}/${dollar}{pojoMeta.className}PageTo.java
+      - inFilePath: btl/jsvo.btl
+        outFilePath: ${dollar}{project}-web/src/vo/${dollar}{project}/${dollar}{pojoMeta.className}Vo.ts
+      - inFilePath: btl/jsmng.btl
+        outFilePath: ${dollar}{project}-web/src/view/${dollar}{project}/${dollar}{pojoMeta.lowerHyphenNameWithoutPrefix}/${dollar}{pojoMeta.className}Mng.vue
+      - inFilePath: btl/jsmng.btl
+        outFilePath: ${dollar}{project}-web/src/view/${dollar}{project}/${dollar}{pojoMeta.lowerHyphenNameWithoutPrefix}/${dollar}{pojoMeta.className}Mng.vue
+      - inFilePath: btl/js-type-d.btl
+        outFilePath: ${dollar}{project}-web/src/view/${dollar}{project}/${dollar}{pojoMeta.lowerHyphenNameWithoutPrefix}/type.d.ts
+      - inFilePath: btl/js-edit-form.btl
+        outFilePath: ${dollar}{project}-web/src/view/${dollar}{project}/${dollar}{pojoMeta.lowerHyphenNameWithoutPrefix}/${dollar}{pojoMeta.className}EditForm.vue
+      - inFilePath: btl/js-form-cfg.btl
+        outFilePath: ${dollar}{project}-web/src/view/${dollar}{project}/${dollar}{pojoMeta.lowerHyphenNameWithoutPrefix}/cfg/form.cfg.ts
+      - inFilePath: btl/js-table-cfg.btl
+        outFilePath: ${dollar}{project}-web/src/view/${dollar}{project}/${dollar}{pojoMeta.lowerHyphenNameWithoutPrefix}/cfg/table.cfg.ts
+      - inFilePath: btl/js-dic-cfg.btl
+        outFilePath: ${dollar}{project}-web/src/view/${dollar}{project}/${dollar}{pojoMeta.lowerHyphenNameWithoutPrefix}/cfg/dic.cfg.ts
+      - inFilePath: btl/js-api.btl
+        outFilePath: ${dollar}{project}-web/src/api/${dollar}{project}/${dollar}{pojoMeta.className}Api.ts

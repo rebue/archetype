@@ -1,0 +1,45 @@
+package globalvariable;
+
+import java.util.Map;
+import java.util.HashMap;
+import rebue.wheel.serialization.jackson.JacksonUtils;
+import io.github.codgen.core.drools.fact.GlobalVariableFact;
+import rebue.wheel.core.db.JdbcUtils;
+import rebue.wheel.core.db.meta.DbMeta;
+
+declare DbMetaOptions
+  connect   : JdbcUtils.ConnectParam
+  tableName : String
+end
+
+/**
+ * 将数据库的配置放入变量中
+ */
+rule global_variable_db_meta
+    agenda-group "global-variable"  // 议程分组
+    no-loop true                    // 防止死循环(当规则通过update之类的函数修改了Fact对象时，可能使当前规则再次被激活从而导致死循环)
+    lock-on-active true             // 限制当前规则只会被执行一次(包括当前规则的重复执行不是本身触发的)
+    salience 3                      // 执行的优先级(值越大优先级越高，可以为负数，不设置默认为0)
+when
+    $variableFact: GlobalVariableFact();
+then
+    // 指定变量的key
+    final String DB_META_GLOBAL_VARIABLE_KEY = "dbMeta";
+    // 从变量选项中获取指定的选项
+    Map<String, ?> dbMetaOptionsMap = (Map<String, ?>) $variableFact.getVariableOptions().get(DB_META_GLOBAL_VARIABLE_KEY);
+    System.out.printf("variable_db_meta: %s(%s)%n", dbMetaOptionsMap, dbMetaOptionsMap.getClass().getName());
+
+     if (dbMetaOptionsMap != null && !dbMetaOptionsMap.isEmpty()) {
+        // jdbc选项原为Map类型，利用jackson将其转换成JdbcOptions对象
+        DbMetaOptions dbMetaOptions = JacksonUtils.getObjectMapper().convertValue(dbMetaOptionsMap, DbMetaOptions.class);
+        DbMeta dbMeta = JdbcUtils.getDbMeta(dbMetaOptions.getConnect(), dbMetaOptions.getTableName());
+        dbMeta.setUserName(dbMetaOptions.getConnect().getProperties().getProperty("user"));
+        dbMeta.setPassword(dbMetaOptions.getConnect().getProperties().getProperty("password"));
+        if (dbMeta.getDriverName().contains("MySQL")) {
+            dbMeta.setDriverClass("com.mysql.cj.jdbc.Driver");
+        }
+        Map<String, Object> variableMap = (Map<String, Object>)$variableFact.getVariableMap();
+        variableMap.put(DB_META_GLOBAL_VARIABLE_KEY, dbMeta);
+        update($variableFact);
+    }
+end

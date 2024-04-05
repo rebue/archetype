@@ -1,0 +1,73 @@
+# 基础配置
+server:
+  port: 0
+
+spring:
+  application:
+    name: ${artifactId}
+  profiles:
+    active: dev
+  config:
+    import:
+      - logging-${dollar}{spring.profiles.active}.yml
+      - optional:consul:consul:8500/${dollar}{spring.application.name}-${dollar}{spring.profiles.active}
+  cloud:
+    consul:
+      #      host: localhost
+      #      port: 8500
+      config:
+        # 因为consul的kv路径为 ${dollar}{prefixes}/${dollar}{default-context}-${dollar}{spring.profiles.active}/${dollar}{data-key}
+        # 所以prod要在consul中添加 /xxx-svr-prod/data 的 key，value为application-prod.yml 文件的内容
+        prefixes: /
+        default-context: ${dollar}{spring.application.name}
+        profile-separator: '-'
+        format: yaml
+  #  aop:
+  #    # 不启动Web服务器(不提供HTTP服务)
+  #    web-application-type: none
+  #  autoconfigure:
+  #    exclude:
+  #      # 项目中禁用Redis(如果使用了Redis，请删除下面两行)
+  #      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+  #      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+
+mybatis:
+  configuration:
+    # 自动将数据库中用下划线分隔单词的风格转换为小驼峰风格
+    map-underscore-to-camel-case: true
+    # 自动转化枚举类型
+    default-enum-type-handler: rebue.robotech.mybatis.AutoEnumTypeHandler
+
+pagehelper:
+  # 分页合理化参数。
+  # 如果设置为 true:
+  #     pageNum<=0 -> 查询第一页
+  #     pageNum>pages（超过总数时）-> 查询最后一页
+  reasonable: true
+
+bean-searcher:
+  field-convertor:
+    # 禁用枚举字段转换器(和自定义的枚举字段转换器冲突)
+    use-enum: false
+  params:
+    pagination:
+      # 设置当前页的参数名称
+      page: pageNum
+      # 设置分页大小的参数名称
+      size: pageSize
+      # 设置起始页为1
+      start: 1
+  sql:
+    default-mapping:
+      # 数据库表名及字段名大写
+      upper-case: true
+      # 实体类后缀(自动映射表名会自动去掉实体类的后缀)
+      redundant-suffixes: Vo
+
+rebue:
+  # 配置idworker参数
+  # "auto": 由zookeeper自动分配nodeId(nodeIdBits默认为5)
+  # "auto:xx": 由zookeeper自动分配nodeId("xx"为nodeIdBits的值)
+  # "nodeId:xx": 指定nodeId(xx值为0~31)
+  # 不设置: 不使用zookeeper来计算id(仅用于开发或单机模式中)
+  idworker: auto

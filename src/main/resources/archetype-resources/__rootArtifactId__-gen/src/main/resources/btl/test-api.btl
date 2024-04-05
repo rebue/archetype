@@ -1,85 +1,78 @@
-package ${modulePackage}.test.api;
+package ${modulePackageName};
 
 import java.io.IOException;
 
-import com.github.dozermapper.core.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.apache.dubbo.config.annotation.DubboReference;
+import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import ${modulePackage}.mo.${entityName}Mo;
-import ${modulePackage}.to.${entityName}AddTo;
-import ${modulePackage}.to.${entityName}ModifyTo;
-import ${modulePackage}.to.${entityName}PageTo;
-import ${modulePackage}.api.${entityName}Api;
+import ${packageName}.vo.${pojoMeta.className}Vo;
+import ${packageName}.to.${pojoMeta.className}AddTo;
+import ${packageName}.to.${pojoMeta.className}ModifyTo;
+import ${packageName}.to.${pojoMeta.className}PageTo;
+import ${packageName}.clone.${pojoMeta.className}Clone;
+import ${packageName}.api.${pojoMeta.className}Api;
 
 import lombok.extern.slf4j.Slf4j;
-import rebue.robotech.dic.ResultDic;
-import rebue.robotech.ra.IdRa;
-import rebue.robotech.ra.PageRa;
-import rebue.robotech.ra.PojoRa;
-import rebue.robotech.ro.Ro;
+import rebue.wheel.api.dic.ResultDic;
+import rebue.wheel.api.ra.IdRa;
+import rebue.wheel.api.ra.PageRa;
+import rebue.wheel.api.ro.Rt;
 import rebue.wheel.core.RandomEx;
 
 /**
- * ${table.remarks} API层测试
+ * ${pojoMeta.title} API层测试
  *
- * @mbg.generated 自动生成的注释，如需修改本注释，请删除本行
+ * @codgen.generated 自动生成的注释，如需修改本注释，请删除本行
  */
 @Slf4j
 @SpringBootTest
-public class ${entityName}ApiTests {
+public class ${pojoMeta.className}ApiTests {
 
     /**
      * 要测试的API
      * 
-     * @mbg.generated 自动生成，如需修改，请删除本行
+     * @codgen.generated 自动生成，如需修改，请删除本行
      */
-    @DubboReference
-    private ${entityName}Api _api;
-
-    /**
-     * @mbg.generated 自动生成，如需修改，请删除本行
-     */
-    @Autowired
-    private Mapper        dozerMapper;
+    @Resource
+    private ${pojoMeta.className}Api _api;
 
     /**
      * 测试基本的增删改查
      *
-     * @mbg.generated 自动生成，如需修改，请删除本行
+     * @codgen.generated 自动生成，如需修改，请删除本行
      */
     @Test
     public void testCrud() {
-        ${entityName}AddTo addTo = null;
-        ${idType} id = null;        
+        ${pojoMeta.className}AddTo addTo = null;
+        ${pojoMeta.ids[0].classSimpleName} id = null;
         for (int i = 0; i < 20; i++) {
-            addTo = (${entityName}AddTo) RandomEx.randomPojo(${entityName}AddTo.class);
-            log.info("添加${table.remarks}的参数为：" + addTo);
-            final Ro<IdRa<${idType}>> idRo = _api.add(addTo);
-            log.info("添加${table.remarks}的返回值为：" + idRo);
+            addTo = (${pojoMeta.className}AddTo) RandomEx.randomPojo(${pojoMeta.className}AddTo.class);
+            log.info("添加${pojoMeta.title}的参数为：" + addTo);
+            final Rt<IdRa<${pojoMeta.ids[0].classSimpleName}>> idRo = _api.add(addTo);
+            log.info("添加${pojoMeta.title}的返回值为：" + idRo);
             Assertions.assertEquals(ResultDic.SUCCESS, idRo.getResult());
             id = idRo.getExtra().getId();
         }
-        final Ro<PageRa<${entityName}Mo>> pageResult = _api.page(new ${entityName}PageTo());
-        log.info("查询${table.remarks}的返回值为：" + pageResult);
+        final Rt<PageRa<${pojoMeta.className}Vo>> pageResult = _api.page(new ${pojoMeta.className}PageTo());
+        log.info("查询${pojoMeta.title}的返回值为：" + pageResult);
         Assertions.assertEquals(ResultDic.SUCCESS, pageResult.getResult());
-        log.info("获取单个${table.remarks}的参数为：" + id);
-        final Ro<PojoRa<${entityName}Mo>> getByIdResult = _api.getById(id);
-        log.info("获取单个${table.remarks}的返回值为：" + getByIdResult);
+        log.info("获取单个${pojoMeta.title}的参数为：" + id);
+        final Rt<${pojoMeta.className}Vo> getByIdResult = _api.getById(id);
+        log.info("获取单个${pojoMeta.title}的返回值为：" + getByIdResult);
         
-        final ${entityName}ModifyTo modifyTo = dozerMapper.map(addTo, ${entityName}ModifyTo.class);
+        final ${pojoMeta.className}ModifyTo modifyTo = ${pojoMeta.className}Clone.INSTANCE.addToMapModifyTo(addTo);
         modifyTo.setId(id);
-        log.info("修改${table.remarks}的参数为：" + modifyTo);
-        final Ro<?> modifyResult = _api.modify(modifyTo);
-        log.info("修改${table.remarks}的返回值为：" + modifyResult);
+        log.info("修改${pojoMeta.title}的参数为：" + modifyTo);
+        final Rt<?> modifyResult = _api.modify(modifyTo);
+        log.info("修改${pojoMeta.title}的返回值为：" + modifyResult);
         Assertions.assertEquals(ResultDic.SUCCESS, modifyResult.getResult());
         
-        log.info("删除${table.remarks}的参数为：" + id);
-        final Ro<?> deleteResult = _api.del(id);
-        log.info("删除${table.remarks}的返回值为：" + deleteResult);
+        log.info("删除${pojoMeta.title}的参数为：" + id);
+        final Rt<?> deleteResult = _api.delById(id);
+        log.info("删除${pojoMeta.title}的返回值为：" + deleteResult);
         Assertions.assertEquals(ResultDic.SUCCESS, deleteResult.getResult());
     }
 }

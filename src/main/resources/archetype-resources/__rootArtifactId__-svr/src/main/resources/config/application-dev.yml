@@ -1,0 +1,30 @@
+# 开发环境的配置
+debug: true
+
+server:
+  # 固定端口方便调试
+  port: ${microServerPort}
+
+spring:
+  datasource:
+    url: ${jdbcUrl}
+    username: ${jdbcUser}
+    password: ${jdbcPswd}
+  cloud:
+    consul:
+      # 开发环境可以禁用consul来不使用配置中心和注册中心
+      # 如要供其它微服务调试调用，则要启用
+      enabled: false
+
+# 开发环境不用连接zookeeper来生成idworker
+curator:
+  enabled: false
+
+rebue:
+  # 开发环境不配置idworker参数，则不会依赖zookeeper来生成id
+  idworker:
+  # AOP拦截(开发环境可以打开日志方便调试)
+  aop:
+    ctrl-log: true
+    svc-log: true
+    sub-log: true

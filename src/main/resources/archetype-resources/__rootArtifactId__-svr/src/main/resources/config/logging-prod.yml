@@ -1,0 +1,12 @@
+logging:
+  level:
+    root: INFO
+    rebue: TRACE
+    # bean searcher: 若日志级别配置为 INFO 或 WARN，则只打印 慢 SQL 日志，配置为 DEBUG 则 慢 SQL 与 普通 SQL 都打印
+    cn.zhxu.bs: DEBUG
+    # debug信息太多
+    org.apache.http: INFO
+    org.springframework.web: INFO
+    org.springframework.http: INFO
+    org.springframework.boot: INFO
+    org.springframework.boot.actuate.endpoint.web: INFO

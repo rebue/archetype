@@ -1,22 +1,20 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.gen;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
+import io.github.codgen.CodgenApplication;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
-
 import rebue.mbgx.MybatisGeneratorWrap;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.sql.SQLException;
+
 /**
- * 自动生成Mybatis
+ * 自动生成代码
  */
 public class ${projectNameCapitalise}Gen {
-
-    public static void main(final String[] args) throws IOException, XMLParserException, InvalidConfigurationException, SQLException, InterruptedException {
-        MybatisGeneratorWrap.gen(true, "conf/mbg-${parentArtifactId}.properties");
+    public static void main(String[] args) throws IOException, XMLParserException, SQLException, InterruptedException, InvalidConfigurationException {
+        CodgenApplication.main(new String[]{"-i", "src/main/resources/in", "-o", "../"});
+        MybatisGeneratorWrap.gen(Path.of("target", "mbgx"), true, null);
     }
 }

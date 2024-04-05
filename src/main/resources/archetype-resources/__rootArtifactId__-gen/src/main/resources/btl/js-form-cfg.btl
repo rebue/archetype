@@ -1,0 +1,53 @@
+import type { CustomSchemaType } from '~/component/rebue/rebue-search/type';
+
+// 搜索表单配置项
+export const searchFormSchema: CustomSchemaType[] = [
+    <%
+        for(property in pojoMeta.properties) {
+            println('{');
+            println('label:' + '\'' + property.title + '\',');
+            println('field:' + '\'' + property.name + '\',');
+            println('component: \'Input\',');
+            println('componentProps: {');
+            println('placeholder: \'请输入'  + property.title + '\',');
+            println('},');
+            println('colProps: { span: 4, },');
+            println('},');
+        }
+    %>
+];
+
+// 编辑表单配置项
+const editFormLayout = {
+    colProps: {
+        span: 24,
+    },
+    formColProps: {
+        labelCol: {
+            span: 4,
+        },
+        wrapperCol: {
+            span: 19,
+        },
+    },
+};
+
+
+export const editFormSchema: CustomSchemaType[] = [
+    <%
+        for(property in pojoMeta.properties) {
+            println('{');
+            println('label:\''  + property.title + '\',');
+            println('field:\''  + property.name + '\',');
+            println('required: true,');
+            println('component: \'Input\',');
+            println('componentProps: {');
+            println('placeholder: \'请输入'  + property.title + '\',');
+            println('},');
+            println('...editFormLayout,');
+            println('},');
+        }
+    %>
+    
+];
+

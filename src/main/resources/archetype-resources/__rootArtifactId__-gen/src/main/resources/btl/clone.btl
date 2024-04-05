@@ -1,0 +1,32 @@
+package ${packageName}.clone;
+
+import org.mapstruct.Mapper;
+import rebue.robotech.clone.CloneMapper;
+import org.mapstruct.factory.Mappers;
+
+import ${packageName}.to.${pojoMeta.className}AddTo;
+import ${packageName}.to.${pojoMeta.className}ModifyTo;
+import ${packageName}.to.${pojoMeta.className}DelTo;
+import ${packageName}.to.${pojoMeta.className}OneTo;
+import ${packageName}.to.${pojoMeta.className}ListTo;
+import ${packageName}.to.${pojoMeta.className}PageTo;
+import ${packageName}.mo.${pojoMeta.className}Mo;
+import ${packageName}.vo.${pojoMeta.className}Vo;
+
+import rebue.robotech.mapstruct.RebueMapper;
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
+
+/**
+ * ${pojoMeta.title}的克隆类
+ *
+ * @codgen.generated 自动生成的注释，如需修改本注释，请删除本行
+ */
+@Mapper(componentModel = SPRING, uses = RebueMapper.class)
+public interface ${moduleClassName} extends CloneMapper<${pojoMeta.className}AddTo, ${pojoMeta.className}ModifyTo, ${pojoMeta.className}DelTo, ${pojoMeta.className}OneTo, ${pojoMeta.className}ListTo, ${pojoMeta.className}PageTo, ${pojoMeta.className}Mo, ${pojoMeta.className}Vo> {
+    /**
+     * ${pojoMeta.title}的克隆实例
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    ${moduleClassName} INSTANCE = Mappers.getMapper(${moduleClassName}.class);
+}

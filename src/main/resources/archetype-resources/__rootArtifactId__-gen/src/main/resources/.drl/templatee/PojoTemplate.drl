@@ -1,0 +1,95 @@
+package templatee;  // 避免使用template关键字
+
+import java.nio.file.Path;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import com.google.common.base.CaseFormat;
+import org.beetl.core.GroupTemplate;
+import org.beetl.core.Template;
+import rebue.wheel.core.db.meta.PojoMeta;
+import rebue.wheel.core.PackageUtils;
+import io.github.codgen.core.drools.fact.TemplateInfo;
+import io.github.codgen.core.drools.fact.TemplateFact;
+import io.github.codgen.core.FileInfo;
+import io.github.codgen.core.options.TemplateOptions;
+
+/**
+ * 装载POJO模板
+ */
+rule template_pojo
+    agenda-group "template" // 议程分组
+    no-loop true            // 防止死循环(当规则通过update之类的函数修改了Fact对象时，可能使当前规则再次被激活从而导致死循环)
+    lock-on-active true     // 限制当前规则只会被执行一次(包括当前规则的重复执行不是本身触发的)
+    salience 1              // 执行的优先级(值越大优先级越高，可以为负数，不设置默认为0)
+when
+    $templateFact: TemplateFact()
+then
+    String POJO_RULE_TEMPLATE_KEY = "pojo";
+    String POJO_METAS_GLOBAL_VARIABLE_KEY = "pojoMetas";
+    String PACKAGE_NAME_GLOBAL_VARIABLE_KEY = "packageName";
+    String POJO_META_LOCAL_VARIABLE_KEY = "pojoMeta";
+    GroupTemplate pathGroupTemplate = $templateFact.getPathGroupTemplate();
+    GroupTemplate contentGroupTemplate = $templateFact.getContentGroupTemplate();
+    FileInfo inFileInfo = $templateFact.getInFileInfo();
+    String packageName = (String) $templateFact.getGlobalVariableMap().get(PACKAGE_NAME_GLOBAL_VARIABLE_KEY);
+    List<PojoMeta> pojoMetas =  (List<PojoMeta>) $templateFact.getGlobalVariableMap().get(POJO_METAS_GLOBAL_VARIABLE_KEY);
+    if (pojoMetas == null || pojoMetas.isEmpty()) return;
+    Map<String, List<?>> templateRuleOptionsMap = $templateFact.getRuleOptionsMap();
+    List<TemplateInfo> templates = $templateFact.getTemplates();
+    if (templateRuleOptionsMap != null && !templateRuleOptionsMap.isEmpty()) {
+        List<Map<String, Object>> rules = (List<Map<String, Object>>) templateRuleOptionsMap.get(POJO_RULE_TEMPLATE_KEY);
+        if (rules != null && !rules.isEmpty()) {
+            // 绑定规则中配置的变量到路径模板和内容模板
+            for (Map<String, Object> rule : rules) {
+                String inFilePath = (String) rule.get("inFilePath");
+                if (inFileInfo.getPath().startsWith(inFilePath)) {
+                    String outFilePath = (String) rule.get("outFilePath");
+                    for (PojoMeta pojoMeta: pojoMetas) {
+                        // 获取路径模板
+                        Template pathTemplate = pathGroupTemplate.getTemplate(outFilePath);
+                        // 绑定pojoMeta局部变量到路径模板
+                        pathTemplate.binding(POJO_META_LOCAL_VARIABLE_KEY, pojoMeta);
+                        // 获取内容模板
+                        Template contentTemplate = contentGroupTemplate.getTemplate(inFileInfo.getContent());
+                        // 绑定pojoMeta局部变量到内容模板
+                        contentTemplate.binding(POJO_META_LOCAL_VARIABLE_KEY, pojoMeta);
+                        // 遍历pojo中配置的变量绑定到模板中
+                        for (Map.Entry<String, ?> variable: rule.entrySet()) {
+                            String key   = variable.getKey();
+                            Object value = variable.getValue();
+                            pathTemplate.binding(key, value);
+                            contentTemplate.binding(key, value);
+                            if (key.equals("moduleName")) {
+                                String moduleName = (String) value;
+                                // 根据moduleName计算出modulePackageName和modulePath，并绑定到模板中
+                                String modulePackageName = packageName + "." + moduleName;
+                                String modulePath        = PackageUtils.nameToPath(modulePackageName).toString();
+                                String moduleDirName     = moduleName.replace('.', '-');
+                                String moduleClassName = pojoMeta.getClassName()
+                                    + CaseFormat.LOWER_HYPHEN.to(CaseFormat.UPPER_CAMEL, moduleDirName);
+                                pathTemplate.binding("modulePackageName", modulePackageName);
+                                pathTemplate.binding("modulePath", modulePath);
+                                pathTemplate.binding("moduleDirName", moduleDirName);
+                                pathTemplate.binding("moduleClassName", moduleClassName);
+                                contentTemplate.binding("modulePackageName", modulePackageName);
+                                contentTemplate.binding("modulePath", modulePath);
+                                contentTemplate.binding("moduleDirName", moduleDirName);
+                                contentTemplate.binding("moduleClassName", moduleClassName);
+                            }
+                        }
+                        // 添加模板信息到模板列表中
+                        templates.add(TemplateInfo.builder()
+                            .pathTemplate(pathTemplate)
+                            .contentTemplate(contentTemplate)
+                            .build());
+                    }
+                    update($templateFact);
+                    drools.halt();      // 终止执行后续规则
+                    return;
+                }
+            }
+        }
+    }
+end

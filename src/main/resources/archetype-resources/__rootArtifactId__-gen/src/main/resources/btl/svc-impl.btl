@@ -1,44 +1,44 @@
-package ${modulePackage}.svc.impl;
+package @{modulePackageName};
 
-<&
-	if (idType=="String") {
-&>
+<%
+	if (pojoMeta.ids[0].classSimpleName=="String") {
+%>
 import java.util.UUID;
-<&
+<%
 	}
-&>
+%>
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
-import org.springframework.dao.DuplicateKeyException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import ${moClassFullName};
-import ${modulePackage}.jo.${entityName}Jo;
-import ${modulePackage}.to.${entityName}AddTo;
-import ${modulePackage}.to.${entityName}ModifyTo;
-import ${modulePackage}.to.${entityName}DelTo;
-import ${modulePackage}.to.${entityName}OneTo;
-import ${modulePackage}.to.${entityName}ListTo;
-import ${modulePackage}.to.${entityName}PageTo;
-import ${modulePackage}.dao.${entityName}Dao;
-import ${modulePackage}.mapper.${entityName}Mapper;
-import ${modulePackage}.svc.${entityName}Svc;
+import @{packageName}.to.@{pojoMeta.className}AddTo;
+import @{packageName}.to.@{pojoMeta.className}ModifyTo;
+import @{packageName}.to.@{pojoMeta.className}DelTo;
+import @{packageName}.to.@{pojoMeta.className}OneTo;
+import @{packageName}.to.@{pojoMeta.className}ListTo;
+import @{packageName}.to.@{pojoMeta.className}PageTo;
+import @{packageName}.mo.@{pojoMeta.className}Mo;
+import @{packageName}.vo.@{pojoMeta.className}Vo;
+import @{packageName}.mapper.@{pojoMeta.className}Mapper;
+import @{packageName}.svc.@{pojoMeta.className}Svc;
+import @{packageName}.clone.@{pojoMeta.className}Clone;
 
-import rebue.robotech.dic.ResultDic;
-import rebue.robotech.ra.IdRa;
-import rebue.robotech.ro.Ro;
+import rebue.wheel.api.dic.ResultDic;
+import rebue.wheel.api.ra.IdRa;
+import rebue.wheel.api.ro.Rt;
 import rebue.robotech.svc.BaseSvc;
 import rebue.robotech.svc.impl.BaseSvcImpl;
 
 /**
- * ${table.remarks}服务实现
+ * @{pojoMeta.title}的服务实现
  *
  * <pre>
  * 注意：
@@ -49,57 +49,64 @@ import rebue.robotech.svc.impl.BaseSvcImpl;
  *    要想回滚事务，须抛出运行时异常(RuntimeException)
  * 3. 如果类上方不带任何参数的 @Transactional 注解时，如同下面的设置
  *    propagation(传播模式)=REQUIRED，readOnly=false，isolation(事务隔离级别)=READ_COMMITTED
+ * 4. 如果要调用自己的方法，应该使用getThisSvc()代替this来调用，这样该方法的事务才会起效
  * </pre>
  *
- * @mbg.generated 自动生成的注释，如需修改本注释，请删除本行
+ * @codgen.generated 自动生成的注释，如需修改本注释，请删除本行
  */
 @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 @Service
-public class ${entityName}SvcImpl extends BaseSvcImpl<<&
-		for(id in ids){
-			if(!idLP.first) {
-				print(', ');
-			}
-		    print(id.value);
-		}
-	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}DelTo, ${entityName}OneTo, ${entityName}ListTo, ${entityName}PageTo, ${moClassShortName}, ${entityName}Jo, ${entityName}Mapper, ${entityName}Dao> implements ${entityName}Svc {
+public class @{moduleClassName} extends BaseSvcImpl<@{pojoMeta.ids[0].classSimpleName}, @{pojoMeta.className}AddTo, @{pojoMeta.className}ModifyTo, @{pojoMeta.className}DelTo, @{pojoMeta.className}OneTo, @{pojoMeta.className}ListTo, @{pojoMeta.className}PageTo, @{pojoMeta.className}Mo, @{pojoMeta.className}Vo, @{pojoMeta.className}Mapper, @{pojoMeta.className}Clone> implements @{pojoMeta.className}Svc {
 
 	
     /**
      * 本服务的单例
-     * 注意：内部调用自己的方法，如果涉及到回滚事务的，请不要直接调用，而是通过本实例调用
      *
-	 * @mbg.generated 自动生成，如需修改，请删除本行
+	 * @codgen.generated 自动生成，如需修改，请删除本行
      */
     @Lazy
     @Resource
-    private ${entityName}Svc thisSvc;
+    private @{pojoMeta.className}Svc thisSvc;
     
     /**
-     * 从接口获取本服务的单例(提供给基类调用)
+     * 最大分页大小
      *
-     * @mbg.generated 自动生成，如需修改，请删除本行
+	 * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @Value("${rebue.page.max-page-size.@{pojoMeta.lowerHyphenName}:100}")
+    private Integer maxPageSize;
+
+    /**
+     * 从接口获取本服务的单例
+     * XXX 如果要调用自己的方法，涉及到可能要回滚事务的，请使用getThisSvc()代替this来调用，这样该方法的事务才能回滚
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
      */
     @Override
-    protected BaseSvc<<&
-		for(id in ids){
-			if(!idLP.first) {
-				print(', ');
-			}
-		    print(id.value);
-		}
-	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}DelTo, ${entityName}OneTo, ${entityName}ListTo, ${entityName}PageTo, ${entityName}Mo, ${entityName}Jo> getThisSvc() {
+    protected BaseSvc<@{pojoMeta.ids[0].classSimpleName}, @{pojoMeta.className}AddTo, @{pojoMeta.className}ModifyTo, @{pojoMeta.className}DelTo, @{pojoMeta.className}OneTo, @{pojoMeta.className}ListTo, @{pojoMeta.className}PageTo, @{pojoMeta.className}Mo, @{pojoMeta.className}Vo> getThisSvc() {
         return thisSvc;
     }
 
     /**
-     * 泛型MO的class(提供给基类调用-因为java中泛型擦除，JVM无法智能获取泛型的class)
+     * 泛型MO的class(子类提供给基类调用-因为java中泛型擦除，JVM无法智能获取泛型的class)
      *
-	 * @mbg.generated 自动生成，如需修改，请删除本行
+	 * @codgen.generated 自动生成，如需修改，请删除本行
      */
     @Override
-    protected Class<${moClassShortName}> getMoClass() {
-        return ${moClassShortName}.class;
+    protected Class<@{pojoMeta.className}Vo> getVoClass() {
+        return @{pojoMeta.className}Vo.class;
+    }
+
+    /**
+     * 获取最大分页大小
+     * 如果分页查询传过来的分页大小大于这个值，那么抛出异常
+     *
+     * @return 最大分页大小
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    protected Integer getMaxPageSize() {
+        return maxPageSize;
     }
 
 }

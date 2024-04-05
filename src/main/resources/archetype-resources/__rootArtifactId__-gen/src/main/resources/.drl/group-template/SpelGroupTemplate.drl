@@ -1,0 +1,54 @@
+package grouptemplate;
+
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import org.beetl.core.GroupTemplate;
+import org.beetl.core.Template;
+import io.github.codgen.core.drools.fact.GroupTemplateFact;
+import io.github.codgen.core.options.TemplateOptions;
+import io.github.codgen.core.FileInfo;
+import io.github.codgen.core.drools.fact.TemplateInfo
+import io.github.codgen.core.FileInfo;
+
+/**
+ * SPEL的groupTemplate
+ */
+rule group_template_spel
+    agenda-group "group-template"   // 议程分组
+    no-loop true                    // 防止死循环(当规则通过update之类的函数修改了Fact对象时，可能使当前规则再次被激活从而导致死循环)
+    lock-on-active true             // 限制当前规则只会被执行一次(包括当前规则的重复执行不是本身触发的)
+    salience 1                      // 执行的优先级(值越大优先级越高，可以为负数，不设置默认为0)
+when
+    $groupTemplateFact: GroupTemplateFact()
+then
+    // 默认分组模板的key
+    String DEFAULT_GROUP_TEMPLATE_KEY = "default";
+    // SpEL分组模板的key
+    String SPEL_GROUP_TEMPLATE_KEY = "spel";
+    // groupTemplate列表
+    Map<String,GroupTemplate> groupTemplates = $groupTemplateFact.getGroupTemplates();
+    // 获取groupTemplate
+    GroupTemplate defaultGroupTemplate = (GroupTemplate) groupTemplates.get(DEFAULT_GROUP_TEMPLATE_KEY);
+    // 输入文件信息
+    FileInfo inFileInfo = $groupTemplateFact.getInFileInfo();
+    Map<String, List<String>> templateOptionsMap = $groupTemplateFact.getGroupTemplateOptionsMap();
+    Map<String, List<String>> groupTemplateOptionsMap = $groupTemplateFact.getGroupTemplateOptionsMap();
+    if (groupTemplateOptionsMap != null && !groupTemplateOptionsMap.isEmpty()) {
+        List<String> spelFilePaths = groupTemplateOptionsMap.get(SPEL_GROUP_TEMPLATE_KEY);
+        if (spelFilePaths != null && !spelFilePaths.isEmpty()) {
+            for (String path : spelFilePaths) {
+                if (path.equals(inFileInfo.getPath())) {
+                    // 获取groupTemplate
+                    GroupTemplate groupTemplate = (GroupTemplate) groupTemplates.get(SPEL_GROUP_TEMPLATE_KEY);
+                    // 设置groupTemplate返回
+                    $groupTemplateFact.setPathGroupTemplate(defaultGroupTemplate);
+                    $groupTemplateFact.setContentGroupTemplate(groupTemplate);
+                    update($groupTemplateFact);
+                    drools.halt();      // 终止执行后续规则
+                    return;
+                }
+            }
+        }
+    }
+end

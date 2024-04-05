@@ -1,0 +1,19 @@
+/**
+    <%
+        for(remark in dicMeta.remarks) {
+            println(' * ' + remark);
+        }
+    %>
+ */
+enum ${dicMeta.className} {
+    <%
+        for(item in dicMeta.items) {
+    %>
+        /**
+         * ${item.code}: ${item.desc}
+         */
+        ${item.name} = ${item.code},
+    <%
+        }
+    %>
+}

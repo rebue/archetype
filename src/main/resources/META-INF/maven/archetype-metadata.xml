@@ -6,6 +6,10 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <requiredProperties>
+        <!-- $符号替换 -->
+        <requiredProperty key="dollar">
+            <defaultValue>$</defaultValue>
+        </requiredProperty>
         <!-- 项目中文名称 -->
         <requiredProperty key="projectChineseName">
             <defaultValue>${artifactId.toUpperCase()}微服务</defaultValue>
@@ -27,6 +31,22 @@
         <!-- jdbc数据库驱动 -->
         <requiredProperty key="jdbcDriver">
             <defaultValue>com.mysql.cj.jdbc.Driver</defaultValue>
+        </requiredProperty>
+        <!-- 数据库驱动 -->
+        <requiredProperty key="dbDriver">
+            <defaultValue>mysql</defaultValue>
+        </requiredProperty>
+        <!-- 数据库主机 -->
+        <requiredProperty key="dbHost">
+            <defaultValue>127.0.0.1</defaultValue>
+        </requiredProperty>
+        <!-- 数据库端口号 -->
+        <requiredProperty key="dbPort">
+            <defaultValue>3306</defaultValue>
+        </requiredProperty>
+        <!-- 数据库名 -->
+        <requiredProperty key="dbName">
+            <defaultValue>${artifactId}</defaultValue>
         </requiredProperty>
         <!-- jdbc链接 -->
         <requiredProperty key="jdbcUrl">
@@ -69,6 +89,12 @@
         <module id="${rootArtifactId}-gen" dir="__rootArtifactId__-gen" name="${rootArtifactId}-gen">
             <fileSets>
                 <fileSet filtered="true" encoding="UTF-8">
+                    <directory>./</directory>
+                    <includes>
+                        <include>gen.sh</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
                     <directory>src/main/java</directory>
                     <includes>
                         <include>**/*.java</include>
@@ -77,17 +103,17 @@
                 <fileSet filtered="true" encoding="UTF-8">
                     <directory>src/main/resources</directory>
                     <includes>
-                        <include>**/*.xml</include>
-                        <include>**/*.properties</include>
-                        <include>**/*.json</include>
-                        <!-- 此文件要取属性来设置微服务的端口 -->
+                        <!-- 要取属性来设置微服务的端口 -->
                         <include>btl/test-http.btl</include>
+                        <include>codgen.yml</include>
                     </includes>
                 </fileSet>
                 <fileSet filtered="false" encoding="UTF-8">
                     <directory>src/main/resources</directory>
                     <includes>
                         <include>**/*.btl</include>
+                        <include>**/*.xml</include>
+                        <include>.drl/</include>
                     </includes>
                     <excludes>
                         <!-- 此文件要取属性来设置微服务的端口 -->
@@ -112,7 +138,7 @@
                 <fileSet filtered="true" encoding="UTF-8">
                     <directory>./</directory>
                     <includes>
-                        <!-- <include>upload.sh</include> -->
+                        <include>start.sh</include>
                         <include>maven-local.properties</include>
                         <include>pom.xml</include>
                     </includes>
@@ -126,26 +152,38 @@
                 </fileSet>
                 <fileSet filtered="true" encoding="UTF-8">
                     <directory>src/main/java</directory>
-                    <!-- <includes> -->
-                    <!-- <include>**/*.java</include> -->
-                    <!-- <include>**/*.xml</include> -->
-                    <!-- </includes> -->
                 </fileSet>
                 <fileSet filtered="true" encoding="UTF-8">
                     <directory>src/main/resources</directory>
-                    <!-- <includes> -->
-                    <!-- <include>**/*.xml</include> -->
-                    <!-- <include>**/*.yml</include> -->
-                    <!-- <include>**/*.json</include> -->
-                    <!-- </includes> -->
+                    <includes>
+                        <include>**/application.yml</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="false" encoding="UTF-8">
+                    <directory>src/main/resources</directory>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/application.yml</exclude>
+                    </excludes>
                 </fileSet>
                 <fileSet filtered="true" encoding="UTF-8">
                     <directory>src/test/java</directory>
-                    <!-- <includes> -->
-                    <!-- <include>**/*.java</include> -->
-                    <!-- </includes> -->
+                    <includes>
+                        <include>**/GenNativeConfigsTests.java</include>
+                    </includes>
                 </fileSet>
-                <fileSet encoding="UTF-8">
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/test/java</directory>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/GenNativeConfigsTests.java</exclude>
+                    </excludes>
+                </fileSet>
+                <fileSet filtered="false" encoding="UTF-8">
                     <directory>src/test/resources</directory>
                 </fileSet>
             </fileSets>

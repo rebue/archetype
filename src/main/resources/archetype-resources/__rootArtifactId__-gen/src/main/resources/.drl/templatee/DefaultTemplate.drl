@@ -1,0 +1,54 @@
+package templatee;  // 避免使用template关键字
+
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import org.beetl.core.GroupTemplate;
+import org.beetl.core.Template;
+import io.github.codgen.core.drools.fact.TemplateFact;
+import io.github.codgen.core.options.TemplateOptions;
+import io.github.codgen.core.FileInfo
+import io.github.codgen.core.drools.fact.TemplateInfo
+import io.github.codgen.core.FileInfo
+import io.github.codgen.core.drools.fact.TemplateInfo
+import java.nio.file.Path;
+
+/**
+ * 装载默认模板
+ */
+rule template_default
+    agenda-group "template" // 议程分组
+    no-loop true            // 防止死循环(当规则通过update之类的函数修改了Fact对象时，可能使当前规则再次被激活从而导致死循环)
+    lock-on-active true     // 限制当前规则只会被执行一次(包括当前规则的重复执行不是本身触发的)
+    salience -1             // 执行的优先级(值越大优先级越高，可以为负数，不设置默认为0)
+when
+    $templateFact: TemplateFact()
+then
+    String DEFAULT_RULE_TEMPLATE_KEY = "default";
+    GroupTemplate pathGroupTemplate = $templateFact.getPathGroupTemplate();
+    GroupTemplate contentGroupTemplate = $templateFact.getContentGroupTemplate();
+    FileInfo inFileInfo = $templateFact.getInFileInfo();
+    List<TemplateInfo> templates = $templateFact.getTemplates();
+    Map<String, List<?>> templateRuleOptionsMap = $templateFact.getRuleOptionsMap();
+    String outFilePath = inFileInfo.getPath();
+    if (templateRuleOptionsMap != null && !templateRuleOptionsMap.isEmpty()) {
+        List<Map<String, Object>> rules = (List<Map<String, Object>>) templateRuleOptionsMap.get(DEFAULT_RULE_TEMPLATE_KEY);
+        if (rules != null && !rules.isEmpty()) {
+            // 绑定规则中配置的变量到路径模板和内容模板
+            for (Map<String, Object> rule : rules) {
+                String inFilePath = (String) rule.get("inFilePath");
+                if (inFileInfo.getPath().startsWith(inFilePath)) {
+                    outFilePath = Path.of((String) rule.get("outFilePath"), outFilePath).toString();
+                    break;
+                }
+            }
+        }
+    }
+
+    // 生成模板信息并添加到模板列表中
+    templates.add(TemplateInfo.builder()
+        .pathTemplate(pathGroupTemplate.getTemplate(outFilePath))
+        .contentTemplate(contentGroupTemplate.getTemplate(inFileInfo.getContent()))
+        .build());
+    update($templateFact);
+end

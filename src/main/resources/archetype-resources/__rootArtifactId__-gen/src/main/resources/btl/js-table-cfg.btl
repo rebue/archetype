@@ -1,0 +1,15 @@
+export const tableColumns = [
+    <%
+        for(property in pojoMeta.properties) {
+            println('{');
+            println('title:' + '\'' + property.title + '\',');
+            println('dataIndex:' + '\'' + property.name + '\',');
+            println('},');
+        }
+    %>
+    {
+        title: '操作',
+        dataIndex: 'action',
+        width: 200,
+    },
+];

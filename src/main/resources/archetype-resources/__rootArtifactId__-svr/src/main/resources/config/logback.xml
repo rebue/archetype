@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
+<!-- scan: 扫描配置文件是否有变动(默认1分钟1次) -->
+<configuration scan="true">
+    <!-- 包含配置logger的文件 -->
+    <!--    <include file="config/logback-logger.xml"/>-->
+
+    <!-- 引入变量属性文件 -->
+    <!--    <variable file="config/logback-var.properties"/>-->
+
+    <variable name="CONSOLE_LOG_PATTERN" value="%d{HH:mm:ss.SSS}[%5p]%m---%c%n"/>
+    <variable name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS}[%5p]%m---%c %t%n"/>
+    <variable name="LOG_FILE_NAME_PATTERN" value="logs/%d{yyyyMMdd}/%d{yyyyMMddHH}-%i.log.gz"/>
+    <variable name="ERR_FILE_NAME_PATTERN" value="logs/%d{yyyyMMdd}/%d{yyyyMMddHH}-%i.err.gz"/>
+    <variable name="ASYNC_QUEUE_SIZE" value="512"/>
+
+    <!-- 引入需要用到的类 -->
+    <import class="ch.qos.logback.classic.jul.LevelChangePropagator"/>
+    <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
+    <import class="ch.qos.logback.core.ConsoleAppender"/>
+    <import class="ch.qos.logback.core.rolling.RollingFileAppender"/>
+    <import class="ch.qos.logback.classic.filter.ThresholdFilter"/>
+    <import class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"/>
+
+    <!-- 优化jul转换的性能 -->
+    <contextListener class="LevelChangePropagator">
+        <!-- 重置jul的配置 -->
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <!-- 输出到控制台 -->
+    <appender name="console" class="ConsoleAppender">
+        <encoder class="PatternLayoutEncoder">
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 输出trace/debug/info/warn/error所有级别的日志到文件，按每小时或者超过5MB分割 -->
+    <appender name="file-log" class="RollingFileAppender">
+        <file>logs/current.log</file>
+        <rollingPolicy class="SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE_NAME_PATTERN}</fileNamePattern>
+            <maxFileSize>5MB</maxFileSize>
+        </rollingPolicy>
+        <encoder class="PatternLayoutEncoder">
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 只输出warn/error级别的日志到文件，按每小时或者超过5MB分割 -->
+    <appender name="file-err" class="RollingFileAppender">
+        <file>logs/current.err</file>
+        <rollingPolicy class="SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${ERR_FILE_NAME_PATTERN}</fileNamePattern>
+            <maxFileSize>5MB</maxFileSize>
+        </rollingPolicy>
+        <encoder class="PatternLayoutEncoder">
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+
+    <!-- 异步文件日志输出 -->
+    <appender name="async-file-log" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>${ASYNC_QUEUE_SIZE}</queueSize>
+        <!-- 添加附加的appender,最多只能添加一个 -->
+        <appender-ref ref="file-log"/>
+    </appender>
+
+    <!-- 异步文件错误输出 -->
+    <appender name="async-file-err" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>${ASYNC_QUEUE_SIZE}</queueSize>
+        <!-- 添加附加的appender,最多只能添加一个 -->
+        <appender-ref ref="file-err"/>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="console"/>
+        <!--        <if condition='isDefined("log.async")&amp;&amp;property("log.async").equals("true")'>-->
+        <!--            <then>-->
+        <!--                <appender-ref ref="async-file-log"/>-->
+        <!--                <appender-ref ref="async-file-err"/>-->
+        <!--            </then>-->
+        <!--            <else>-->
+        <appender-ref ref="file-log"/>
+        <appender-ref ref="file-err"/>
+        <!--            </else>-->
+        <!--        </if>-->
+    </root>
+</configuration>

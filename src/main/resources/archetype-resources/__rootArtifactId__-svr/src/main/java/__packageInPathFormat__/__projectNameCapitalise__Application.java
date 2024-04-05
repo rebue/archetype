@@ -1,20 +1,22 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package};
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.reactive.config.EnableWebFlux;
 
-@SpringCloudApplication
-@EnableCaching
+@SpringBootApplication
 @EnableWebFlux
+// 如需访问其它微服务，请解开下面的注释
+//@EnableFeignClients
 public class ${projectNameCapitalise}Application {
 
     public static void main(final String[] args) {
-        SpringApplication.run(${projectNameCapitalise}Application.class, args);
+        try {
+            SpringApplication.run(AdmApplication.class, args);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
 }

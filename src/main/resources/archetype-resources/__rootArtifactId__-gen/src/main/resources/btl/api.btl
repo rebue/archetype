@@ -1,24 +1,133 @@
-package ${modulePackage}.api;
+package ${modulePackageName};
 
-import ${modulePackage}.mo.${entityName}Mo;
-import ${modulePackage}.to.${entityName}AddTo;
-import ${modulePackage}.to.${entityName}ModifyTo;
-import ${modulePackage}.to.${entityName}OneTo;
-import ${modulePackage}.to.${entityName}PageTo;
+import java.util.Map;
 
-import rebue.robotech.api.BaseApi;
+import org.springframework.cloud.openfeign.FeignClient;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import rebue.wheel.svc.dic.ResultDic;
+import rebue.wheel.api.ra.IdRa;
+import rebue.wheel.api.ra.BooleanRa;
+import rebue.wheel.api.ra.PageRa;
+import rebue.wheel.api.ro.Rt;
+import ${packageName}.vo.${pojoMeta.className}Vo;
+import ${packageName}.to.${pojoMeta.className}AddTo;
+import ${packageName}.to.${pojoMeta.className}ModifyTo;
+import ${packageName}.to.${pojoMeta.className}OneTo;
+import ${packageName}.to.${pojoMeta.className}PageTo;
 
 /**
- * ${table.remarks}的API
+ * ${pojoMeta.title}的API接口
  *
- * @mbg.generated 自动生成的注释，如需修改本注释，请删除本行
+ * FeignClient注解中的 name 要与本微服务配置文件中的 spring.application.name 一致
+ *
+ * @codgen.generated 自动生成的注释，如需修改本注释，请删除本行
  */
-public interface ${entityName}Api extends BaseApi<<&
-		for(id in ids){
-			if(!idLP.first) {
-				print(', ');
-			}
-		    print(id.value);
-		}
-	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}OneTo, ${entityName}PageTo, ${entityName}Mo>{
+@FeignClient(name = "${project}-svr", contextId = "${moduleClassName}")
+public interface ${moduleClassName} {
+    /**
+     * 添加${pojoMeta.title}
+     *
+     * @param to 添加的具体信息
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @PostMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}")
+    Rt<IdRa<${pojoMeta.ids[0].classSimpleName}>> add(@RequestBody ${pojoMeta.className}AddTo to);
+
+    /**
+     * 修改${pojoMeta.title}的信息
+     *
+     * @param to 修改的具体数据
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @PutMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}")
+    Rt<?> modify(@RequestBody ${pojoMeta.className}ModifyTo to);
+
+    /**
+     * 删除${pojoMeta.title}
+     *
+     * @param ${pojoMeta.ids[0].name} ${pojoMeta.title}ID
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @DeleteMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}")
+    Rt<?> delById(@RequestParam("${pojoMeta.ids[0].name}") ${pojoMeta.ids[0].classSimpleName} ${pojoMeta.ids[0].name});
+
+    /**
+     * 通过条件获取单个${pojoMeta.title}的信息
+     *
+     * @param qc 查询单个{pojoMeta.title}的具体条件$
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/get-one")
+    Rt<${pojoMeta.className}Vo> getOne(@RequestParam("qc") ${pojoMeta.className}OneTo qc);
+
+    /**
+     * 通过ID获取单个${pojoMeta.title}的信息
+     *
+     * @param ${pojoMeta.ids[0].name} ${pojoMeta.title}ID
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/get-by-id")
+    Rt<${pojoMeta.className}Vo> getById(@RequestParam("${pojoMeta.ids[0].name}") ${pojoMeta.ids[0].classSimpleName} ${pojoMeta.ids[0].name});
+
+    /**
+     * 判断${pojoMeta.title}是否存在
+     *
+     * @param ${pojoMeta.ids[0].name} ${pojoMeta.title}ID
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/exist-by-id")
+    Rt<BooleanRa> existById(@RequestParam("${pojoMeta.ids[0].name}") ${pojoMeta.ids[0].classSimpleName} ${pojoMeta.ids[0].name});
+
+    /**
+     * 分页查询${pojoMeta.title}的信息
+     *
+     * @param qc 查询的具体条件
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/page")
+    Rt<PageRa<${pojoMeta.className}Vo>> page(@RequestParam("qc") ${pojoMeta.className}PageTo qc);
+
+    /**
+     * 通过条件获取单个${pojoMeta.title}的信息
+     *
+     * @param qc 查询单个{pojoMeta.title}的具体条件$
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search-one")
+    Rt<${pojoMeta.className}Vo> searchOne(@RequestParam Map<String, Object> qc);
+
+    /**
+     * 通过ID获取单个${pojoMeta.title}的信息
+     *
+     * @param ${pojoMeta.ids[0].name} ${pojoMeta.title}ID
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search-by-id")
+    Rt<${pojoMeta.className}Vo> searchById(@RequestParam("${pojoMeta.ids[0].name}") ${pojoMeta.ids[0].classSimpleName} ${pojoMeta.ids[0].name});
+
+    /**
+     * 分页搜索${pojoMeta.title}的信息
+     *
+     * @param qc 查询的具体条件
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search")
+    Rt<PageRa<${pojoMeta.className}Vo>> search(@RequestParam Map<String, Object> qc);
 }

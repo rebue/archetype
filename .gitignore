@@ -1,21 +1,75 @@
-.classpath
-.project
-target
-.settings
-logs
-.DS_Store
-*.pjb
-*.pdb
+**/target/*
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
 *.ldb
-*.gz
-*.log.gz
-*.class
-rebel.xml
-.gradle
-gradle
-build.grdle
-gradlew
-gradlew.bat
-settings.gradle
+*.pjb
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
 *.iml
-maven-local.properties
+*.ipr
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+/os_del.cmd
+/.vscode/
+/.history/
+/adm-web/.history
+/adm-web/.vscode
+/svn clear.bat
+
+# .hbuilderx
+/.hbuilderx/
+/uni_modules/
+/unpackage/
+
+pnpm-lock.yaml

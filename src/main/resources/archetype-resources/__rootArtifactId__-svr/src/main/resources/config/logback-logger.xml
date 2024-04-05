@@ -1,0 +1,9 @@
+<included>
+    <logger name="com.hazelcast" level="info"/>
+    <logger name="io.netty" level="debug"/>
+    <!-- <logger name="io.netty.handler.logging.LoggingHandler" level="debug" /> -->
+    <logger name="org.apache.zookeeper" level="info"/>
+    <logger name="org.apache.curator" level="info"/>
+    <logger name="org.apache.pulsar" level="info"/>
+    <logger name="com.xxl.job" level="info"/>
+</included>

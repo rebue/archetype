@@ -1,11 +1,11 @@
-package ${modulePackage}.ctrl;
+package ${modulePackageName};
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import javax.annotation.Resource;
-
-import org.springframework.dao.DuplicateKeyException;
+import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,168 +13,164 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import ${moClassFullName};
-import ${modulePackage}.to.${entityName}AddTo;
-import ${modulePackage}.to.${entityName}ModifyTo;
-import ${modulePackage}.to.${entityName}OneTo;
-import ${modulePackage}.to.${entityName}PageTo;
-import ${modulePackage}.api.${entityName}Api;
-
-import rebue.robotech.dic.ResultDic;
 import reactor.core.publisher.Mono;
-import rebue.robotech.ra.IdRa;
-import rebue.robotech.ra.BooleanRa;
-import rebue.robotech.ra.PageRa;
-import rebue.robotech.ra.PojoRa;
-import rebue.robotech.ro.Ro;
+
+import rebue.robotech.clone.MapStructMapper;
+import rebue.wheel.svc.dic.ResultDic;
+import rebue.wheel.api.ra.IdRa;
+import rebue.wheel.api.ra.BooleanRa;
+import rebue.wheel.api.ra.PageRa;
+import rebue.wheel.api.ro.Rt;
+
+import ${packageName}.vo.${pojoMeta.className}Vo;
+import ${packageName}.to.${pojoMeta.className}AddTo;
+import ${packageName}.to.${pojoMeta.className}ModifyTo;
+import ${packageName}.to.${pojoMeta.className}OneTo;
+import ${packageName}.to.${pojoMeta.className}PageTo;
+import ${packageName}.svc.${pojoMeta.className}Svc;
 
 /**
- * ${table.remarks}
+ * ${pojoMeta.title}的控制器
  *
- * @mbg.generated 自动生成的注释，如需修改本注释，请删除本行
+ * @codgen.generated 自动生成的注释，如需修改本注释，请删除本行
  */
 @RestController
-public class ${entityName}Ctrl {
+public class ${moduleClassName} {
     /**
-     * @mbg.generated 自动生成，如需修改，请删除本行
+     * @codgen.generated 自动生成，如需修改，请删除本行
      */
     @Resource
-    private ${entityName}Api api;
+    private ${pojoMeta.className}Svc svc;
 
     /**
-     * 添加${entityTitle}
+     * 添加${pojoMeta.title}
      *
      * @param to 添加的具体信息
      *
-     * @mbg.generated 自动生成，如需修改，请删除本行
+     * @codgen.generated 自动生成，如需修改，请删除本行
      */
-    @PostMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
-    public Mono<Ro<IdRa<<&
-                            for(id in ids){
-                                if(!idLP.first) {
-                                    print(', ');
-                                }
-                                print(id.value);
-                            }
-                        &>
-                        >>> add(@RequestBody final ${entityName}AddTo to) {
-        return Mono.create(callback -> callback.success(api.add(to)));
+    @PostMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}")
+    public Mono<Rt<IdRa<${pojoMeta.ids[0].classSimpleName}>>> add(@RequestBody final ${pojoMeta.className}AddTo to) {
+        return Mono.create(callback -> callback.success(Rt.success("添加成功", new IdRa<>(svc.add(to).getId()))));
     }
 
     /**
-     * 修改${entityTitle}的信息
+     * 修改${pojoMeta.title}的信息
      *
      * @param to 修改的具体数据
      *
-     * @mbg.generated 自动生成，如需修改，请删除本行
+     * @codgen.generated 自动生成，如需修改，请删除本行
      */
-    @PutMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
-    public Mono<Ro<?>> modify(@RequestBody final ${entityName}ModifyTo to) {
-        return Mono.create(callback -> callback.success(api.modify(to)));
+    @PutMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}")
+    public Mono<Rt<?>> modify(@RequestBody final ${pojoMeta.className}ModifyTo to) {
+        return Mono.create(callback -> {
+            svc.modifyById(to);
+            callback.success(Rt.success("修改成功"));
+        });
     }
 
     /**
-     * 删除${entityTitle}
+     * 删除${pojoMeta.title}
      *
-     * @param id ${entityTitle}ID
+     * @param ${pojoMeta.ids[0].name} ${pojoMeta.title}ID
      * 
-     * @mbg.generated 自动生成，如需修改，请删除本行
+     * @codgen.generated 自动生成，如需修改，请删除本行
      */
-    @DeleteMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}")
-    public Mono<Ro<?>> del(<&
-        for(id in ids){
-            if(!idLP.first) {
-                print(', ');
-            }
-            print('@RequestParam("');
-            print(id.key);
-            print('") final ');
-            print(id.value);
-            print(' ');
-            print(id.key);
-        }
-    &>) {
-		return Mono.create(callback -> callback.success(api.del(<&
-            for(id in ids){
-                if(!idLP.first) {
-                    print(', ');
-                }
-                print(id.key);
-            }
-        &>)));
+    @DeleteMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}")
+    public Mono<Rt<?>> delById(@RequestParam("${pojoMeta.ids[0].name}") final ${pojoMeta.ids[0].classSimpleName} ${pojoMeta.ids[0].name}) {
+		return Mono.create(callback -> {
+		    svc.delById(${pojoMeta.ids[0].name});
+		    callback.success(Rt.success("删除成功"));
+        });
     }
 
     /**
-     * 通过条件获取单个${entityTitle}的信息
+     * 通过条件获取单个${pojoMeta.title}的信息
      *
-     * @param id ${entityTitle}ID
+     * @param qc 查询单个{pojoMeta.title}的具体条件$
+     * XXX 注意qc参数不能加上@RequestParam注解，否则接收请求时会报ConversionNotSupportedException异常
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/get-one")
+    public Mono<Rt<${pojoMeta.className}Vo>> getOne(final ${pojoMeta.className}OneTo qc) {
+        return Mono.create(callback -> callback.success(Rt.success("查询成功", svc.getOne(qc))));
+    }
+
+    /**
+     * 通过ID获取单个${pojoMeta.title}的信息
+     *
+     * @param ${pojoMeta.ids[0].name} ${pojoMeta.title}ID
      * 
-     * @mbg.generated 自动生成，如需修改，请删除本行
+     * @codgen.generated 自动生成，如需修改，请删除本行
      */
-    @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/get-one")
-    public Mono<Ro<PojoRa<${entityName}Mo>>> getOne(final ${entityName}OneTo qo) {
-        return Mono.create(callback -> callback.success(api.getOne(qo)));
+    @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/get-by-id")
+    public Mono<Rt<${pojoMeta.className}Vo>> getById(@RequestParam("${pojoMeta.ids[0].name}") final ${pojoMeta.ids[0].classSimpleName} ${pojoMeta.ids[0].name}) {
+        return Mono.create(callback -> callback.success(Rt.success("查询成功", svc.getById(${pojoMeta.ids[0].name}))));
     }
 
     /**
-     * 通过ID获取单个${entityTitle}的信息
+     * 判断${pojoMeta.title}是否存在
      *
-     * @param id ${entityTitle}ID
+     * @param ${pojoMeta.ids[0].name} ${pojoMeta.title}ID
      * 
-     * @mbg.generated 自动生成，如需修改，请删除本行
+     * @codgen.generated 自动生成，如需修改，请删除本行
      */
-    @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/get-by-id")
-    public Mono<Ro<PojoRa<${entityName}Mo>>> getById(<&
-        for(id in ids){
-            if(!idLP.first) {
-                print(', ');
-            }
-            print('@RequestParam("');
-            print(id.key);
-            print('") final ');
-            print(id.value);
-            print(' ');
-            print(id.key);
-        }
-    &>) {
-        return Mono.create(callback -> callback.success(api.getById(id)));
+    @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/exist-by-id")
+    public Mono<Rt<BooleanRa>> existById(@RequestParam("${pojoMeta.ids[0].name}") final ${pojoMeta.ids[0].classSimpleName} ${pojoMeta.ids[0].name}) {
+        return Mono.create(callback -> callback.success(Rt.success("查询成功", new BooleanRa(svc.existById(${pojoMeta.ids[0].name})))));
     }
 
     /**
-     * 判断${entityTitle}是否存在
+     * 分页查询${pojoMeta.title}的信息
      *
-     * @param id ${entityTitle}ID
-     * 
-     * @mbg.generated 自动生成，如需修改，请删除本行
+     * @param qc 查询的具体条件
+     * XXX 注意qc参数不能加上@RequestParam注解，否则接收请求时会报ConversionNotSupportedException异常
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
      */
-    @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/exist-by-id")
-    public Mono<Ro<BooleanRa>> existById(<&
-        for(id in ids){
-            if(!idLP.first) {
-                print(', ');
-            }
-            print('@RequestParam("');
-            print(id.key);
-            print('") final ');
-            print(id.value);
-            print(' ');
-            print(id.key);
-        }
-    &>) {
-        return Mono.create(callback -> callback.success(api.existById(id)));
+    @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/page")
+    public Mono<Rt<PageRa<${pojoMeta.className}Vo>>> page(final ${pojoMeta.className}PageTo qc) {
+        return Mono.create(callback -> callback.success(Rt.success("分页查询成功", svc.page(qc))));
     }
 
     /**
-     * 查询${entityTitle}的信息
+     * 通过条件获取单个${pojoMeta.title}的信息
      *
-     * @param qo 查询的具体条件
+     * @param qc 查询单个{pojoMeta.title}的具体条件$
      *
-     * @mbg.generated 自动生成，如需修改，请删除本行
+     * @codgen.generated 自动生成，如需修改，请删除本行
      */
-    @GetMapping("/${strutil.toLowerCase(entityNamePrefix)}/${kebab(sputil.uncapitalize(entitySimpleName))}/page")
-    public Mono<Ro<PageRa<${moClassShortName}>>> page(final ${entityName}PageTo qo) {
-        return Mono.create(callback -> callback.success(api.page(qo)));
+    @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search-one")
+    public Mono<Rt<${pojoMeta.className}Vo>> searchOne(@RequestParam Map<String, Object> qc) {
+        return Mono.create(callback -> callback.success(Rt.success("查询成功", svc.beanSearchOne(qc))));
+    }
+
+    /**
+     * 通过ID获取单个${pojoMeta.title}的信息
+     *
+     * @param ${pojoMeta.ids[0].name} ${pojoMeta.title}ID
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search-by-id")
+    public Mono<Rt<${pojoMeta.className}Vo>> searchById(@RequestParam("${pojoMeta.ids[0].name}") final ${pojoMeta.ids[0].classSimpleName} ${pojoMeta.ids[0].name}) {
+        return Mono.create(callback -> {
+            Map<String, Object> qc = Map.of("${pojoMeta.ids[0].name}", ${pojoMeta.ids[0].name});
+            callback.success(Rt.success("查询成功", svc.beanSearchOne(qc)));
+        });
+    }
+
+    /**
+     * 分页搜索${pojoMeta.title}的信息
+     *
+     * @param qc 查询的具体条件
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search")
+    public Mono<Rt<PageRa<${pojoMeta.className}Vo>>> search(@RequestParam Map<String, Object> qc) {
+        return Mono.create(callback -> callback.success(Rt.success("分页查询成功", svc.beanSearch(qc))));
     }
 
 }

@@ -1,0 +1,39 @@
+/**
+*自动生成增删查改方法 ADD BY YHC 2024-04-02
+**/
+import { Ro } from '~/ro/Ro';
+import { request } from '~/util/request';
+export const ${pojoMeta.className}Api = {
+    /**
+     * 获取${pojoMeta.className}列表
+     * @param {any} params 参数对象
+     */
+    list(params?: any): Promise<Ro> {
+        // 发出get请求
+        return request.get({
+            url: '/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search',
+            params: { ...params },
+        });
+    },
+
+    del(params?: any): Promise<Ro> {
+        return request.del({
+            url: '/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}',
+            params: { ...params },
+        });
+    },
+
+    add(data?: any): Promise<Ro> {
+        return request.post({
+            url: '/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}',
+            data: { ...data },
+        });
+    },
+
+    update(data?: any): Promise<Ro> {
+        return request.put({
+            url: '/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}',
+            data: { ...data },
+        });
+    },
+};

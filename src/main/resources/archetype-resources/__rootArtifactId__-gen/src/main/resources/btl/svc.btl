@@ -1,21 +1,21 @@
-package ${modulePackage}.svc;
+package ${modulePackageName};
 
-import ${modulePackage}.mo.${entityName}Mo;
-import ${modulePackage}.to.${entityName}AddTo;
-import ${modulePackage}.to.${entityName}ModifyTo;
-import ${modulePackage}.to.${entityName}DelTo;
-import ${modulePackage}.to.${entityName}OneTo;
-import ${modulePackage}.to.${entityName}ListTo;
-import ${modulePackage}.to.${entityName}PageTo;
-import ${modulePackage}.jo.${entityName}Jo;
+import ${packageName}.to.${pojoMeta.className}AddTo;
+import ${packageName}.to.${pojoMeta.className}ModifyTo;
+import ${packageName}.to.${pojoMeta.className}DelTo;
+import ${packageName}.to.${pojoMeta.className}OneTo;
+import ${packageName}.to.${pojoMeta.className}ListTo;
+import ${packageName}.to.${pojoMeta.className}PageTo;
+import ${packageName}.mo.${pojoMeta.className}Mo;
+import ${packageName}.vo.${pojoMeta.className}Vo;
 
 import org.springframework.validation.annotation.Validated;
 
-import rebue.robotech.ro.Ro;
+import rebue.wheel.api.ro.Rt;
 import rebue.robotech.svc.BaseSvc;
 
 /**
- * ${table.remarks}服务接口
+ * ${pojoMeta.title}的服务接口
  *
  * <pre>
  * 1. 在接口上方必须写上 @Validated 注解
@@ -26,16 +26,9 @@ import rebue.robotech.svc.BaseSvc;
  *    如果方法的返回值为void，在方法上方加上 @Valid 注解会出现异常，报HV000132错误
  * </pre>
  *
- * @mbg.generated 自动生成的注释，如需修改本注释，请删除本行
+ * @codgen.generated 自动生成的注释，如需修改本注释，请删除本行
  */
 @Validated
-public interface ${entityName}Svc extends BaseSvc<<&
-		for(id in ids){
-			if(!idLP.first) {
-				print(', ');
-			}
-		    print(id.value);
-		}
-	&>, ${entityName}AddTo, ${entityName}ModifyTo, ${entityName}DelTo, ${entityName}OneTo, ${entityName}ListTo, ${entityName}PageTo, ${entityName}Mo, ${entityName}Jo> {
+public interface ${moduleClassName} extends BaseSvc<${pojoMeta.ids[0].classSimpleName}, ${pojoMeta.className}AddTo, ${pojoMeta.className}ModifyTo, ${pojoMeta.className}DelTo, ${pojoMeta.className}OneTo, ${pojoMeta.className}ListTo, ${pojoMeta.className}PageTo, ${pojoMeta.className}Mo, ${pojoMeta.className}Vo> {
 
 }

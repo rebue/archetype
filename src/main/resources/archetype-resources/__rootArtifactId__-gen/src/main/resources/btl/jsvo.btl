@@ -1,0 +1,93 @@
+<%
+    // 生成导入字典语句
+    for(property in pojoMeta.properties) {
+        if (strutil.endWith(property.name,'Dic')) {
+            var dicClassName = capitalize(property.name);
+            println('import { ' + dicClassName + '} from \'~/dic/' + dicClassName + '\';');
+        }
+    }
+
+    // 如果有外键，生成主键表的字段
+    var<String> pkTableNames1 = [];
+    for (foreignKey in pojoMeta.table.foreignKeys) {
+        // 主键表名
+        var pkTableName = foreignKey.pkTableName;
+        // 判断是否已重复获取主键表
+        if (array.contain(pkTableNames1, pkTableName)) continue;
+        // 遍历所有pojo，获取主键表
+        for (pojo in pojoMetas) {
+            if (pojo.table.name == pkTableName) {
+                // 先添加进主键表列表，以供判断是否已重复获取主键表
+                array.add(pkTableNames1, pkTableName);
+                // 遍历主键表pojo的所有属性
+                for (property in pojo.properties) {
+                    // 如果字段不是主键且是关键字，关联过来
+                    if (!property.field.isPrimaryKey && property.isKeyWord) {
+                        if (strutil.endWith(property.name,'Dic')) {
+                            var dicClassName = capitalize(property.name);
+                            println('import { ' + dicClassName + '} from \'~/dic/' + dicClassName + '\';');
+                        }
+                    }
+                }
+                break;
+            }
+        }
+    }
+%>
+
+/**
+<%
+    for(remark in pojoMeta.remarks) {
+        println(' * ' + remark);
+    }
+%>
+ */
+export interface ${pojoMeta.className} {
+<%
+    // 生成本表的字段
+    for(property in pojoMeta.properties) {
+        println('/**');
+        for(remark in property.remarks) {
+            println(' * ' + remark);
+        }
+        println('*/');
+        var jsType = strutil.endWith(property.name,'Dic')?capitalize(property.name):property.jsType;
+        println(property.name + ':' + jsType + ';');
+    }
+
+    // 如果有外键，生成主键表的字段
+    var<String> pkTableNames2 = [];
+    for (foreignKey in pojoMeta.table.foreignKeys) {
+        // 主键表名
+        var pkTableName = foreignKey.pkTableName;
+        // 判断是否已重复获取主键表
+        if (array.contain(pkTableNames2, pkTableName)) continue;
+        // 遍历所有pojo，获取主键表
+        for (pojo in pojoMetas) {
+            if (pojo.table.name == pkTableName) {
+                // 先添加进主键表列表，以供判断是否已重复获取主键表
+                array.add(pkTableNames2, pkTableName);
+                // 遍历主键表pojo的所有属性
+                for (property in pojo.properties) {
+                    // 如果字段不是主键且是关键字，关联过来
+                    if (!property.field.isPrimaryKey && property.isKeyWord) {
+                        println('/**');
+                        for(remark in property.remarks) {
+                        if (remarkLP.first)
+                            // 关联过来的字段标题前面要加上主键表标题
+                            println(' * ' + pojo.title + remark);
+                        else
+                            println(' * ' + remark);
+                        }
+                        println('*');
+                        println('*/');
+                        var jsType = strutil.endWith(property.name,'Dic')?capitalize(property.name):property.jsType;
+                        println(property.alias + ':' + jsType + ';');
+                    }
+                }
+                break;
+            }
+        }
+    }
+%>
+}

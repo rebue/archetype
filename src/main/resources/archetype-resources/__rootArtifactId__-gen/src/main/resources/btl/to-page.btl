@@ -1,4 +1,6 @@
-package ${modulePackage}.to;
+package ${modulePackageName};
+
+import ${packageName}.dic.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -6,9 +8,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,9 +27,9 @@ import lombok.EqualsAndHashCode;
 import rebue.robotech.to.PageTo;
 
 /**
- * ${table.remarks}
+ * ${pojoMeta.title}查询分页方法的传输参数
  *
- * @mbg.generated 自动生成，如需修改，请删除本行
+ * @codgen.generated 自动生成，如需修改，请删除本行
  */
 @Data
 @NoArgsConstructor
@@ -35,53 +37,57 @@ import rebue.robotech.to.PageTo;
 @Builder
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(Include.NON_NULL)
-public class ${entityName}PageTo extends PageTo implements Serializable {
+public class ${pojoMeta.className}PageTo extends PageTo implements Serializable {
 
 	/**
-     * @mbg.generated 自动生成，如需修改，请删除本行
+     * @codgen.generated 自动生成，如需修改，请删除本行
      */
 	private static final long serialVersionUID = 1L;
 
-	<&
-		for(var i=0;i<props.~size;i++){
+	<%
+		for(var i=0;i<pojoMeta.properties.~size;i++){
+		    var property = pojoMeta.properties[i];
 			// 查询列表时不会以主键为条件
-			if(props[i].isPrimaryKey) continue;
+			if(property.field.isPrimaryKey) continue;
 
         	println('/**');
-        	println('* ' + props[i].remark);
+            for(remark in property.remarks) {
+        	    println(' * ' + remark);
+            }
         	println('*');
-        	println('* @mbg.generated 自动生成，如需修改，请删除本行');
+        	println('* @codgen.generated 自动生成，如需修改，请删除本行');
         	println('*/');
         	
 	        // 如果是字符串且有长度限制，添加 @Length 注解
-	        if (props[i].type == 'String') {
-	            if (props[i].length > 0) {
-	                println('@Length(max = ' + props[i].length + ', message = "' + props[i].name + '的长度不能大于' + props[i].length + '")');
+	        if (property.classSimpleName == 'String') {
+	            if (property.field.scale > 0) {
+	                println('@Length(max = ' + property.field.scale + ', message = "' + property.title + '的长度不能大于' + property.field.scale + '")');
 	            }
 	        }
 	        // 如果是DateTime类型
-	        else if (props[i].type=='LocalDateTime' || (props[i].type=='Date' && strutil.endWith(props[i].code,'DateTime'))) {
+	        else if (property.classSimpleName=='LocalDateTime' || (property.classSimpleName=='Date' && strutil.endWith(property.name,'DateTime'))) {
                 println('@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")');
                 println('@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")');
 	        }
 	        // 如果是Date类型
-	        else if (props[i].type=='LocalDate' || (props[i].type=='Date' && strutil.endWith(props[i].code,'Date'))) {
+	        else if (property.classSimpleName=='LocalDate' || (property.classSimpleName=='Date' && strutil.endWith(property.name,'Date'))) {
                 println('@DateTimeFormat(pattern = "yyyy-MM-dd")');
                 println('@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")');
 	        }
 	        // 如果是Time类型
-	        else if (props[i].type=='LocalTime' || (props[i].type=='Date' && strutil.endWith(props[i].code,'Time'))) {
+	        else if (property.classSimpleName=='LocalTime' || (property.classSimpleName=='Date' && strutil.endWith(property.name,'Time'))) {
                 println('@DateTimeFormat(pattern = "HH:mm:ss")');
                 println('@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "GMT+8")');
 	        }
 
-	        // 如果是无符号类型，添加 @Min(...) 符号，限制为非负数
-	        if (props[i].isUnsigned) {
-	            println('@PositiveOrZero(message = "' + props[i].name + '不能为负数")');
+	        // 如果是无符号类型，添加 @PositiveOrZero 符号，限制为非负数
+	        if (property.field.isUnsigned && !strutil.endWith(property.name,'Dic')) {
+	            println('@PositiveOrZero(message = "' + property.title + '不能为负数")');
 	        }
 	        
-	        println('private ' + props[i].type + ' ' + props[i].code + ';');
+	        var propertyClassName = strutil.endWith(property.name,'Dic')?capitalize(property.name):property.classSimpleName;
+	        println('private ' + propertyClassName + ' ' + property.name + ';');
 		}
-	&>
+	%>
 	
 }

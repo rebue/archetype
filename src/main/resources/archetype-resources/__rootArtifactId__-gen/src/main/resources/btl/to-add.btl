@@ -1,4 +1,6 @@
-package ${modulePackage}.to;
+package ${modulePackageName};
+
+import ${packageName}.dic.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -6,9 +8,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,78 +19,91 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- * ${table.remarks}
+ * ${pojoMeta.title}添加方法的传输参数
  *
- * @mbg.generated 自动生成，如需修改，请删除本行
+ * @codgen.generated 自动生成，如需修改，请删除本行
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @JsonInclude(Include.NON_NULL)
-public class ${entityName}AddTo implements Serializable {
+public class ${pojoMeta.className}AddTo implements Serializable {
 
 	/**
-     * @mbg.generated 自动生成，如需修改，请删除本行
+     * @codgen.generated 自动生成，如需修改，请删除本行
      */
 	private static final long serialVersionUID = 1L;
 
-	<&
-		for(var i=0;i<props.~size;i++){
+	<%
+		for(var i=0;i<pojoMeta.properties.~size;i++){
+		    var property = pojoMeta.properties[i];
 			// 添加时主键可由后端生成不用填
-			if(props[i].isPrimaryKey) continue;
+			if(property.field.isPrimaryKey
+			        && (property.classSimpleName=='Long'
+			        || property.field.precision==32))
+			    continue;
 			
 			// 添加时创建时间戳和修改时间戳不用填
-			if(props[i].code=="createTimestamp") continue;
-			if(props[i].code=="updateTimestamp") continue;
+			if(property.name=="createTimestamp") continue;
+			if(property.name=="updateTimestamp") continue;
 			
         	println('/**');
-        	println('* ' + props[i].remark);
+            for(remark in property.remarks) {
+        	    println(' * ' + remark);
+            }
         	println('*');
-        	println('* @mbg.generated 自动生成，如需修改，请删除本行');
+        	println('* @codgen.generated 自动生成，如需修改，请删除本行');
         	println('*/');
         	
 	        // 如果字段要求非空
-	        if(!props[i].isNullable) {
+	        if(!property.field.isNullable) {
                 // 如果是字符串类型，添加 @NotBlank 注解
-	            if (props[i].type == 'String') {
-	                println('@NotBlank(message = "' + props[i].name + '不能为空")');
+	            if (property.classSimpleName == 'String') {
+	                println('@NotBlank(message = "' + property.title + '不能为空")');
 	            }
 	            // 如果是非字符串类型，添加 @NotNull 注解
 	            else {
-	                println('@NotNull(message = "' + props[i].name + '不能为空")');
+	                println('@NotNull(message = "' + property.title + '不能为空")');
 	            }
 	        }
 
 	        // 如果是字符串且有长度限制，添加 @Length 注解
-	        if (props[i].type == 'String') {
-	            if (props[i].length > 0) {
-	                println('@Length(max = ' + props[i].length + ', message = "' + props[i].name + '的长度不能大于' + props[i].length + '")');
+	        if (property.classSimpleName == 'String') {
+	            if (property.field.scale > 0) {
+	                println('@Length(max = ' + property.field.scale + ', message = "' + property.title + '的长度不能大于' + property.field.scale + '")');
 	            }
 	        }
 	        // 如果是DateTime类型
-	        else if (props[i].type=='LocalDateTime' || (props[i].type=='Date' && strutil.endWith(props[i].code,'DateTime'))) {
+	        else if (property.classSimpleName=='LocalDateTime' || (property.classSimpleName=='Date' && strutil.endWith(property.name,'DateTime'))) {
                 println('@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")');
                 println('@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")');
 	        }
 	        // 如果是Date类型
-	        else if (props[i].type=='LocalDate' || (props[i].type=='Date' && strutil.endWith(props[i].code,'Date'))) {
+	        else if (property.classSimpleName=='LocalDate' || (property.classSimpleName=='Date' && strutil.endWith(property.name,'Date'))) {
                 println('@DateTimeFormat(pattern = "yyyy-MM-dd")');
                 println('@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")');
 	        }
 	        // 如果是Time类型
-	        else if (props[i].type=='LocalTime' || (props[i].type=='Date' && strutil.endWith(props[i].code,'Time'))) {
+	        else if (property.classSimpleName=='LocalTime' || (property.classSimpleName=='Date' && strutil.endWith(property.name,'Time'))) {
                 println('@DateTimeFormat(pattern = "HH:mm:ss")');
                 println('@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "GMT+8")');
 	        }
 
-	        // 如果是无符号类型，添加 @Min(...) 符号，限制为非负数
-	        if (props[i].isUnsigned) {
-	            println('@PositiveOrZero(message = "' + props[i].name + '不能为负数")');
+	        // 如果是无符号类型，添加 @PositiveOrZero 符号，限制为非负数
+	        if (property.field.isUnsigned && !strutil.endWith(property.name,'Dic')) {
+	            println('@PositiveOrZero(message = "' + property.title + '不能为负数")');
 	        }
 
-	        println('private ' + props[i].type + ' ' + props[i].code + ';');
+            var propertyClassName = strutil.endWith(property.name,'Dic')?capitalize(property.name):property.classSimpleName;
+	        println('private ' + propertyClassName + ' ' + property.name + ';');
 		}
-	&>
+	%>
 	
 }

@@ -1,0 +1,35 @@
+package globalvariable;
+
+import java.util.Map;
+import java.util.HashMap;
+import org.apache.commons.lang3.StringUtils;
+import rebue.wheel.core.PackageUtils;
+import rebue.wheel.serialization.jackson.JacksonUtils;
+import io.github.codgen.core.drools.fact.GlobalVariableFact;
+
+/**
+ * 将默认配置放入变量中
+ */
+rule global_variable_default
+    agenda-group "global-variable"  // 议程分组
+    no-loop true                    // 防止死循环(当规则通过update之类的函数修改了Fact对象时，可能使当前规则再次被激活从而导致死循环)
+    lock-on-active true             // 限制当前规则只会被执行一次(包括当前规则的重复执行不是本身触发的)
+    salience -1                     // 执行的优先级(值越大优先级越高，可以为负数，不设置默认为0)
+when
+    $variableFact: GlobalVariableFact()
+then
+    @SuppressWarnings("unchecked")
+    Map<String, Object> variableMap = (Map<String, Object>)$variableFact.getVariableMap();
+    Map<String, Object> defaultOptionsMap = (Map<String, Object>)$variableFact.getVariableOptions().get("default");
+    for (Map.Entry<String, Object> defaultOption : defaultOptionsMap.entrySet()) {
+        String key = defaultOption.getKey();
+        Object value = defaultOption.getValue();
+        variableMap.put(key, value);
+        if (key.equals("packageName")) {
+            // 根据packageName计算出packagePath并绑定到模板中
+            String packagePath = PackageUtils.nameToPath((String) value).toString();
+            variableMap.put("packagePath", packagePath);
+        }
+    }
+    update($variableFact);
+end

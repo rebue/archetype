@@ -1,0 +1,90 @@
+<script lang="ts" setup>
+import { ${pojoMeta.className}Api } from '~/api/adm/${pojoMeta.className}Api';
+import { message } from 'ant-design-vue';
+import { editFormSchema } from './cfg/form.cfg';
+import type { EditFormData } from './type.d';
+
+const props = defineProps({
+    data: {
+        type: Object,
+        default: () => ({}),
+    },
+    modalType: {
+        type: Number,
+        default: 0,
+    },
+});
+
+const emit = defineEmits(['success']);
+
+const modalRef = ref();
+const formRef = ref();
+
+const modalTitle = computed(() => ['新增${pojoMeta.title}', '编辑${pojoMeta.title}'][props.modalType]);
+
+/**
+ * 点击确认方法
+ */
+const onClickConfirm = async () => {
+    const { validate, getFormData } = unref(formRef);
+    const isValid = await validate();
+
+    if (!isValid) return;
+    const reqData = getFormData();
+    const operationApi = props.modalType ? ${pojoMeta.className}Api.update : ${pojoMeta.className}Api.add;
+    aggregationOperationApp(operationApi, { ...reqData });
+};
+
+/**
+ * modal 完全退出后事件
+ */
+const modalAfterCloseEvent = () => {
+    const { clearValidate, resetFormData } = unref(formRef);
+    resetFormData();
+    clearValidate();
+};
+
+const modalVisibleChangeEvent = () => {
+    nextTick(() => unref(formRef)?.setFieldsValue({ ...unref(props.data) }));
+};
+
+/**
+ * 聚合操作应用方法
+ * @param {(_data: EditFormData) => Promise<any>} api 请求方法
+ * @param {EditFormData} data 请求参数
+ * @returns {Promise<string>} 返回请求响应消息
+ */
+const aggregationOperationApp = async (api: (_data: EditFormData) => Promise<any>, data: EditFormData) => {
+    const { setLoading, close } = unref(modalRef);
+    setLoading(true);
+    const { result, msg } = await api(data);
+    if (result <= 0) {
+        setLoading(false);
+
+        return Promise.reject(msg);
+    }
+
+    message.success(msg);
+    setLoading(false);
+    close();
+    emit('success');
+
+    return Promise.resolve(msg);
+};
+</script>
+
+<template>
+    <RebueModal
+        ref="modalRef"
+        v-bind="$attrs"
+        :title="modalTitle"
+        :after-close="modalAfterCloseEvent"
+        :show-ok-btn="![2].includes(modalType)"
+        @change="modalVisibleChangeEvent"
+        @confirm="onClickConfirm"
+    >
+        <RebueForm ref="formRef" :schemas="editFormSchema" />
+    </RebueModal>
+</template>
+
+<style lang="scss" scoped></style>
