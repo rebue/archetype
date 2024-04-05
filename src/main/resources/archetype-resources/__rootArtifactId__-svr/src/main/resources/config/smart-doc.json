@@ -1,5 +1,5 @@
 {
-  "projectName": "${projectDescription}",
+  "projectName": "${projectChineseName}",
   "outPath": "./src/main/resources/static/doc",
   "isStrict": false,
   "appToken": "dfd1c47d09ca4d909b8f8d76f577298e",

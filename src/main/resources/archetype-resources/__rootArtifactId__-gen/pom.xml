@@ -10,7 +10,7 @@
         <version>${version}</version>
     </parent>
     <artifactId>${artifactId}</artifactId>
-    <description>${projectDescription}生成代码的项目</description>
+    <description>${projectChineseName}生成代码的项目</description>
 
     <dependencies>
         <dependency>
