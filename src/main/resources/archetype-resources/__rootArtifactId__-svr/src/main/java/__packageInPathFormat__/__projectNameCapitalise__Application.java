@@ -12,7 +12,7 @@ public class ${projectNameCapitalise}Application {
 
     public static void main(final String[] args) {
         try {
-            SpringApplication.run(AdmApplication.class, args);
+            SpringApplication.run(${projectNameCapitalise}Application.class, args);
         } catch (Throwable e) {
             e.printStackTrace();
             throw e;

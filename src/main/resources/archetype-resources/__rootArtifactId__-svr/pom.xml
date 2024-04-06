@@ -4,13 +4,28 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>${groupId}</groupId>
-        <artifactId>${rootArtifactId}</artifactId>
-        <version>${version}</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.4</version>
+        <relativePath/>
     </parent>
 
+    <groupId>${groupId}</groupId>
     <artifactId>${artifactId}</artifactId>
+    <version>${version}</version>
     <description>${projectChineseName}微服务</description>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>${groupId}</groupId>
+                <artifactId>${rootArtifactId}</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -18,32 +33,23 @@
             <artifactId>${rootArtifactId}-api</artifactId>
         </dependency>
 
+        <!-- 如果需要调用其它微服务，请引用此包，否则不需要 -->
+        <dependency>
+            <groupId>com.github.rebue.sbs</groupId>
+            <artifactId>feign-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- smart-doc推送api信息到torna需要打开注释 -->
+        <!--        <dependency>-->
+        <!--            <groupId>com.github.rebue.wheel</groupId>-->
+        <!--            <artifactId>wheel-api</artifactId>-->
+        <!--            <classifier>sources</classifier>-->
+        <!--            <version>${wheel.version}</version>-->
+        <!--        </dependency>-->
+
         <dependency>
             <groupId>com.github.rebue.robotech</groupId>
             <artifactId>robotech-bll</artifactId>
-        </dependency>
-
-        <!-- 读写分离 -->
-        <dependency>
-            <groupId>com.github.rebue.sbs</groupId>
-            <artifactId>shardingsphere-spring-boot-starter</artifactId>
-        </dependency>
-        <!-- 将shardingsphere中的curator-client的版本进行统一管理 -->
-        <dependency>
-            <groupId>org.apache.curator</groupId>
-            <artifactId>curator-client</artifactId>
-        </dependency>
-
-        <!-- 数据库版本控制 -->
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-        </dependency>
-        <!-- 经测试，liquibase目前不能使用8.0.23~8.0.27版本的mysql的jdbc库 -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.22</version><!--$NO-MVN-MAN-VER$ -->
         </dependency>
 
         <dependency>
@@ -57,17 +63,14 @@
         </dependency>
 
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -80,6 +83,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>com.github.rebue.wheel</groupId>
             <artifactId>wheel-net</artifactId>
@@ -94,46 +98,141 @@
 
     <build>
         <plugins>
-            <!-- SpringBoot服务项目打包插件，会分全包和原始包，并且会配置MANIFEST.MF文件设置运行的主类 -->
+            <!-- smart-doc如果项目依赖其他内部公共模块和二方包, 则依赖包需要配置源码打包 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- smart-doc -->
+            <plugin>
+                <groupId>com.ly.smart-doc</groupId>
+                <artifactId>smart-doc-maven-plugin</artifactId>
+                <version>3.0.3</version>
+                <configuration>
+                    <!-- 指定生成文档的使用的配置文件 -->
+                    <configFile>${basedir}/src/main/resources/config/smart-doc.json</configFile>
+                    <!--                    <includes>-->
+                    <!--                        <include>com.github.rebue.wheel:*</include>-->
+                    <!--                    </includes>-->
+                </configuration>
+            </plugin>
+
+            <!-- native打包需要 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
             <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>default</id>
-                        <!-- 绑定到install阶段执行 -->
-                        <!-- <phase>install</phase> -->
-                        <!-- 绑定到deploy阶段执行 -->
-                        <!-- <phase>deploy</phase> -->
-                        <!-- 不绑定到任何阶段，也就不会执行 -->
-                        <phase></phase>
-                        <goals>
-                            <goal>build</goal>
-                            <goal>push</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <!-- 此选项指定在settings.xml文件中设置的server -->
-                    <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
-                    <!-- 部署到私服，${my-docker.host}在settins.xml中统一配置 -->
-                    <repository>${my-docker.host}/${docker.image.prefix}/${project.artifactId}</repository>
-                    <!-- 部署到hub.docker.com -->
-                    <!-- <repository>${docker.image.prefix}/${project.artifactId}</repository> -->
-                    <tag>${project.version}</tag>
+                    <excludes>
+                        <!-- 排除打包 src/main/resources 下的所有文件 -->
+                        <exclude>config/**</exclude>
+                        <exclude>db/**</exclude>
+                        <exclude>META-INF/**</exclude>
+                        <exclude>security/**</exclude>
+                        <exclude>static/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- Maven 编译插件，提供给 Lombok 和 MapStruct 使用 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <annotationProcessorPaths>
+                        <!-- MapStruct 注解处理器 -->
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                        <!-- Lombok 注解处理器 -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <!-- MapStruct 和 Lombok 注解绑定处理器 -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>${lombok-mapstruct-binding.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <version>0.10.1</version>
+                <configuration>
+                    <mainClass>${groupId}.${projectNameCapitalise}Application</mainClass>
                     <buildArgs>
-                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                        <!-- 建立独立镜像，不成功则报告失败 -->
+                        <buildArg>--no-fallback</buildArg>
+                        <!-- 开启实验性的功能 -->
+                        <buildArg>-H:+UnlockExperimentalVMOptions</buildArg>
+                        <!-- 列出要打包的资源 -->
+                        <buildArg>-H:ExcludeResources=config/*</buildArg>>
+                        <!-- 指定native-image配置文件的目录(此目录由maven编译gen-native-image-config生成) -->
+                        <buildArg>-H:ConfigurationFileDirectories=src/main/resources/META-INF/native-image/</buildArg>
+                        <!-- 级别设置为3，打包时输出包含的资源文件 -->
+                        <buildArg>-H:Log=registerResource:3</buildArg>
                     </buildArgs>
+                    <!-- native-image编译时输出详细的日志 -->
                     <verbose>true</verbose>
-                    <googleContainerRegistryEnabled>false</googleContainerRegistryEnabled>
+                    <!-- 生成调试信息 -->
+                    <debug>true</debug>
+                    <!-- 快速编译 -->
+                    <quickBuild>true</quickBuild>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
+    <profiles>
+        <profile>
+            <!-- 生成native-image的配置文件需要 -->
+            <!-- 因为是利用test插件生成，所以不能skip test -->
+            <!-- maven命令使用test，并最好加上 '-Dtest=CodgenApplicationTests#testMain' 参数限定测试的方法 -->
+            <id>gen-native-image-config</id>
+            <build>
+                <plugins>
+                    <!-- 执行测试用例的插件 -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                        <configuration>
+                            <argLine>
+                                -agentlib:native-image-agent=config-output-dir=src/main/resources/META-INF/native-image
+                            </argLine>
+                            <includes>
+                                <include>**/*Tests.java</include>
+                            </includes>
+                            <!-- 因为native-image-agent根据测试生成反射的配置文件，所以不能跳过测试 -->
+                            <skip>false</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
