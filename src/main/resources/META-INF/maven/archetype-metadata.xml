@@ -34,7 +34,7 @@
         </requiredProperty>
         <!-- 数据库主机 -->
         <requiredProperty key="dbHost">
-            <defaultValue>127.0.0.1</defaultValue>
+            <defaultValue>mysql</defaultValue>
         </requiredProperty>
         <!-- 数据库端口号 -->
         <requiredProperty key="dbPort">
