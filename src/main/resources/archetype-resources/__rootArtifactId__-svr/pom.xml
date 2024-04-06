@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>${artifactId}</artifactId>
+    <description>${projectChineseName}微服务</description>
 
     <dependencies>
         <dependency>
