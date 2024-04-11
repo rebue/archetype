@@ -65,8 +65,8 @@ template:
       - moduleName: dic # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
         inFilePath: btl/dic.btl
         outFilePath: ${dollar}{project}-api/src/main/java/${dollar}{modulePath}/${dollar}{moduleClassName}.java
-      - inFilePath: btl/jsdic.btl
-        outFilePath: ${dollar}{project}-web/src/dic/${dollar}{project}/${dollar}{dicMeta.className}.ts
+      - inFilePath: btl/js-dic.btl
+        outFilePath: ${project}-web/src/dic/${project}/${dicMeta.className}.ts
     # PojoTemplate规则的配置选项
     #     值是Map列表，程序会将其中的每一项绑定到模板中
     pojo:
@@ -115,21 +115,19 @@ template:
       - moduleName: to # 模块名(根据moduleName自动计算modulePackageName为packageName+'.'+moduleName，然后计算出modulePath)
         inFilePath: btl/to-page.btl
         outFilePath: ${dollar}{project}-api/src/main/java/${dollar}{modulePath}/${dollar}{pojoMeta.className}PageTo.java
-      - inFilePath: btl/jsvo.btl
-        outFilePath: ${dollar}{project}-web/src/vo/${dollar}{project}/${dollar}{pojoMeta.className}Vo.ts
-      - inFilePath: btl/jsmng.btl
-        outFilePath: ${dollar}{project}-web/src/view/${dollar}{project}/${dollar}{pojoMeta.lowerHyphenNameWithoutPrefix}/${dollar}{pojoMeta.className}Mng.vue
-      - inFilePath: btl/jsmng.btl
-        outFilePath: ${dollar}{project}-web/src/view/${dollar}{project}/${dollar}{pojoMeta.lowerHyphenNameWithoutPrefix}/${dollar}{pojoMeta.className}Mng.vue
+      - inFilePath: btl/js-vo.btl
+        outFilePath: ${project}-web/src/vo/${project}/${pojoMeta.className}Vo.ts
+      - inFilePath: btl/js-mng.btl
+        outFilePath: ${project}-web/src/view/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/${pojoMeta.className}Mng.vue
       - inFilePath: btl/js-type-d.btl
-        outFilePath: ${dollar}{project}-web/src/view/${dollar}{project}/${dollar}{pojoMeta.lowerHyphenNameWithoutPrefix}/type.d.ts
+        outFilePath: ${project}-web/src/view/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/type.d.ts
       - inFilePath: btl/js-edit-form.btl
-        outFilePath: ${dollar}{project}-web/src/view/${dollar}{project}/${dollar}{pojoMeta.lowerHyphenNameWithoutPrefix}/${dollar}{pojoMeta.className}EditForm.vue
+        outFilePath: ${project}-web/src/view/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/${pojoMeta.className}EditForm.vue
       - inFilePath: btl/js-form-cfg.btl
-        outFilePath: ${dollar}{project}-web/src/view/${dollar}{project}/${dollar}{pojoMeta.lowerHyphenNameWithoutPrefix}/cfg/form.cfg.ts
+        outFilePath: ${project}-web/src/view/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/cfg/form.cfg.ts
       - inFilePath: btl/js-table-cfg.btl
-        outFilePath: ${dollar}{project}-web/src/view/${dollar}{project}/${dollar}{pojoMeta.lowerHyphenNameWithoutPrefix}/cfg/table.cfg.ts
+        outFilePath: ${project}-web/src/view/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/cfg/table.cfg.ts
       - inFilePath: btl/js-dic-cfg.btl
-        outFilePath: ${dollar}{project}-web/src/view/${dollar}{project}/${dollar}{pojoMeta.lowerHyphenNameWithoutPrefix}/cfg/dic.cfg.ts
+        outFilePath: ${project}-web/src/view/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/cfg/dic.cfg.ts
       - inFilePath: btl/js-api.btl
-        outFilePath: ${dollar}{project}-web/src/api/${dollar}{project}/${dollar}{pojoMeta.className}Api.ts
+        outFilePath: ${project}-web/src/api/${project}/${pojoMeta.className}Api.ts

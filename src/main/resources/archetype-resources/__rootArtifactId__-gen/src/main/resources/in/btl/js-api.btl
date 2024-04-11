@@ -11,6 +11,14 @@ export const ${pojoMeta.className}Api = {
     list(params?: any): Promise<Ro> {
         // 发出get请求
         return request.get({
+            url: '/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/list',
+            params: { ...params },
+        });
+    },
+
+    search(params?: any): Promise<Ro> {
+        // 发出get请求
+        return request.get({
             url: '/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search',
             params: { ...params },
         });
@@ -36,4 +44,11 @@ export const ${pojoMeta.className}Api = {
             data: { ...data },
         });
     },
+
+    searchById(params?: any): Promise<Ro> {
+            return request.get({
+                url: '/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search-by-id',
+                params: { ...params },
+            });
+        },
 };

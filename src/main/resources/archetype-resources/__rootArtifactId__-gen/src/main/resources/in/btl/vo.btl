@@ -9,6 +9,7 @@ import lombok.Data;
 import rebue.robotech.vo.Vo;
 import rebue.wheel.api.desensitize.Desensitize;
 import rebue.wheel.api.desensitize.DesensitizeStrategy;
+import net.postgis.jdbc.PGgeometry;
 
 import java.time.LocalDateTime;
 

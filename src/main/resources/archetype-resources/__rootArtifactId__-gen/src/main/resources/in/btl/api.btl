@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import rebue.wheel.svc.dic.ResultDic;
 import rebue.wheel.api.ra.IdRa;
 import rebue.wheel.api.ra.BooleanRa;
 import rebue.wheel.api.ra.PageRa;

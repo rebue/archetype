@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { ${pojoMeta.className}Api } from '~/api/adm/${pojoMeta.className}Api';
-import { useAdmStore } from '~/store/AdmStore';
+import { ${pojoMeta.className}Api } from '~/api/${project}/${pojoMeta.className}Api';
+import { use${capitalize(project)}Store } from '~/store/${capitalize(project)}Store';
 import { message } from 'ant-design-vue';
 import { keywordColumns } from './cfg/dic.cfg';
 import { searchFormSchema } from './cfg/form.cfg';
@@ -8,7 +8,7 @@ import { tableColumns } from './cfg/table.cfg';
 import { beanSearchGenerateKeyword, paramsMerge } from '~/util/params';
 import type { ActionItem } from '~/component/rebue/rebue-table/type';
 
-const { getCurrentMngData, setMng } = $(useAdmStore());
+const { getCurrentMngData, setMng } = $(use${capitalize(project)}Store());
 
 const isOpenAddModal = ref(false);
 const isEditModal = ref(0);

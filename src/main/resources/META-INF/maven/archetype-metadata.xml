@@ -153,6 +153,7 @@
                     <directory>src/main/resources</directory>
                     <includes>
                         <include>**/application.yml</include>
+                        <include>**/application-dev.yml</include>
                     </includes>
                 </fileSet>
                 <fileSet filtered="false" encoding="UTF-8">
@@ -162,6 +163,7 @@
                     </includes>
                     <excludes>
                         <exclude>**/application.yml</exclude>
+                        <exclude>**/application-dev.yml</exclude>
                     </excludes>
                 </fileSet>
                 <fileSet filtered="true" encoding="UTF-8">

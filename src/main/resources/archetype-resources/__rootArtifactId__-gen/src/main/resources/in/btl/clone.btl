@@ -13,7 +13,7 @@ import ${packageName}.to.${pojoMeta.className}PageTo;
 import ${packageName}.mo.${pojoMeta.className}Mo;
 import ${packageName}.vo.${pojoMeta.className}Vo;
 
-import rebue.robotech.mapstruct.RebueMapper;
+import rebue.robotech.clone.RebueMapper;
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**

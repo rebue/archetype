@@ -19,6 +19,7 @@ const emit = defineEmits(['success']);
 
 const modalRef = ref();
 const formRef = ref();
+const isLoading = ref(false);
 
 const modalTitle = computed(() => ['新增${pojoMeta.title}', '编辑${pojoMeta.title}'][props.modalType]);
 
@@ -44,8 +45,32 @@ const modalAfterCloseEvent = () => {
     clearValidate();
 };
 
-const modalVisibleChangeEvent = () => {
-    nextTick(() => unref(formRef)?.setFieldsValue({ ...unref(props.data) }));
+/**
+ * modal 显示/隐藏事件
+ */
+const modalVisibleChangeEvent = (visible: boolean) => {
+    if (!visible) return;
+    const { id, ...editData } = unref(props).data;
+    if (props.modalType === 1) {
+        get${pojoMeta.className}Data({ id: props.data.id }).then((data) => unref(formRef)?.setFieldsValue({ ...editData, ...data }));
+    } else {
+        nextTick(() => unref(formRef)?.setFieldsValue({ id, ...editData }));
+    }
+};
+
+/**
+ * 获取${pojoMeta.title}数据方法
+ * @param {any} data 请求参数
+ */
+const get${pojoMeta.className}Data = async (data: any) => {
+    isLoading.value = true;
+    const { result, extra } = await ${pojoMeta.className}Api.searchById(data);
+    if (result <= 0) {
+        isLoading.value = false;
+        return Promise.reject();
+    }
+    isLoading.value = false;
+    return Promise.resolve(extra);
 };
 
 /**
