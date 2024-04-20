@@ -22,6 +22,9 @@ spring:
         default-context: ${dollar}{spring.application.name}
         profile-separator: '-'
         format: yaml
+  mvc:
+    # 静态文件访问的路径
+    static-path-pattern: /static/**
   #  aop:
   #    # 不启动Web服务器(不提供HTTP服务)
   #    web-application-type: none
@@ -36,7 +39,7 @@ mybatis:
     # 自动将数据库中用下划线分隔单词的风格转换为小驼峰风格
     map-underscore-to-camel-case: true
     # 自动转化枚举类型
-    default-enum-type-handler: rebue.robotech.mybatis.AutoEnumTypeHandler
+    default-enum-type-handler: rebue.robotech.mybatis.handler.enumtype.AutoEnumTypeHandler
 
 pagehelper:
   # 分页合理化参数。
@@ -58,11 +61,19 @@ bean-searcher:
       # 设置起始页为1
       start: 1
   sql:
+    dialect: postgresql
     default-mapping:
       # 数据库表名及字段名大写
       upper-case: true
       # 实体类后缀(自动映射表名会自动去掉实体类的后缀)
       redundant-suffixes: Vo
+
+management:
+  influx:
+    metrics:
+      export:
+        # 禁用influx统计(否则启动完成后会报unable to create database 'mydb'的错误，虽然不影响使用)
+        enabled: false
 
 rebue:
   # 配置idworker参数
