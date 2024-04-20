@@ -21,7 +21,7 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  *
  * @codgen.generated 自动生成的注释，如需修改本注释，请删除本行
  */
-@Mapper(componentModel = SPRING, uses = RebueMapper.class)
+@Mapper(componentModel = SPRING, uses = {EnumConverter.class})
 public interface ${moduleClassName} extends CloneMapper<${pojoMeta.className}AddTo, ${pojoMeta.className}ModifyTo, ${pojoMeta.className}DelTo, ${pojoMeta.className}OneTo, ${pojoMeta.className}ListTo, ${pojoMeta.className}PageTo, ${pojoMeta.className}Mo, ${pojoMeta.className}Vo> {
     /**
      * ${pojoMeta.title}的克隆实例

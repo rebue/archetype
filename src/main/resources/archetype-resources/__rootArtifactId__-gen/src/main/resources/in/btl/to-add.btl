@@ -11,10 +11,18 @@ import java.time.LocalTime;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import net.postgis.jdbc.PGgeometry;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import rebue.robotech.jackson.geometry.PointGeometryDeserializer;
+import rebue.robotech.jackson.geometry.LineGeometryDeserializer;
+import rebue.robotech.jackson.geometry.PolygonGeometryDeserializer;
+import net.postgis.jdbc.geometry.Point;
+import net.postgis.jdbc.geometry.LineString;
+import net.postgis.jdbc.geometry.Polygon;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -45,6 +53,8 @@ public class ${pojoMeta.className}AddTo implements Serializable {
 	<%
 		for(var i=0;i<pojoMeta.properties.~size;i++){
 		    var property = pojoMeta.properties[i];
+		    var propertyNameLowerCase = strutil.toLowerCase(property.name);
+
 			// 添加时主键可由后端生成不用填
 			if(property.field.isPrimaryKey
 			        && (property.classSimpleName=='Long'
@@ -100,6 +110,17 @@ public class ${pojoMeta.className}AddTo implements Serializable {
 	        // 如果是无符号类型，添加 @PositiveOrZero 符号，限制为非负数
 	        if (property.field.isUnsigned && !strutil.endWith(property.name,'Dic')) {
 	            println('@PositiveOrZero(message = "' + property.title + '不能为负数")');
+	        }
+
+	        // 如果是点坐标，加上特定的反序列化注解
+	        if (strutil.endWith(propertyNameLowerCase,'pointcoord') || strutil.endWith(propertyNameLowerCase,'pointlocation')) {
+	            println('@JsonDeserialize(using = PointGeometryDeserializer.class)');
+            // 如果是线坐标，加上特定的反序列化注解
+	        } else if (strutil.endWith(propertyNameLowerCase,'linecoord') || strutil.endWith(propertyNameLowerCase,'linelocation')) {
+	            println('@JsonDeserialize(using = LineGeometryDeserializer.class)');
+            // 如果是多边形坐标，加上特定的反序列化注解
+	        } else if (strutil.endWith(propertyNameLowerCase,'polygoncoord') || strutil.endWith(propertyNameLowerCase,'polygonlocation')) {
+	            println('@JsonDeserialize(using = PolygonGeometryDeserializer.class)');
 	        }
 
             var propertyClassName = strutil.endWith(property.name,'Dic')?capitalize(property.name):property.classSimpleName;

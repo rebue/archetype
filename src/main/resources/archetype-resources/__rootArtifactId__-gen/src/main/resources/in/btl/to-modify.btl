@@ -11,10 +11,19 @@ import java.time.LocalTime;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import net.postgis.jdbc.PGgeometry;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import net.postgis.jdbc.geometry.Point;
+import net.postgis.jdbc.geometry.LineString;
+import net.postgis.jdbc.geometry.Polygon;
+import rebue.robotech.jackson.geometry.PointGeometryDeserializer;
+import rebue.robotech.jackson.geometry.LineGeometryDeserializer;
+import rebue.robotech.jackson.geometry.PolygonGeometryDeserializer;
+import rebue.robotech.to.ModifyTo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -35,7 +44,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @JsonInclude(Include.NON_NULL)
-public class ${pojoMeta.className}ModifyTo implements Serializable {
+public class ${pojoMeta.className}ModifyTo implements ModifyTo<${pojoMeta.ids[0].classSimpleName}>, Serializable {
 
 	/**
      * @codgen.generated 自动生成，如需修改，请删除本行
@@ -45,6 +54,8 @@ public class ${pojoMeta.className}ModifyTo implements Serializable {
 	<%
 		for(var i=0;i<pojoMeta.properties.~size;i++){
 		    var property = pojoMeta.properties[i];
+		    var propertyNameLowerCase = strutil.toLowerCase(property.name);
+
 			// 修改时创建时间戳和修改时间戳不用填
 			if(property.name=="createTimestamp") continue;
 			if(property.name=="updateTimestamp") continue;
@@ -96,6 +107,17 @@ public class ${pojoMeta.className}ModifyTo implements Serializable {
 	            println('@PositiveOrZero(message = "' + property.title + '不能为负数")');
 	        }
 	        
+	        // 如果是点坐标，加上特定的反序列化注解
+	        if (strutil.endWith(propertyNameLowerCase,'pointcoord') || strutil.endWith(propertyNameLowerCase,'pointlocation')) {
+	            println('@JsonDeserialize(using = PointGeometryDeserializer.class)');
+            // 如果是线坐标，加上特定的反序列化注解
+	        } else if (strutil.endWith(propertyNameLowerCase,'linecoord') || strutil.endWith(propertyNameLowerCase,'linelocation')) {
+	            println('@JsonDeserialize(using = LineGeometryDeserializer.class)');
+            // 如果是多边形坐标，加上特定的反序列化注解
+	        } else if (strutil.endWith(propertyNameLowerCase,'polygoncoord') || strutil.endWith(propertyNameLowerCase,'polygonlocation')) {
+	            println('@JsonDeserialize(using = PolygonGeometryDeserializer.class)');
+	        }
+
 	        var propertyClassName = strutil.endWith(property.name,'Dic')?capitalize(property.name):property.classSimpleName;
 	        println('private ' + propertyClassName + ' ' + property.name + ';');
 		}

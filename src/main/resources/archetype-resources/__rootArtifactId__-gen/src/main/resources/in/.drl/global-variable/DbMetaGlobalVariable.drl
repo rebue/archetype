@@ -37,6 +37,12 @@ then
         dbMeta.setPassword(dbMetaOptions.getConnect().getProperties().getProperty("password"));
         if (dbMeta.getDriverName().contains("MySQL")) {
             dbMeta.setDriverClass("com.mysql.cj.jdbc.Driver");
+        } else if (dbMeta.getDriverName().contains("PostgreSQL")) {
+            if (dbMeta.getUrl().contains("postgresql_postGIS")) {
+                dbMeta.setDriverClass("net.postgis.jdbc.DriverWrapper");
+            } else {
+                dbMeta.setDriverClass("org.postgresql.Driver");
+            }
         }
         Map<String, Object> variableMap = (Map<String, Object>)$variableFact.getVariableMap();
         variableMap.put(DB_META_GLOBAL_VARIABLE_KEY, dbMeta);
