@@ -13,7 +13,7 @@ spring:
   cloud:
     consul:
       # 开发环境可以禁用consul来不使用配置中心和注册中心
-      # 如要供其它微服务调试调用，则要启用
+      # 如要要调用其它微服务或供其它微服务调用，则要启用
       enabled: false
 
 # 开发环境不用连接zookeeper来生成idworker
