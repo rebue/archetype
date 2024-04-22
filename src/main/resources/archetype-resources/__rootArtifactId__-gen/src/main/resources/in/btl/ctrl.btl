@@ -51,7 +51,7 @@ public class ${moduleClassName} {
      */
     @PostMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}")
     public Mono<Rt<IdRa<${pojoMeta.ids[0].classSimpleName}>>> add(@RequestBody final ${pojoMeta.className}AddTo to) {
-        return Mono.create(callback -> callback.success(Rt.success("添加成功", new IdRa<>(svc.add(to).getId()))));
+        return Mono.create(callback -> callback.success(Rt.success("添加成功", IdRa.of(svc.add(to).getId()))));
     }
 
     /**
@@ -118,7 +118,7 @@ public class ${moduleClassName} {
      */
     @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/exist-by-id")
     public Mono<Rt<BooleanRa>> existById(@RequestParam("${pojoMeta.ids[0].name}") final ${pojoMeta.ids[0].classSimpleName} ${pojoMeta.ids[0].name}) {
-        return Mono.create(callback -> callback.success(Rt.success("查询成功", new BooleanRa(svc.existById(${pojoMeta.ids[0].name})))));
+        return Mono.create(callback -> callback.success(Rt.success("查询成功", BooleanRa.of(svc.existById(${pojoMeta.ids[0].name})))));
     }
 
     /**
