@@ -21,21 +21,31 @@ st->op1->op2->op3->op4->op5->op6->op7->op8->e
 ## 1. 建立工作空间
 
 与Eclipse的工作空间类型，一个工作空间可以存放多个项目，**规范没有强制要求，只是建议一台电脑就用一个工作空间就好了**
+![项目结构](项目结构.png)
 
 ## 2. 建立项目
 
 项目的英文是 `Project`，新建项目请在菜单中选择 `New Project...`，具体操作略
 
+
 ## 3. 新建逻辑模型
 
-逻辑数据模型的英文是 `Logical Data Model`，新建请在菜单中选择 `New Model...` > `Model types` > `Logical Data Model` > `Logical Diagram`，具体操作略
+逻辑数据模型的英文是 `Logical Data Model`
+，新建请在菜单中选择 `New Model...` > `Model types` > `Logical Data Model` > `Logical Diagram`，具体操作略
 
 ## 4. 设计逻辑模型
 
-- 每个表的code不用加项目前缀（在生成物理模型的时候再设置）
-- 表和字段的code大写，单词之间用下划线隔开
-- 每个表必须有且有一个关键字段，code为 `ID`，如无特殊要求，数据类型请使用 `Long integer`
+- 逻辑模型页面,创建表，添加字段 `New`>`Entity`
 
+  ![逻辑模型中创建表](逻辑模型中创建表.png)
+- 每个表的code不用加项目前缀（在生成物理模型的时候再设置）
+- 表和字段的code大写，单词之间用下划线隔开(pgsql的数据库为 表和字段的code小写，单词之间下划线隔开)
+- 每个表必须有且有一个关键字段，code为 `ID`，如无特殊要求，数据类型请使用 `Long integer`
+- 每个表的物理外键通过设置关系生成，无需手动设置物理外键。
+![设置表关系](设置表关系.png)
+**一些tip**
+- 在逻辑模型中，显示表的code
+![表显示code](表显示code.png)
 ## 5. 生成物理模型
 
 打开逻辑模型 > 点击菜单`Tools` - `Generate Physical Data Model...` 或 直接`Ctrl + Shift + p`
@@ -70,6 +80,7 @@ st->op1->op2->op3->op4->op5->op6->op7->op8->e
   ![排除比较unique2.png](排除比较unique2.png)
 
 - 可以在生成脚本后查找脚本中是否有 `   key ` 来检查
+
 ### 6.2. 物理模型中设置unique字段
 
 - MySQL物理模型中，双击表，设置Keys，选择要修改的key，编辑 -> MySQL -> Unique key
@@ -79,17 +90,17 @@ st->op1->op2->op3->op4->op5->op6->op7->op8->e
 在MySQL的物理图中 > 双击表 > 在 `Columns` 中选择要更改的字段 > 查看属性 > 切换到MySQL标签页 > 勾选 `Unsigned` > 确定并保存
 
 - 常见的有tinyint,bigint
-  - 注意: ID字段的数据类型是bigint的，请使用unsigned
+    - 注意: ID字段的数据类型是bigint的，请使用unsigned
 
-    生成的脚本应如下:
+      生成的脚本应如下:
 
-    ```txt
-    id                   bigint unsigned not null  comment 'XXX',
-    ```
+      ```txt
+      id                   bigint unsigned not null  comment 'XXX',
+      ```
 
 - 可以在生成脚本后查找脚本中是否有 `bigint not null` 、`bigint  comment` 、 `tinyint not null` 来检查
 - 注意每次生成物理模型的时候不要覆盖 `unsigned`
-  
+
   ![排除比较unsigned](排除比较unsigned.png)
 
 ### 6.4. 修改生成外键名称规则
@@ -132,12 +143,16 @@ st->op1->op2->op3->op4->op5->op6->op7->op8->e
 
 ```sql
 -- 会话内禁用外键约束
-SET FOREIGN_KEY_CHECKS = 0;
+SET
+FOREIGN_KEY_CHECKS = 0;
 -- 会话内启用外键约束
-SET FOREIGN_KEY_CHECKS = 1;
+SET
+FOREIGN_KEY_CHECKS = 1;
 
 -- 全局禁用外键约束
-SET GLOBAL FOREIGN_KEY_CHECKS = 0;
+SET
+GLOBAL FOREIGN_KEY_CHECKS = 0;
 -- 全局启用外键约束
-SET GLOBAL FOREIGN_KEY_CHECKS = 1;
+SET
+GLOBAL FOREIGN_KEY_CHECKS = 1;
 ```
