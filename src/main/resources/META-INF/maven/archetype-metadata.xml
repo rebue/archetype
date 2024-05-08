@@ -26,19 +26,23 @@
         </requiredProperty>
         <!-- jdbc数据库驱动 -->
         <requiredProperty key="jdbcDriver">
-            <defaultValue>com.mysql.cj.jdbc.Driver</defaultValue>
+<!--            <defaultValue>com.mysql.cj.jdbc.Driver</defaultValue>-->
+            <defaultValue>org.postgresql.Driver</defaultValue>
         </requiredProperty>
         <!-- 数据库驱动 -->
         <requiredProperty key="dbDriver">
-            <defaultValue>mysql</defaultValue>
+<!--            <defaultValue>mysql</defaultValue>-->
+            <defaultValue>postgresql</defaultValue>
         </requiredProperty>
         <!-- 数据库主机 -->
         <requiredProperty key="dbHost">
-            <defaultValue>mysql</defaultValue>
+<!--            <defaultValue>mysql</defaultValue>-->
+            <defaultValue>pgsql</defaultValue>
         </requiredProperty>
         <!-- 数据库端口号 -->
         <requiredProperty key="dbPort">
-            <defaultValue>3306</defaultValue>
+<!--            <defaultValue>3306</defaultValue>-->
+            <defaultValue>5432</defaultValue>
         </requiredProperty>
         <!-- 数据库名 -->
         <requiredProperty key="dbName">
@@ -46,7 +50,8 @@
         </requiredProperty>
         <!-- jdbc链接 -->
         <requiredProperty key="jdbcUrl">
-            <defaultValue>jdbc:mysql://mysql:3306/${artifactId}?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true&amp;useSSL=false</defaultValue>
+<!--            <defaultValue>jdbc:mysql://mysql:3306/${artifactId}?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true&amp;useSSL=false</defaultValue>-->
+            <defaultValue>jdbc:postgresql://pgsql:5432/${artifactId}</defaultValue>
         </requiredProperty>
         <!-- jdbc用户名称 -->
         <requiredProperty key="jdbcUser">

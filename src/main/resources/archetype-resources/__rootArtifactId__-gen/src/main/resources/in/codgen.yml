@@ -29,7 +29,7 @@ globalVariable:
   dbMeta:
     connect:
       # 数据库连接字符串(MySQL5要想获取表的注释，必须设置useInformationSchema=true，据说8可以不设置)
-      url: jdbc:${dbDriver}://%s:%s/%s?useInformationSchema=true
+      url: ${jdbcUrl}
       # 数据库连接字符串要插入的参数
       params:
         # 主机地址
@@ -45,7 +45,7 @@ globalVariable:
         # 密码
         password: ${jdbcPswd}
     # 表名过滤的模式(不设置则获取所有的表)
-    tableName: ${projectNameUpperCase}_%
+    tableName: ${projectName}_%
 # 获取模板的配置选项
 template:
   # 分组模板
