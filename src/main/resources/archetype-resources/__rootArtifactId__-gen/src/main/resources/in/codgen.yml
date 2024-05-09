@@ -45,7 +45,7 @@ globalVariable:
         # 密码
         password: ${jdbcPswd}
     # 表名过滤的模式(不设置则获取所有的表)
-    tableName: ${projectName}_%
+    tableName: ${rootArtifactId}_%
 # 获取模板的配置选项
 template:
   # 分组模板
