@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.4</version>
+        <version>3.2.5</version>
         <relativePath/>
     </parent>
 
@@ -21,7 +21,7 @@
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
 
-        <wheel.version>3.4.28</wheel.version>
+        <wheel.version>3.5.29</wheel.version>
     </properties>
 
     <dependencyManagement>
