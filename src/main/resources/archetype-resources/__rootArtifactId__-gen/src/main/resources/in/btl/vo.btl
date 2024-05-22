@@ -6,10 +6,16 @@ import cn.zhxu.bs.bean.DbField;
 import cn.zhxu.bs.bean.SearchBean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+
+import net.postgis.jdbc.PGgeometry;
+import net.postgis.jdbc.geometry.Point;
+import net.postgis.jdbc.geometry.LineString;
+import net.postgis.jdbc.geometry.Polygon;
+
 import rebue.robotech.vo.Vo;
 import rebue.wheel.api.desensitize.Desensitize;
 import rebue.wheel.api.desensitize.DesensitizeStrategy;
-import net.postgis.jdbc.PGgeometry;
+import rebue.wheel.api.dic.HttpMethodDic;
 
 import java.time.LocalDateTime;
 

@@ -17,9 +17,6 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import net.postgis.jdbc.PGgeometry;
 import com.fasterxml.jackson.databind.JsonSerializer;
-import rebue.robotech.jackson.geometry.PointGeometryDeserializer;
-import rebue.robotech.jackson.geometry.LineGeometryDeserializer;
-import rebue.robotech.jackson.geometry.PolygonGeometryDeserializer;
 import net.postgis.jdbc.geometry.Point;
 import net.postgis.jdbc.geometry.LineString;
 import net.postgis.jdbc.geometry.Polygon;
@@ -32,6 +29,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import rebue.robotech.jackson.geometry.PointGeometryDeserializer;
+import rebue.robotech.jackson.geometry.LineGeometryDeserializer;
+import rebue.robotech.jackson.geometry.PolygonGeometryDeserializer;
+import rebue.wheel.api.dic.HttpMethodDic;
 
 /**
  * ${pojoMeta.title}添加方法的传输参数

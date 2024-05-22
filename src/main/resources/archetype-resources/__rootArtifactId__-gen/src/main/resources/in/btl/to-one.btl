@@ -33,6 +33,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import rebue.wheel.api.dic.HttpMethodDic;
+
 /**
  * ${pojoMeta.title}查询一条记录方法的传输参数
  *
