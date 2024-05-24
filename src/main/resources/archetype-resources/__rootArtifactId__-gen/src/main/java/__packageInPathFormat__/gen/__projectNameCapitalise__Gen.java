@@ -1,20 +1,23 @@
-package ${package}.gen;
-
-import io.github.codgen.CodgenApplication;
-import org.mybatis.generator.exception.InvalidConfigurationException;
-import org.mybatis.generator.exception.XMLParserException;
-import rebue.mbgx.MybatisGeneratorWrap;
+package $
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.SQLException;
 
+import org.mybatis.generator.exception.InvalidConfigurationException;
+import org.mybatis.generator.exception.XMLParserException;
+
+import io.github.codgen.CodgenApplication;
+import rebue.mbgx.MybatisGeneratorWrap;
+
 /**
  * 自动生成代码
  */
-public class ${projectNameCapitalise}Gen {
+public class $ {
+    projectNameCapitalise}Gen{
+
     public static void main(String[] args) throws IOException, XMLParserException, SQLException, InterruptedException, InvalidConfigurationException {
-        CodgenApplication.main(new String[]{"-i", "src/main/resources/in", "-o", "../"});
+        CodgenApplication.main(new String[] { "-i", "src/main/resources/in", "-o", "../" });
         MybatisGeneratorWrap.gen(Path.of("target", "mbgx"), true, null);
     }
 }
