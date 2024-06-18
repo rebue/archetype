@@ -36,6 +36,8 @@ spring:
 
 mybatis:
   configuration:
+    # 打印SQL
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     # 自动将数据库中用下划线分隔单词的风格转换为小驼峰风格
     map-underscore-to-camel-case: true
     # 自动转化枚举类型

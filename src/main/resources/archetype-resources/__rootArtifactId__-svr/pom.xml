@@ -21,7 +21,7 @@
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
 
-        <wheel.version>3.5.35</wheel.version>
+        <wheel.version>3.5.36</wheel.version>
     </properties>
 
     <dependencyManagement>
