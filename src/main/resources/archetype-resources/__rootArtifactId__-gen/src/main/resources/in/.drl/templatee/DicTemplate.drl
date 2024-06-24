@@ -68,7 +68,7 @@ then
                                 String modulePackageName = packageName + "." + moduleName;
                                 String modulePath        = PackageUtils.nameToPath(modulePackageName).toString();
                                 String moduleDirName     = moduleName.replace('.', '-');
-                                String moduleClassName = dicMeta.getClassName();
+                                String moduleClassName = dicMeta.getClassSimpleName();
                                 pathTemplate.binding("modulePackageName", modulePackageName);
                                 pathTemplate.binding("modulePath", modulePath);
                                 pathTemplate.binding("moduleDirName", moduleDirName);

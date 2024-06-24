@@ -52,7 +52,7 @@ public class ${moduleClassName} implements Vo<${pojoMeta.ids[0].classSimpleName}
             }
             // 根据remark解析情况添加脱敏注解
             addDesensitizeAnnotation(property.remark);
-            var propertyClassName = strutil.endWith(property.name,'Dic')?capitalize(property.name):property.classSimpleName;
+            var propertyClassName = property.classSimpleName;
             println('private ' + propertyClassName + ' ' + property.name + ';');
 		}
 
@@ -86,7 +86,7 @@ public class ${moduleClassName} implements Vo<${pojoMeta.ids[0].classSimpleName}
                             println('@DbField("' + foreignKey.pkTableAlias + '.' + property.field.name + '")');
                             // 根据remark解析情况添加脱敏注解
                             addDesensitizeAnnotation(property.remark);
-                            var propertyClassName = strutil.endWith(property.name,'Dic')?capitalize(property.name):property.classSimpleName;
+                            var propertyClassName = property.classSimpleName;
                             println('private ' + propertyClassName + ' ' + property.alias + ';');
                         }
                     }

@@ -120,7 +120,7 @@ public class ${pojoMeta.className}ModifyTo implements ModifyTo<${pojoMeta.ids[0]
 	            println('@JsonDeserialize(using = PolygonGeometryDeserializer.class)');
 	        }
 
-	        var propertyClassName = strutil.endWith(property.name,'Dic')?capitalize(property.name):property.classSimpleName;
+	        var propertyClassName = property.classSimpleName;
 	        println('private ' + propertyClassName + ' ' + property.name + ';');
 		}
 	%>
