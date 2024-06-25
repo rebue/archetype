@@ -42,7 +42,7 @@
     }
 %>
  */
-export interface ${pojoMeta.className} {
+export interface ${pojoMeta.className}Vo {
 <%
     // 生成本表的字段
     for(property in pojoMeta.properties) {
