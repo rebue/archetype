@@ -1,5 +1,25 @@
 spring:
+  config:
+    import:
+      - optional:consul:consul_svr:8500/${dollar}{spring.application.name}-${dollar}{spring.profiles.active}
   datasource:
     url: ${jdbcUrl}
     username: ${jdbcUser}
     password: ${jdbcPswd}
+  cloud:
+    consul:
+      host: consul_svr
+
+# 生产要连接zookeeper来生成idworker
+curator:
+  enabled: true
+  connect-string: zookeeper_zoo1:2181,zookeeper_zoo2:2181,zookeeper_zoo3:2181
+
+rebue:
+  # 依赖zookeeper来生成id
+  idworker: auto
+  # AOP拦截(开发调试时可以打开日志方便调试)
+  aop:
+    ctrl-log: true
+    svc-log: true
+    sub-log: true

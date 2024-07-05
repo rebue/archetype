@@ -6,6 +6,9 @@ server:
   port: ${microServerPort}
 
 spring:
+  config:
+    import:
+      - optional:consul:consul:8500/${dollar}{spring.application.name}-${dollar}{spring.profiles.active}
   datasource:
     url: ${jdbcUrl}
     username: ${jdbcUser}

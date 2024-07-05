@@ -13,8 +13,12 @@ spring:
       - optional:consul:consul:8500/${dollar}{spring.application.name}-${dollar}{spring.profiles.active}
   cloud:
     consul:
-      #      host: localhost
-      #      port: 8500
+      discovery:
+        instance-id: ${dollar}{spring.application.name}-${dollar}{spring.cloud.client.ip-address}:${dollar}{server.port}
+        prefer-ip-address: true
+        heartbeat:
+          enabled: true
+          reregister-service-on-failure: true
       config:
         # 因为consul的kv路径为 ${dollar}{prefixes}/${dollar}{default-context}-${dollar}{spring.profiles.active}/${dollar}{data-key}
         # 所以prod要在consul中添加 /xxx-svr-prod/data 的 key，value为application-prod.yml 文件的内容
