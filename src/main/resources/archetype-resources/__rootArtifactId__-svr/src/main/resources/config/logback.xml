@@ -2,12 +2,6 @@
 <!DOCTYPE configuration>
 <!-- scan: 扫描配置文件是否有变动(默认1分钟1次) -->
 <configuration scan="true">
-    <!-- 包含配置logger的文件 -->
-    <!--    <include file="config/logback-logger.xml"/>-->
-
-    <!-- 引入变量属性文件 -->
-    <!--    <variable file="config/logback-var.properties"/>-->
-
     <variable name="CONSOLE_LOG_PATTERN" value="%d{HH:mm:ss.SSS}[%5p]%m---%c%n"/>
     <variable name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS}[%5p]%m---%c %t%n"/>
     <variable name="LOG_FILE_NAME_PATTERN" value="logs/%d{yyyyMMdd}/%d{yyyyMMddHH}-%i.log.gz"/>
@@ -87,15 +81,19 @@
 
     <root level="DEBUG">
         <appender-ref ref="console"/>
-        <!--        <if condition='isDefined("log.async")&amp;&amp;property("log.async").equals("true")'>-->
-        <!--            <then>-->
-        <!--                <appender-ref ref="async-file-log"/>-->
-        <!--                <appender-ref ref="async-file-err"/>-->
-        <!--            </then>-->
-        <!--            <else>-->
-        <appender-ref ref="file-log"/>
-        <appender-ref ref="file-err"/>
-        <!--            </else>-->
-        <!--        </if>-->
     </root>
+    <if condition='isDefined("log.async")&amp;&amp;property("log.async").equals("true")'>
+        <then>
+            <root>
+                <appender-ref ref="async-file-log"/>
+                <appender-ref ref="async-file-err"/>
+            </root>
+        </then>
+        <else>
+            <root>
+                <appender-ref ref="file-log"/>
+                <appender-ref ref="file-err"/>
+            </root>
+        </else>
+    </if>
 </configuration>
