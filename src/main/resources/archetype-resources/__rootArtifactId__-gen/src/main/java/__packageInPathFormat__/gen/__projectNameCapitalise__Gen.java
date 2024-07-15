@@ -1,4 +1,4 @@
-package $
+package ${package}.gen;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -13,8 +13,7 @@ import rebue.mbgx.MybatisGeneratorWrap;
 /**
  * 自动生成代码
  */
-public class $ {
-    projectNameCapitalise}Gen{
+public class ${projectNameCapitalise}Gen{
 
     public static void main(String[] args) throws IOException, XMLParserException, SQLException, InterruptedException, InvalidConfigurationException {
         CodgenApplication.main(new String[] { "-i", "src/main/resources/in", "-o", "../" });
