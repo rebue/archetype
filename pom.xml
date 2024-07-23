@@ -120,13 +120,13 @@
                 <snapshotRepository>
                     <id>my-snapshots</id>
                     <name>my-snapshots</name>
-                    <url>${my-snapshots.url}</url>
+                    <url>${my-repository.url}</url>
                     <uniqueVersion>true</uniqueVersion>
                 </snapshotRepository>
                 <repository>
                     <id>my-releases</id>
                     <name>my-releases</name>
-                    <url>${my-releases.url}</url>
+                    <url>${my-repository.url}</url>
                 </repository>
             </distributionManagement>
         </profile>
