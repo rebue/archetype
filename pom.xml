@@ -5,7 +5,7 @@
 
     <groupId>com.github.rebue.archetype</groupId>
     <artifactId>rebue-archetype</artifactId>
-    <version>3.5.45</version>
+    <version>3.5.46</version>
     <packaging>maven-archetype</packaging>
 
     <name>rebue-archetype</name>
