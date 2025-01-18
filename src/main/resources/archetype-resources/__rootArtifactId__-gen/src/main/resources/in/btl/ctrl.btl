@@ -137,7 +137,7 @@ public class ${moduleClassName} {
     /**
      * 通过条件获取单个${pojoMeta.title}的信息
      *
-     * @param qc 查询单个{pojoMeta.title}的具体条件$
+     * @param qc 查询单个${pojoMeta.title}的具体条件
      *
      * @codgen.generated 自动生成，如需修改，请删除本行
      */
@@ -155,10 +155,7 @@ public class ${moduleClassName} {
      */
     @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search-by-id")
     public Mono<Rt<${pojoMeta.className}Vo>> searchById(@RequestParam("${pojoMeta.ids[0].name}") final ${pojoMeta.ids[0].classSimpleName} ${pojoMeta.ids[0].name}) {
-        return Mono.create(callback -> {
-            Map<String, Object> qc = Map.of("${pojoMeta.ids[0].name}", ${pojoMeta.ids[0].name});
-            callback.success(Rt.success("查询成功", svc.beanSearchOne(qc)));
-        });
+        return Mono.create(callback -> callback.success(Rt.success("查询成功", svc.beanSearchById(${pojoMeta.ids[0].name}))));
     }
 
     /**
