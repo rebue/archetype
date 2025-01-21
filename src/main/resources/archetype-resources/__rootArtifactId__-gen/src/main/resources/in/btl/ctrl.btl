@@ -87,7 +87,7 @@ public class ${moduleClassName} {
     /**
      * 通过条件获取单个${pojoMeta.title}的信息
      *
-     * @param qc 查询单个{pojoMeta.title}的具体条件$
+     * @param qc 查询单个${pojoMeta.title}的具体条件
      * XXX 注意qc参数不能加上@RequestParam注解，否则接收请求时会报ConversionNotSupportedException异常
      *
      * @codgen.generated 自动生成，如需修改，请删除本行
