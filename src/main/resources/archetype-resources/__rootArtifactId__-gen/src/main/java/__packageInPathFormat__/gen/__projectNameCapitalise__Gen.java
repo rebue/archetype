@@ -16,7 +16,7 @@ import rebue.mbgx.MybatisGeneratorWrap;
 public class ${projectNameCapitalise}Gen{
 
     public static void main(String[] args) throws IOException, XMLParserException, SQLException, InterruptedException, InvalidConfigurationException {
-        CodgenApplication.main(new String[] { "-i", "src/main/resources/in", "-o", "../" });
         MybatisGeneratorWrap.gen(Path.of("target", "mbgx"), true, null);
+        CodgenApplication.main(new String[] { "-i", "src/main/resources/in", "-o", "../" });
     }
 }
