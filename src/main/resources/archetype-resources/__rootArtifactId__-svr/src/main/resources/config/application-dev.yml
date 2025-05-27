@@ -21,7 +21,7 @@ spring:
 
 # 开发环境不用连接zookeeper来生成idworker
 curator:
-  enabled: false
+  enabled: true
 
 rebue:
   # 开发环境不配置idworker参数，则不会依赖zookeeper来生成id

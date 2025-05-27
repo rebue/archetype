@@ -54,7 +54,6 @@ dist-ssr
 # Editor directories and files
 .vscode/*
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
@@ -73,3 +72,4 @@ dist-ssr
 /unpackage/
 
 pnpm-lock.yaml
+/target/
