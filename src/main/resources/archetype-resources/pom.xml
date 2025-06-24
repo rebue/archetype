@@ -22,11 +22,11 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <codgen.version>1.2.24</codgen.version>
-        <mbgx.version>3.5.51</mbgx.version>
-        <wheel.version>3.5.51</wheel.version>
-        <robotech.version>3.5.51</robotech.version>
-        <sbs.version>3.5.51</sbs.version>
+        <codgen.version>1.2.25</codgen.version>
+        <mbgx.version>3.5.52</mbgx.version>
+        <wheel.version>3.5.52</wheel.version>
+        <robotech.version>3.5.52</robotech.version>
+        <sbs.version>3.5.52</sbs.version>
     </properties>
 
     <dependencyManagement>
