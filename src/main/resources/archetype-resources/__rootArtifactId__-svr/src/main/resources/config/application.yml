@@ -39,6 +39,8 @@ spring:
   #      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
 
 mybatis:
+  # 优化MyBatis的批量处理
+  executor-type: BATCH
   configuration:
     # 打印SQL
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
