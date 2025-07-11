@@ -50,29 +50,29 @@ public class ${pojoMeta.className}ApiTests {
         ${pojoMeta.ids[0].classSimpleName} id = null;
         for (int i = 0; i < 20; i++) {
             addTo = (${pojoMeta.className}AddTo) RandomEx.randomPojo(${pojoMeta.className}AddTo.class);
-            log.info("添加${pojoMeta.title}的参数为：" + addTo);
+            log.info("添加${pojoMeta.title}的参数为: {}", addTo);
             final Rt<IdRa<${pojoMeta.ids[0].classSimpleName}>> idRo = _api.add(addTo);
-            log.info("添加${pojoMeta.title}的返回值为：" + idRo);
+            log.info("添加${pojoMeta.title}的返回值为: {}", idRo);
             Assertions.assertEquals(ResultDic.SUCCESS, idRo.getResult());
             id = idRo.getExtra().getId();
         }
         final Rt<PageRa<${pojoMeta.className}Vo>> pageResult = _api.page(new ${pojoMeta.className}PageTo());
-        log.info("查询${pojoMeta.title}的返回值为：" + pageResult);
+        log.info("查询${pojoMeta.title}的返回值为: {}", pageResult);
         Assertions.assertEquals(ResultDic.SUCCESS, pageResult.getResult());
-        log.info("获取单个${pojoMeta.title}的参数为：" + id);
+        log.info("获取单个${pojoMeta.title}的参数为: {}", id);
         final Rt<${pojoMeta.className}Vo> getByIdResult = _api.getById(id);
-        log.info("获取单个${pojoMeta.title}的返回值为：" + getByIdResult);
-        
+        log.info("获取单个${pojoMeta.title}的返回值为: {}", getByIdResult);
+
         final ${pojoMeta.className}ModifyTo modifyTo = ${pojoMeta.className}Clone.INSTANCE.addToMapModifyTo(addTo);
         modifyTo.setId(id);
-        log.info("修改${pojoMeta.title}的参数为：" + modifyTo);
+        log.info("修改${pojoMeta.title}的参数为: {}", modifyTo);
         final Rt<?> modifyResult = _api.modify(modifyTo);
-        log.info("修改${pojoMeta.title}的返回值为：" + modifyResult);
+        log.info("修改${pojoMeta.title}的返回值为: {}", modifyResult);
         Assertions.assertEquals(ResultDic.SUCCESS, modifyResult.getResult());
-        
-        log.info("删除${pojoMeta.title}的参数为：" + id);
+
+        log.info("删除${pojoMeta.title}的参数为: {}", id);
         final Rt<?> deleteResult = _api.delById(id);
-        log.info("删除${pojoMeta.title}的返回值为：" + deleteResult);
+        log.info("删除${pojoMeta.title}的返回值为: {}", deleteResult);
         Assertions.assertEquals(ResultDic.SUCCESS, deleteResult.getResult());
     }
 }
