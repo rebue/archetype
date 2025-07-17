@@ -79,6 +79,6 @@
         <javaClientGenerator targetProject="../${project}-svr/src/main/java" targetPackage="${packageName}.mapper"/>
 
         <!-- tableName:用于自动生成代码的数据库表(必须已经被建立)；domainObjectName:对应于数据库表的javaBean类名 -->
-        <table tableName="${dbMeta.tableNamePattern}"/>
+        <table catalog="${dbMeta.name}" tableName="${dbMeta.tableNamePattern}"/>
     </context>
 </generatorConfiguration>

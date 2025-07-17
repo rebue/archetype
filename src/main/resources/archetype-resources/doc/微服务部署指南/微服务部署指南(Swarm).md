@@ -22,16 +22,16 @@
 ### 1.2. 在配置中心中配置项目的信息
 
 1. 进入配置中心
-  <http://xxxxx:8848/nacos/>
+   <http://xxxxx:8848/nacos/>
 2. 新建配置
-  `配置管理` -> `配置列表` -> 点击列表右上角的 `+` 按钮
+   `配置管理` -> `配置列表` -> 点击列表右上角的 `+` 按钮
 3. 填写内容并发布
-   - Data ID
-     xxx-svr-prod.yaml
-   - 配置格式
-     YAML
-   - 配置内容
-     `xxx-svr` 项目的 `application-prod.yml` 文件的内容，并根据实际情况修改相应内容
+    - Data ID
+      xxx-svr-prod.yaml
+    - 配置格式
+      YAML
+    - 配置内容
+      `xxx-svr` 项目的 `application-prod.yml` 文件的内容，并根据实际情况修改相应内容
 
 ## 2. 上传微服务
 

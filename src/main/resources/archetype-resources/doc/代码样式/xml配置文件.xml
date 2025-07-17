@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <profiles version="21">
-	<profile kind="CodeFormatterProfile" name="Default copy" version="21">
+	<profile kind="CodeFormatterProfile" name="rebue" version="21">
 		<setting id="org.eclipse.jdt.core.formatter.tabulation.char" value="space"/>
 		<setting id="org.eclipse.jdt.core.formatter.use_tabs_only_for_leading_indentations" value="false"/>
 		<setting id="org.eclipse.jdt.core.formatter.indentation.size" value="4"/>
@@ -286,7 +286,7 @@
 		<setting id="org.eclipse.jdt.core.formatter.keep_record_declaration_on_one_line" value="one_line_never"/>
 		<setting id="org.eclipse.jdt.core.formatter.keep_record_constructor_on_one_line" value="one_line_never"/>
 		<setting id="org.eclipse.jdt.core.formatter.keep_annotation_declaration_on_one_line" value="one_line_never"/>
-		<setting id="org.eclipse.jdt.core.formatter.lineSplit" value="120"/>
+		<setting id="org.eclipse.jdt.core.formatter.lineSplit" value="150"/>
 		<setting id="org.eclipse.jdt.core.formatter.continuation_indentation" value="2"/>
 		<setting id="org.eclipse.jdt.core.formatter.continuation_indentation_for_array_initializer" value="2"/>
 		<setting id="org.eclipse.jdt.core.formatter.join_wrapped_lines" value="false"/>
@@ -350,7 +350,7 @@
 		<setting id="org.eclipse.jdt.core.formatter.alignment_for_type_annotations" value="49"/>
 		<setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_annotation" value="0"/>
 		<setting id="org.eclipse.jdt.core.formatter.alignment_for_module_statements" value="0"/>
-		<setting id="org.eclipse.jdt.core.formatter.comment.line_length" value="120"/>
+		<setting id="org.eclipse.jdt.core.formatter.comment.line_length" value="150"/>
 		<setting id="org.eclipse.jdt.core.formatter.comment.count_line_length_from_starting_position" value="false"/>
 		<setting id="org.eclipse.jdt.core.formatter.comment.format_javadoc_comments" value="true"/>
 		<setting id="org.eclipse.jdt.core.formatter.comment.format_block_comments" value="false"/>

@@ -27,7 +27,6 @@ st->op1->op2->op3->op4->op5->op6->op7->op8->e
 
 项目的英文是 `Project`，新建项目请在菜单中选择 `New Project...`，具体操作略
 
-
 ## 3. 新建逻辑模型
 
 逻辑数据模型的英文是 `Logical Data Model`
@@ -42,10 +41,11 @@ st->op1->op2->op3->op4->op5->op6->op7->op8->e
 - 表和字段的code大写，单词之间用下划线隔开(pgsql的数据库为 表和字段的code小写，单词之间下划线隔开)
 - 每个表必须有且有一个关键字段，code为 `ID`，如无特殊要求，数据类型请使用 `Long integer`
 - 每个表的物理外键通过设置关系生成，无需手动设置物理外键。
-![设置表关系](设置表关系.png)
-**一些tip**
+  ![设置表关系](设置表关系.png)
+  **一些tip**
 - 在逻辑模型中，显示表的code
-![表显示code](表显示code.png)
+  ![表显示code](表显示code.png)
+
 ## 5. 生成物理模型
 
 打开逻辑模型 > 点击菜单`Tools` - `Generate Physical Data Model...` 或 直接`Ctrl + Shift + p`
