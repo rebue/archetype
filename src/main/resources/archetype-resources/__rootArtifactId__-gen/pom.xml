@@ -17,6 +17,10 @@
             <groupId>io.github.codgen</groupId>
             <artifactId>codgen-cmd</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.github.codgen</groupId>
+            <artifactId>codgen-java</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.github.rebue.mbgx</groupId>

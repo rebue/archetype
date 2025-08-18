@@ -2,6 +2,7 @@ package ${packageName}.clone;
 
 import org.mapstruct.Mapper;
 import rebue.robotech.clone.CloneMapper;
+import rebue.robotech.clone.EnumConverter;
 import org.mapstruct.factory.Mappers;
 
 import ${packageName}.to.${pojoMeta.className}AddTo;
@@ -13,7 +14,6 @@ import ${packageName}.to.${pojoMeta.className}PageTo;
 import ${packageName}.mo.${pojoMeta.className}Mo;
 import ${packageName}.vo.${pojoMeta.className}Vo;
 
-import rebue.robotech.clone.EnumConverter;
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**

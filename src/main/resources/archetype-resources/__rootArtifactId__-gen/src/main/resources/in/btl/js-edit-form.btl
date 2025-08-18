@@ -1,115 +1,88 @@
 <script lang="ts" setup>
-import { ${pojoMeta.className}Api } from '~/api/adm/${pojoMeta.className}Api';
-import { message } from 'ant-design-vue';
+// cfg
+import { ${pojoMeta.className}Vo } from '~/vo/${project}/${pojoMeta.className}Vo';
 import { editFormSchema } from './cfg/form.cfg';
-import type { EditFormData } from './type.d';
+// hook
+import { useBaseCRUD } from '~/hook/api/useBaseCRUD';
+import { ${pojoMeta.className}Api } from '~/api/${project}/${pojoMeta.className}Api';
 
-const props = defineProps({
-    data: {
-        type: Object,
-        default: () => ({}),
-    },
-    modalType: {
-        type: Number,
-        default: 0,
-    },
-});
+// 应急资源请求 hook
+const { transData, detailsData, isDetailsLoading, reqDetailsFetch, reqSubmitFetch } =
+    useBaseCRUD<${pojoMeta.className}Vo>(${pojoMeta.className}Api);
 
 const emit = defineEmits(['success']);
 
-const modalRef = ref();
+const drawerRef = ref();
 const formRef = ref();
-const isLoading = ref(false);
 
-const modalTitle = computed(() => ['新增${pojoMeta.title}', '编辑${pojoMeta.title}'][props.modalType]);
+const drawerTitle = computed(() => {
+    return unref(transData)?.handleMethod === 'add' ? '新增${pojoMeta.title}' : '编辑${pojoMeta.title}';
+});
 
 /**
  * 点击确认方法
  */
 const onClickConfirm = async () => {
+    const { setLoading, close } = unref(drawerRef);
     const { validate, getFormData } = unref(formRef);
-    const isValid = await validate();
+    await validate();
 
-    if (!isValid) return;
-    const reqData = getFormData();
-    const operationApi = props.modalType ? ${pojoMeta.className}Api.update : ${pojoMeta.className}Api.add;
-    aggregationOperationApp(operationApi, { ...reqData });
-};
+    // 获取表单数据
+    const formData = getFormData();
 
-/**
- * modal 完全退出后事件
- */
-const modalAfterCloseEvent = () => {
-    const { clearValidate, resetFormData } = unref(formRef);
-    resetFormData();
-    clearValidate();
-};
+    // 组装请求数据
+    const reqData = {
+        ...formData,
+    };
 
-/**
- * modal 显示/隐藏事件
- */
-const modalVisibleChangeEvent = (visible: boolean) => {
-    if (!visible) return;
-    const { id, ...editData } = unref(props).data;
-    if (props.modalType === 1) {
-        get${pojoMeta.className}Data({ id: props.data.id }).then((data) => unref(formRef)?.setFieldsValue({ ...editData, ...data }));
-    } else {
-        nextTick(() => unref(formRef)?.setFieldsValue({ id, ...editData }));
-    }
-};
-
-/**
- * 获取${pojoMeta.title}数据方法
- * @param {any} data 请求参数
- */
-const get${pojoMeta.className}Data = async (data: any) => {
-    isLoading.value = true;
-    const { result, extra } = await ${pojoMeta.className}Api.searchById(data);
-    if (result <= 0) {
-        isLoading.value = false;
-        return Promise.reject();
-    }
-    isLoading.value = false;
-    return Promise.resolve(extra);
-};
-
-/**
- * 聚合操作应用方法
- * @param {(_data: EditFormData) => Promise<any>} api 请求方法
- * @param {EditFormData} data 请求参数
- * @returns {Promise<string>} 返回请求响应消息
- */
-const aggregationOperationApp = async (api: (_data: EditFormData) => Promise<any>, data: EditFormData) => {
-    const { setLoading, close } = unref(modalRef);
+    // 发起提交请求，并开启弹窗按钮 loading 效果
     setLoading(true);
-    const { result, msg } = await api(data);
-    if (result <= 0) {
-        setLoading(false);
+    reqSubmitFetch(reqData)
+        .then(() => {
+            setLoading(false);
+            close();
+            emit('success');
+        })
+        .catch(() => setLoading(false));
+};
 
-        return Promise.reject(msg);
-    }
+/**
+ * drawer 显示/隐藏事件
+ */
+const drawerVisibleChangeEvent = async (visible: boolean) => {
+    if (!visible || unref(transData)?.handleMethod === 'add') return;
 
-    message.success(msg);
-    setLoading(false);
-    close();
-    emit('success');
+    // 获取详情数据，并设置表单值
+    await reqDetailsFetch({ id: unref(transData)?.id });
 
-    return Promise.resolve(msg);
+    const editData = {
+        ...unref(detailsData),
+    };
+
+    unref(formRef)?.setFieldsValue({ ...editData });
+};
+
+/**
+ * drawer 完全关闭事件
+ * @description 在关闭后进行控件清除，否则会看到闪动问题
+ */
+const drawerAfterCloseEvent = () => {
+    unref(formRef)?.resetFormData();
 };
 </script>
 
 <template>
-    <RebueModal
-        ref="modalRef"
+    <RebueDrawer
+        ref="drawerRef"
         v-bind="$attrs"
-        :title="modalTitle"
-        :after-close="modalAfterCloseEvent"
-        :show-ok-btn="![2].includes(modalType)"
-        @change="modalVisibleChangeEvent"
+        :title="drawerTitle"
+        :is-loading="isDetailsLoading"
+        :after-close="drawerAfterCloseEvent"
+        @change="drawerVisibleChangeEvent"
         @confirm="onClickConfirm"
     >
         <RebueForm ref="formRef" :schemas="editFormSchema" />
-    </RebueModal>
+    </RebueDrawer>
 </template>
 
 <style lang="scss" scoped></style>

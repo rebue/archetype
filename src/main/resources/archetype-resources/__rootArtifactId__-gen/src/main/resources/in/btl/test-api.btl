@@ -62,14 +62,14 @@ public class ${pojoMeta.className}ApiTests {
         log.info("获取单个${pojoMeta.title}的参数为: {}", id);
         final Rt<${pojoMeta.className}Vo> getByIdResult = _api.getById(id);
         log.info("获取单个${pojoMeta.title}的返回值为: {}", getByIdResult);
-
+        
         final ${pojoMeta.className}ModifyTo modifyTo = ${pojoMeta.className}Clone.INSTANCE.addToMapModifyTo(addTo);
         modifyTo.setId(id);
         log.info("修改${pojoMeta.title}的参数为: {}", modifyTo);
         final Rt<?> modifyResult = _api.modify(modifyTo);
         log.info("修改${pojoMeta.title}的返回值为: {}", modifyResult);
         Assertions.assertEquals(ResultDic.SUCCESS, modifyResult.getResult());
-
+        
         log.info("删除${pojoMeta.title}的参数为: {}", id);
         final Rt<?> deleteResult = _api.delById(id);
         log.info("删除${pojoMeta.title}的返回值为: {}", deleteResult);

@@ -127,6 +127,17 @@ public class ${pojoMeta.className}AddTo implements Serializable {
 
             var propertyClassName = property.classSimpleName;
 	        println('private ' + propertyClassName + ' ' + property.name + ';');
+
+            // 如果是排序类型，加上排序相关的两个字段
+            if (strutil.endWith(propertyNameLowerCase,'seqno')|| strutil.endWith(propertyNameLowerCase,'treecode')){
+                println('/**');
+                println('* 目标id(根据treeCode字段自动生成字段,用于自动生成treeCode)');
+                println('*');
+                println('* @codgen.generated 自动生成，如需修改，请删除本行');
+                println('*/');
+                println('private ' + pojoMeta.properties[0].classSimpleName + ' targetId;');
+            }
+
 		}
 	%>
 	

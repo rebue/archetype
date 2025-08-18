@@ -1,22 +1,31 @@
 <script lang="ts" setup>
-import { ${pojoMeta.className}Api } from '~/api/${project}/${pojoMeta.className}Api';
-import { use${capitalize(project)}Store } from '~/store/${capitalize(project)}Store';
-import { message } from 'ant-design-vue';
-import { keywordColumns } from './cfg/dic.cfg';
+// api
+import { ${pojoMeta.className}Api, ${pojoMeta.className}Url } from '~/api/${project}/${pojoMeta.className}Api';
+// store
+import { useThemeStore } from '~/store/ThemeStore';
+// cfg
 import { searchFormSchema } from './cfg/form.cfg';
 import { tableColumns } from './cfg/table.cfg';
-import { beanSearchGenerateKeyword, paramsMerge } from '~/util/params';
 import type { ActionItem } from '~/component/rebue/rebue-table/type';
+// hook
+import { useBaseCRUD } from '~/hook/api/useBaseCRUD';
+import { useFileDownload } from '~/hook/api/useFileDownload';
+// vo
+import type { ${pojoMeta.className}Vo } from '~/vo/${project}/${pojoMeta.className}Vo';
 
-const { getCurrentMngData, setMng } = $(use${capitalize(project)}Store());
+// 主题相关配置仓库
+const { cssToken } = useThemeStore();
 
-const isOpenAddModal = ref(false);
-const isEditModal = ref(0);
-const globalReqData = ref<any>({ pageNum: 1, pageSize: 10 });
+// 初始化 CRUD HOOK
+const { isOpenDrawer, setTransData, setDrawVisible, reqDelFetch, reqDelSelectedFetch } =
+    useBaseCRUD<${pojoMeta.className}Vo>(${pojoMeta.className}Api);
+
+// 初始化下载HOOK
+const { useSimpleDownload } = useFileDownload();
+
+// 相关 Ref 对象
+const tableRef = ref();
 const tableData = ref<any[]>([]);
-const tablePagination = ref<any>({});
-const tableItemData = ref({});
-const isTableLoading = ref(false);
 
 /**
  * 表格操作列配置方法
@@ -42,46 +51,56 @@ const tableActions = (record: any): ActionItem[] => [
  * 点击添加${pojoMeta.title}方法
  */
 const onClickAdd${pojoMeta.className} = () => {
-    isEditModal.value = 0;
-    tableItemData.value = {};
-    isOpenAddModal.value = true;
+    setTransData({ handleMethod: 'add' });
+    setDrawVisible(true);
 };
 
 /**
  * 点击编辑方法
- * @param {any} item 当前点击项数据对象
+ * @param {${pojoMeta.className}Vo} record 当前点击项数据对象
  */
-const onClickEdit = (item: any) => {
-    isEditModal.value = 1;
-    tableItemData.value = item;
-    isOpenAddModal.value = true;
+const onClickEdit = (record: ${pojoMeta.className}Vo) => {
+    setTransData({ ...record, handleMethod: 'edit' });
+    setDrawVisible(true);
 };
 
 /**
  * 点击删除方法
- * @param {any} item 当前点击项数据对象
+ * @param {${pojoMeta.className}Vo} record 当前点击项数据对象
  */
-const onClickDel = async (item: any) => {
-    del${pojoMeta.className}({ id: item.id }).then((msg) => {
-        message.success(msg);
-        get${pojoMeta.className}(unref(globalReqData));
-    });
+const onClickDel = async (record: any) => {
+    const { setLoading, reload } = unref(tableRef);
+    setLoading(true);
+    await reqDelFetch({ id: record.id })
+        .then(() => reload())
+        .catch(() => setLoading(false));
 };
 
 /**
- * 表格搜索动作完成事件
- * @param {string | undefined} keyword 搜索关键字
+ * 点击删除选中项方法
  */
-const tableSearchActionCompleteEvent = (keyword: string | undefined) => {
-    setMng({ subKey: 'searchData', data: { keyword } });
+const onClickDelSelected = async () => {
+    const { getSelectedData, resetSelectedData, setLoading, reload } = unref(tableRef);
+    const { keys } = getSelectedData();
+
+    setLoading(true);
+    await reqDelSelectedFetch({ ids: keys })
+        .then(() => reload())
+        .catch(() => setLoading(false));
+
+    resetSelectedData();
 };
 
 /**
- * 表格搜索切换事件
- * @param {boolean} toggle 是否切换高级查询
+ * 点击导出的方法
  */
-const tableSearchToggleEvent = (toggle: boolean) => {
-    setMng({ subKey: 'isFoldAdvancedSearch', data: toggle, inherit: false });
+const onClick${pojoMeta.className}Export = async () => {
+    const { getSelectedData, setLoading } = unref(tableRef);
+    const { keys } = getSelectedData();
+
+    setLoading(true);
+    useSimpleDownload({ url: ${pojoMeta.className}Url.export, ids: keys });
+    setLoading(false);
 };
 
 /**
@@ -89,143 +108,70 @@ const tableSearchToggleEvent = (toggle: boolean) => {
  * @param {any} data 搜素相关数据
  */
 const advancedSearchActionCompleteEvent = (data: any) => {
-    setMng({ subKey: 'searchData', data });
+    unref(tableRef).setParams((params: any) => ({ ...params, ...data }));
+    unref(tableRef).reload();
 };
-
-/**
- * 表格是否启用状态切换事件
- */
-const switchChangeEvent = (value: any, record: any) => {
-    record.isSwitchLoading = true;
-    const reqData = { id: record.id, isEnabled: value };
-    update${pojoMeta.className}Data(reqData)
-        .then((msg) => {
-            record.isSwitchLoading = false;
-            message.success(msg);
-            get${pojoMeta.className}(unref(globalReqData));
-        })
-        .catch(() => {
-            record.isEnabled = !record.isEnabled!;
-            record.isEnabled = record.isEnabled!;
-            record.isSwitchLoading = false;
-        });
-};
-
-/**
- * table 分页改变事件
- * @param {any} data 分页参数
- */
-const tableChange = (data: any) => {
-    const { current: pageNum, pageSize, total } = data;
-    globalReqData.value = { ...unref(globalReqData), pageNum, pageSize, total };
-    get${pojoMeta.className}(unref(globalReqData));
-};
-
-/**
- * 获取${pojoMeta.title}数据方法
- * @param {any} data 请求参数
- */
-const get${pojoMeta.className} = async (data: any) => {
-    isTableLoading.value = true;
-    const { result, extra } = await ${pojoMeta.className}Api.list(data);
-    if (result <= 0) {
-        isTableLoading.value = false;
-
-        return;
-    }
-
-    const { list, pageNum, total } = extra;
-
-    tableData.value = list;
-    tablePagination.value = { current: pageNum, total };
-    isTableLoading.value = false;
-};
-
-/**
- * 更新${pojoMeta.title}方法
- * @param {any} data 请求参数
- */
-const update${pojoMeta.className}Data = async (data: any) => {
-    const { result, msg } = await ${pojoMeta.className}Api.update(data);
-    if (result <= 0) {
-        return Promise.reject(msg);
-    }
-
-    return Promise.resolve(msg);
-};
-
-/**
- * 删除${pojoMeta.title}方法
- * @param { id: string } data 请求参数
- */
-const del${pojoMeta.className} = async (data: any) => {
-    const { result, msg } = await ${pojoMeta.className}Api.del(data);
-
-    if (result <= 0) return Promise.reject(msg);
-
-    return Promise.resolve(msg);
-};
-
-watch(
-    () => getCurrentMngData.searchData,
-    (val) => {
-        const { keyword, ...searchData } = val ?? {};
-        const procKeyword = getCurrentMngData.isFoldAdvancedSearch ? void 0 : keyword;
-        const keywordEnum = beanSearchGenerateKeyword(keywordColumns, procKeyword);
-        const advancedSearchFieldList = searchFormSchema.map((item) => item.field);
-        const searchParams = paramsMerge(
-            searchData,
-            keywordEnum,
-            !getCurrentMngData.isFoldAdvancedSearch,
-            advancedSearchFieldList,
-        );
-        globalReqData.value = { ...unref(globalReqData), ...searchParams };
-        get${pojoMeta.className}(unref(globalReqData));
-    },
-    { immediate: true, deep: true },
-);
-
 </script>
 
 <template>
     <RebueMng>
         <template #header>
             <RebueSearch
+                class="search"
                 :schemas="searchFormSchema"
-                :data="getCurrentMngData.searchData"
-                :is-show="getCurrentMngData.isFoldAdvancedSearch"
+                is-show
                 @action-complete="advancedSearchActionCompleteEvent"
             />
         </template>
 
         <template #content>
             <RebueTable
+                ref="tableRef"
+                :api="${pojoMeta.className}Api.search"
                 :columns="tableColumns"
                 :data-source="tableData"
-                :loading="isTableLoading"
+                :row-selection="true"
+                show-select-tip
                 row-key="id"
-                :pagination="tablePagination"
-                :is-advanced-query="getCurrentMngData.isFoldAdvancedSearch"
-                :keyword-search-conf="{ value: getCurrentMngData?.searchData?.keyword }"
-                @keyword-search="tableSearchActionCompleteEvent"
-                @toggle-search="tableSearchToggleEvent"
-                @change="tableChange"
             >
                 <template #header-left>
-                    <a-button type="primary" @click="onClickAdd${pojoMeta.className}">{{ $t('新增${pojoMeta.title}') }}</a-button>
+                    <a-space warp>
+                        <a-button ghost type="primary" @click="onClickAdd${pojoMeta.className}">
+                            <template #icon>
+                                <PlusOutlined />
+                            </template>
+                            {{ $t('新增') }}
+                        </a-button>
+                        <a-popconfirm
+                            title="请确认要删除已选择项"
+                            ok-text="Yes"
+                            cancel-text="No"
+                            @confirm="onClickDelSelected"
+                        >
+                            <a-button ghost type="primary" danger>
+                                <template #icon>
+                                    <DeleteOutlined />
+                                </template>
+                                {{ $t('删除') }}
+                            </a-button>
+                        </a-popconfirm>
+                        <RebueUpload :api="${pojoMeta.className}Api.import" :listType="'text'" :showUploadList="false">
+                            <a-button type="primary" ghost>
+                                <template #icon>
+                                    <ImportOutlined />
+                                </template>
+                                导入
+                            </a-button>
+                        </RebueUpload>
+                        <a-button ghost type="primary" @click="onClick${pojoMeta.className}Export  ">
+                            <template #icon>
+                                <ExportOutlined />
+                            </template>
+                            {{ $t('导出') }}
+                        </a-button>
+                    </a-space>
                 </template>
                 <template #bodyCell="{ column, record }">
-                    <template v-if="['isEnabled'].includes(column.dataIndex as string)">
-                        <a-switch
-                            v-model:checked="record.isEnabled"
-                            :loading="record.isSwitchLoading"
-                            checked-children="启用"
-                            un-checked-children="禁用"
-                            :checked-value="true"
-                            :un-checked-value="false"
-                            @change="(value) => switchChangeEvent(value, record)"
-                        />
-                    </template>
                     <template v-if="['action'].includes(column.dataIndex as string)">
                         <Action :actions="tableActions(record)" />
                     </template>
@@ -235,15 +181,12 @@ watch(
     </RebueMng>
 
     <!-- 添加 ${pojoMeta.title} 弹窗 -->
-    <${pojoMeta.className}EditForm
-        v-model:visible="isOpenAddModal"
-        :data="tableItemData"
-        :modal-type="isEditModal"
-        @success="() => get${pojoMeta.className}(globalReqData)"
-    />
+    <${pojoMeta.className}EditForm v-model:visible="isOpenDrawer" @success="() => tableRef?.reload()" />
+
 </template>
 
 <style lang="scss" scoped>
+$colorBgContainer: v-bind('cssToken.colorBgContainer');
 .mng__header {
     @include flexBox();
     gap: 10px;

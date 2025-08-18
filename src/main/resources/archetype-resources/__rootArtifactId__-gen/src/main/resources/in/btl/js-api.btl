@@ -3,6 +3,11 @@
 **/
 import { Ro } from '~/ro/Ro';
 import { request } from '~/util/request';
+
+export const ${pojoMeta.className}Url = {
+    export: '/${project}-svr/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/export',
+};
+
 export const ${pojoMeta.className}Api = {
     /**
      * 获取${pojoMeta.className}列表
@@ -11,7 +16,7 @@ export const ${pojoMeta.className}Api = {
     list(params?: any): Promise<Ro> {
         // 发出get请求
         return request.get({
-            url: '/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/list',
+            url: '/${project}-svr/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/list',
             params: { ...params },
         });
     },
@@ -19,36 +24,57 @@ export const ${pojoMeta.className}Api = {
     search(params?: any): Promise<Ro> {
         // 发出get请求
         return request.get({
-            url: '/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search',
+            url: '/${project}-svr/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search',
             params: { ...params },
         });
     },
 
     del(params?: any): Promise<Ro> {
         return request.del({
-            url: '/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}',
+            url: '/${project}-svr/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}',
             params: { ...params },
         });
     },
 
     add(data?: any): Promise<Ro> {
         return request.post({
-            url: '/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}',
+            url: '/${project}-svr/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}',
             data: { ...data },
         });
     },
 
     update(data?: any): Promise<Ro> {
         return request.put({
-            url: '/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}',
+            url: '/${project}-svr/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}',
             data: { ...data },
         });
     },
 
     searchById(params?: any): Promise<Ro> {
-            return request.get({
-                url: '/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search-by-id',
-                params: { ...params },
+        return request.get({
+            url: '/${project}-svr/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search-by-id',
+            params: { ...params },
+        });
+    },
+
+    batchDeletionDevice(data?: any): Promise<Ro> {
+            return request.post({
+                url: '/${project}-svr/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/${pojoMeta.lowerHyphenNameWithoutPrefix}-del',
+                data: { ...data },
             });
         },
+
+    import(data?: any): Promise<Ro> {
+        return request.post({
+            url: '/${project}-svr/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/import',
+            data,
+        });
+    },
+
+    export(params?: any): Promise<Ro> {
+        return request.get({
+            url: '/${project}-svr/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/export',
+            params: { ...params },
+        });
+    },
 };

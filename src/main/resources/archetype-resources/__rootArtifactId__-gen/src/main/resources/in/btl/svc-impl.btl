@@ -7,15 +7,25 @@ import java.util.UUID;
 <%
 	}
 %>
+import cn.zhxu.bs.FieldOp;
+import cn.zhxu.bs.operator.GreaterEqual;
+import cn.zhxu.bs.operator.NotEqual;
+import cn.zhxu.bs.operator.OrLike;
+import cn.zhxu.bs.operator.StartWith;
+import cn.zhxu.bs.util.MapUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import jakarta.annotation.Resource;
 
+import cn.zhxu.bs.util.MapUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +46,15 @@ import rebue.wheel.api.ra.IdRa;
 import rebue.wheel.api.ro.Rt;
 import rebue.robotech.svc.BaseSvc;
 import rebue.robotech.svc.impl.BaseSvcImpl;
+import rebue.adm.dic.OpSeqNoDic;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
+
+import static rebue.adm.util.TreeUtil.incrementalTreeCode;
 
 /**
  * @{pojoMeta.title}的服务实现
@@ -67,7 +86,7 @@ public class @{moduleClassName} extends BaseSvcImpl<@{pojoMeta.ids[0].classSimpl
     @Lazy
     @Resource
     private @{pojoMeta.className}Svc thisSvc;
-    
+
     /**
      * 最大分页大小
      *
@@ -75,6 +94,15 @@ public class @{moduleClassName} extends BaseSvcImpl<@{pojoMeta.ids[0].classSimpl
      */
     @Value("${rebue.page.max-page-size.@{pojoMeta.lowerHyphenName}:100}")
     private Integer maxPageSize;
+
+    /**
+    * 是否开启逻辑删除
+    *
+    * @codgen.generated 自动生成，如需修改，请删除本行
+    */
+    @Value("${logic.config.enable.@{pojoMeta.lowerHyphenName}:true}")
+    private Boolean logicDelete;
+
 
     /**
      * 从接口获取本服务的单例
@@ -109,4 +137,308 @@ public class @{moduleClassName} extends BaseSvcImpl<@{pojoMeta.ids[0].classSimpl
         return maxPageSize;
     }
 
+
+    /**
+     * 重写删除操作
+     * 如果逻辑删除，则修改对应逻辑字段。否则直接删除
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+     @Override
+     public void delById(@{pojoMeta.ids[0].classSimpleName} @{pojoMeta.ids[0].name}) {
+       if(logicDelete){
+          @{pojoMeta.className}ModifyTo to =  @{pojoMeta.className}ModifyTo.builder().id(@{pojoMeta.ids[0].name}).isDeleted(true).build();
+           getThisSvc().modifyById(to);
+       }else{
+           super.delById(@{pojoMeta.ids[0].name});
+         }
+     }
+
+      /**
+      * 重写删除操作
+      * 如果逻辑删除，则修改对应逻辑字段。否则直接删除
+      *
+      * @codgen.generated 自动生成，如需修改，请删除本行
+      */
+       @Override
+       public Integer delSelective(@{pojoMeta.className}DelTo to) {
+           if (logicDelete) {
+           @{pojoMeta.className}Mo mo = cloneMapper.delToMapMo(to);
+               return mybatisMapper.logicDeleteSelective(mo);
+           } else {
+               return super.delSelective(to);
+          }
+       }
+
+<%
+    // 判断是否有seqNo字段，如果有，则重写add，modifyById，delById方法
+    for(var i=0; i<pojoMeta.properties.~size; i++) {
+        var property = pojoMeta.properties[i];
+        var propertyNameLowerCase = strutil.toLowerCase(property.name);
+
+        if (strutil.endWith(propertyNameLowerCase,'seqno')) {
+%>
+    /**
+     * 重写add方法，实现添加时，自动设置seqNo
+     *
+     * @param to 添加的参数
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    public @{pojoMeta.className}Vo add(@{pojoMeta.className}AddTo to) {
+        try {
+            Map<String, Object> param    = MapUtils.builder().orderBy(@{pojoMeta.className}Vo::getSeqNo).desc().build();
+            @{pojoMeta.className}Vo   vo = getThisSvc().beanSearchOne(param);
+            Optional.ofNullable(vo.getSeqNo()).ifPresentOrElse( i -> to.setSeqNo((byte) (i + 1)), () -> to.setSeqNo((byte) 0) );
+            return super.add(to);
+        } catch (PessimisticLockingFailureException e) {
+            throw new IllegalArgumentException("已有相关操作正在进行，稍后重试", e);
+        }
+    }
+
+    /**
+     * 重排seqNo
+     *
+     * @param to 修改的参数
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    public void modifySeqNo(@{pojoMeta.className}ModifyTo to) {
+        try {
+            @{pojoMeta.className}Vo vo       = getThisSvc().getById(to.getId());
+            @{pojoMeta.className}Vo targetVo = getThisSvc().getById(to.getTargetId());
+            Byte     before   = vo.getSeqNo();
+            int      after    = targetVo.getSeqNo();
+            if (before < after && to.getOpSeqNoDic() == OpSeqNoDic.UP) {
+                after -= 1;
+            }
+            if (before > after && to.getOpSeqNoDic() == OpSeqNoDic.DOWN) {
+                after += 1;
+            }
+            to.setSeqNo((byte) after);
+            if (after > before) {
+                mybatisMapper.updateSeqNo(before, (byte) after, "-", null);
+            } else {
+                mybatisMapper.updateSeqNo((byte) after, before, "+", null);
+            }
+            super.modifyById(to);
+        } catch (PessimisticLockingFailureException e) {
+            throw new IllegalArgumentException("已有相关操作正在进行，稍后重试", e);
+        }
+    }
+
+    /**
+     * 重写delById方法，实现删除时，重排seqNo
+     *
+     * @param id 删除的数据id
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    public void delById(@{pojoMeta.ids[0].classSimpleName} id) {
+        try {
+            @{pojoMeta.className}Vo vo = getThisSvc().getById(id);
+            mybatisMapper.updateSeqNo(vo.getSeqNo(), "-", null);
+            super.delById(id);
+        } catch (PessimisticLockingFailureException e) {
+            throw new IllegalArgumentException("已有相关操作正在进行，稍后重试", e);
+        }
+    }
+
+<%
+   }else if(strutil.endWith(propertyNameLowerCase,'treecode')){
+%>
+    /**
+     * 重新添加方法，自动生成treeCode
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    public @{pojoMeta.className}Vo add(@{pojoMeta.className}AddTo to) {
+        try {
+            // 如果添加时有目标id,目标下级的数据，否则添加到根级
+            Optional.ofNullable(to.getTargetId()).ifPresentOrElse((i) -> {
+                @{pojoMeta.className}Vo fatherVo = getThisSvc().getById(i);
+                Map<String, Object> param = MapUtils.builder().field(@{pojoMeta.className}Vo::getTreeCode, fatherVo.getTreeCode() + "_".repeat(getTreeLevelSize())).op(OrLike.class)
+                        .orderBy(@{pojoMeta.className}Vo::getTreeCode).desc().build();
+                @{pojoMeta.className}Vo vo = getThisSvc().beanSearchOne(param);
+                if (vo != null) {
+                    to.setTreeCode(incrementalTreeCode(vo.getTreeCode(), 1, getTreeLevelSize()));
+                } else {
+                    to.setTreeCode(fatherVo.getTreeCode() + "0".repeat(getTreeLevelSize()));
+                }
+            }, () -> {
+                Map<String, Object> param = MapUtils.builder().field(@{pojoMeta.className}Vo::getTreeCode, "_".repeat(getTreeLevelSize())).op(OrLike.class)
+                        .orderBy(@{pojoMeta.className}Vo::getTreeCode).desc().build();
+                @{pojoMeta.className}Vo vo = getThisSvc().beanSearchOne(param);
+                if (vo != null) {
+                    to.setTreeCode(incrementalTreeCode(vo.getTreeCode(), 1, getTreeLevelSize()));
+                } else {
+                    to.setTreeCode("0".repeat(getTreeLevelSize()));
+                }
+            });
+            return super.add(to);
+        } catch (PessimisticLockingFailureException e) {
+            throw new IllegalArgumentException("已有相关操作正在进行，稍后重试", e);
+        }
+    }
+
+    /**
+     * 重写删除方法，删除后重新排序treeCode
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    public void delById(@{pojoMeta.ids[0].classSimpleName} id) {
+        try {
+            @{pojoMeta.className}Vo vo       = getThisSvc().getById(id);
+            String    treeCode = vo.getTreeCode();
+            mybatisMapper.deleteByTreeCode(treeCode);
+            updateTreeCode(treeCode, true);
+        } catch (PessimisticLockingFailureException e) {
+            throw new IllegalArgumentException("已有相关操作正在进行，稍后重试", e);
+        }
+    }
+
+    /**
+     * 修改treeCode排序
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    public void modifySeqNo(@{pojoMeta.className}ModifyTo to) {
+        try {
+            // 1、当前元素移动到目标位置，移出时将空出位置，同级别的元素需要上移（上移时需要考虑子级）
+            // 2、插入时，目标位置下方同级的元素需要下移（下移时需要考虑子级）
+            // 3、移动时，还需要考虑当前元素的子级
+            // 获取当前元素的信息
+            @{pojoMeta.className}Vo vo             = getThisSvc().getById(to.getId());
+            String    sourceTreeCode = vo.getTreeCode();
+            // 查询当前元素子级集合，后续元素移动时treeCode变化，子极的treeCode也需要跟随变化
+            List<@{pojoMeta.className}Vo> sourceTreeCodeChildVoList = getLevelVoList(sourceTreeCode, StartWith.class, sourceTreeCode, NotEqual.class);
+            // 移动当前元素下方的同级元素
+            updateTreeCode(sourceTreeCode, true);
+            // 将源目标元素移动到目标元素的位置，先获取目标元素信息
+            @{pojoMeta.className}Vo targetVo = getThisSvc().getById(to.getTargetId());
+
+            // 判断是移动到目标元素的上方还是下方，或是移动到目标元素的子级
+            if (to.getOpSeqNoDic() == OpSeqNoDic.UP) {
+                // 移动到目标元素上方，插入元素，插入位置下方所有元素下移，则当前元素最终treeCode取代目标元素的treeCode
+                to.setTreeCode(targetVo.getTreeCode());
+            } else if (to.getOpSeqNoDic() == OpSeqNoDic.CHILD) {
+                Map<String, Object> curLevelMaxTcMap            = MapUtils.builder().field(@{pojoMeta.className}Vo::getTreeCode, targetVo.getTreeCode() + "_".repeat(getTreeLevelSize())).op(OrLike.class).orderBy(@{pojoMeta.className}Vo::getTreeCode).desc().build();
+                @{pojoMeta.className}Vo      curLevelMaxTcVo = getThisSvc().beanSearchOne(curLevelMaxTcMap);
+                if (curLevelMaxTcVo != null) {
+                    to.setTreeCode(incrementalTreeCode(curLevelMaxTcVo.getTreeCode(), 1, getTreeLevelSize()));
+                } else {
+                    to.setTreeCode(targetVo.getTreeCode() + "0".repeat(getTreeLevelSize()));
+                }
+            } else {
+                // 插入到目标下方，最终位置为treeCode+1,其余下方元素下移
+                to.setTreeCode(incrementalTreeCode(targetVo.getTreeCode(), 1, getTreeLevelSize()));
+            }
+
+            String targetTreeCode = to.getTreeCode();
+            // 如果插入为子级，移出时会有变动，插入时不会有下移的变动
+            if (to.getOpSeqNoDic() != OpSeqNoDic.CHILD) {
+                updateTreeCode(targetTreeCode, false);
+            }
+            // 如果当前元素有子级，则移动子级集合
+            if (!CollectionUtils.isEmpty(sourceTreeCodeChildVoList)) {
+                List<Long> idList = sourceTreeCodeChildVoList.stream().map(@{pojoMeta.className}Vo::getId).toList();
+                // 此处使用id检索需要更新的数据，因为以上经过上移和下移的操作，大量treeCode值已经变化，可能会出现重复treeCode，所以使用id检索
+                mybatisMapper.updateTreeCodePrefix(idList, sourceTreeCode, targetTreeCode);
+            }
+            // 更新当前元素
+            super.modifyById(to);
+        } catch (PessimisticLockingFailureException e) {
+            throw new IllegalArgumentException("已有相关操作正在进行，稍后重试", e);
+        }
+
+    }
+
+    /**
+     * 获取Vo集合
+     *
+     * @param treeCode1         treeCode01
+     * @param treeCode1Operator treeCode01的操作符(主要查询本级或子级所有Vo)
+     * @param treeCode2         treeCode02
+     * @param treeCode2Operator treeCode02的操作符操作符(beanSearch大于小于，用于查询该treeCode的当前级别排序上方或下方的数据)
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    private List<@{pojoMeta.className}Vo> getLevelVoList(String treeCode1, Class<? extends FieldOp> treeCode1Operator, String treeCode2, Class<? extends FieldOp> treeCode2Operator) {
+        Map<String, Object> targetLevelParamMap = MapUtils.builder()
+                .group("A").field(@{pojoMeta.className}Vo::getTreeCode, treeCode1).op(treeCode1Operator)
+                .group("B").field(@{pojoMeta.className}Vo::getTreeCode, treeCode2).op(treeCode2Operator)
+                .groupExpr("A&B").orderBy(@{pojoMeta.className}Vo::getTreeCode).asc().build();
+        return getThisSvc().beanSearchList(targetLevelParamMap);
+    }
+
+    /**
+     * 批量移动treeCode
+     *
+     * @param voList 移动树形集合，对treeCode排序有要求，小到大
+     * @param move   移动方向 + / -
+     * @param level  移动的treeCode级别
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    private void batchUpdateTreeCode(List<@{pojoMeta.className}Vo> voList, String move, String level) {
+        if (!CollectionUtils.isEmpty(voList)) {
+            String first = voList.get(0).getTreeCode();
+            String last  = voList.get(voList.size() - 1).getTreeCode();
+            mybatisMapper.updateTreeCode(first, last, move, level);
+        }
+    }
+
+    /**
+     * 排序treeCode
+     *
+     * @param treeCode 移动大于该treeCode且同级的元素
+     * @param isUpMove 是否上移 true 上移 false 下移
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+    private void updateTreeCode(String treeCode, Boolean isUpMove) {
+        // 提取元素treeCode并取出父级treeCode
+        String treeCodeLevelPrefix = treeCode.substring(0, treeCode.length() - getTreeLevelSize());
+        // 拼凑当前级别模糊查询参数
+        String treeCodeLevel = String.format("%s%s", treeCodeLevelPrefix, "_".repeat(getTreeLevelSize()));
+        // 查询出本次需要重新排序的同级元素集合
+        List<@{pojoMeta.className}Vo> sourceLevelVoList = getLevelVoList(treeCodeLevel, OrLike.class, treeCode, GreaterEqual.class);
+        // 查询出本次需要重新排序的同级元素集合以及子级集合
+        List<@{pojoMeta.className}Vo> sourceChildLevelVoList = getLevelVoList(treeCodeLevelPrefix, StartWith.class, treeCode, GreaterEqual.class);
+        // 上移元素集合，填补当前元素移动时的空缺
+        String move = isUpMove ? "-" : "+";
+        batchUpdateTreeCode(sourceLevelVoList, move, treeCodeLevel);
+        // 如果上移的元素集合拥有子级，则移动子级集合
+        if (sourceChildLevelVoList.size() != sourceLevelVoList.size()) {
+            int sourceTreeCodeLength = treeCode.length();
+            // 筛出移出元素相同级别中含有子级的treeCode集合（通过筛选treeCode长度大于当前元素treeCode长度且不等于当前元素treeCode的前缀(父级)去重）
+            Stream<String> treeCodeStream = sourceChildLevelVoList.stream()
+                    .filter(sVo -> sVo.getTreeCode().length() > sourceTreeCodeLength)
+                    .map(sVo -> sVo.getTreeCode().substring(0, sourceTreeCodeLength)).distinct();
+            List<String> updateTreeCodeList;
+            if (isUpMove) {
+                updateTreeCodeList = treeCodeStream.toList();
+            } else {
+                //此处因为下移，所以下方元素先移动。treeCode应该为倒序，流处理中添加sorted排序
+                updateTreeCodeList = treeCodeStream.sorted(Collections.reverseOrder()).toList();
+            }
+            // 遍历更新含有子级集合的treeCode集合
+            int treeCodeMove = isUpMove ? -1 : 1;
+            updateTreeCodeList.forEach(updateTreeCode -> {
+                // 此处得到的子级集合父级前缀为没有上移时的treeCode，需要将treeCode前缀上移一位
+                String lastTreeCode = incrementalTreeCode(updateTreeCode, treeCodeMove, getTreeLevelSize());
+                mybatisMapper.updateTreeCodePrefix(updateTreeCode, lastTreeCode);
+            });
+        }
+    }
+<%
+   }
+   }
+%>
 }

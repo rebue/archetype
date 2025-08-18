@@ -1,4 +1,4 @@
-package $
+package ${package}.test.graalvm;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

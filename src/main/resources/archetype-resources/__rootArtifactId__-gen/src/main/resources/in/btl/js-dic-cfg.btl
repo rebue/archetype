@@ -9,7 +9,12 @@
                    if(dicClassName == dicMeta.className ) {
                         println('export const ' + dicMeta.name + '= [');
                         for(item in dicMeta.items) {
-                            println('{ id: ' + item.code + ', name: ' + '\'' +item.desc + '\'' + '},');
+                            if(item.code == '') {
+                                var propertyClassName = property.classSimpleName;
+                                if(propertyClassName == 'String') {
+                                    println('{ id: ' + item.code + ', name: ' + '\'' +item.desc + '\'' + '},');
+                                }
+                            }
                         }
                         println('];');
                         break;

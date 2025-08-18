@@ -31,4 +31,23 @@ import rebue.robotech.svc.BaseSvc;
 @Validated
 public interface ${moduleClassName} extends BaseSvc<${pojoMeta.ids[0].classSimpleName}, ${pojoMeta.className}AddTo, ${pojoMeta.className}ModifyTo, ${pojoMeta.className}DelTo, ${pojoMeta.className}OneTo, ${pojoMeta.className}ListTo, ${pojoMeta.className}PageTo, ${pojoMeta.className}Mo, ${pojoMeta.className}Vo> {
 
+<%
+    // 判断是否有seqNo字段，如果有，则重写add，modifyById，delById方法
+    for(var i=0; i<pojoMeta.properties.~size; i++) {
+        var property = pojoMeta.properties[i];
+        var propertyNameLowerCase = strutil.toLowerCase(property.name);
+
+        if (strutil.endWith(propertyNameLowerCase,'seqno')|| strutil.endWith(propertyNameLowerCase,'treecode')) {
+%>
+            /**
+             * 修改菜单的排序
+             *
+             * @param to 修改的具体数据
+             * @codgen.generated 自动生成，如需修改，请删除本行
+             */
+            void modifySeqNo(${pojoMeta.className}ModifyTo to);
+<%
+        }
+    }
+%>
 }

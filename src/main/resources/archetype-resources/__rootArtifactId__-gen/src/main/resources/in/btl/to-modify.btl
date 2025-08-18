@@ -122,6 +122,26 @@ public class ${pojoMeta.className}ModifyTo implements ModifyTo<${pojoMeta.ids[0]
 
 	        var propertyClassName = property.classSimpleName;
 	        println('private ' + propertyClassName + ' ' + property.name + ';');
+
+            // 如果是排序类型，加上排序相关的两个字段
+            if (strutil.endWith(propertyNameLowerCase,'seqno')|| strutil.endWith(propertyNameLowerCase,'treecode')){
+                println('/**');
+                println('* 移动到的目标id(根据seqNo字段自动生成字段，辅助排序)');
+                println('*');
+                println('* @codgen.generated 自动生成，如需修改，请删除本行');
+                println('*/');
+                println('private ' + pojoMeta.properties[0].classSimpleName + ' targetId;');
+
+                println('/**');
+                println('* 顺序操作类型(根据seqNo或treeCode字段自动生成字段，辅助排序)');
+                println('* 0:UP(向上)');
+                println('* 1:DOWN(向下)');
+                println('* 2:CHILD(子级)');
+                println('*');
+                println('* @codgen.generated 自动生成，如需修改，请删除本行');
+                println('*/');
+                println('private OpSeqNoDic opSeqNoDic;');
+            }
 		}
 	%>
 	

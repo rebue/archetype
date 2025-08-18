@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import rebue.adm.annotation.Auth;
 import reactor.core.publisher.Mono;
 
 import rebue.robotech.clone.MapStructMapper;
@@ -35,6 +36,7 @@ import ${packageName}.svc.${pojoMeta.className}Svc;
  * @codgen.generated 自动生成的注释，如需修改本注释，请删除本行
  */
 @RestController
+@Auth(auth = "${pojoMeta.title}")
 public class ${moduleClassName} {
     /**
      * @codgen.generated 自动生成，如需修改，请删除本行
@@ -50,6 +52,7 @@ public class ${moduleClassName} {
      * @codgen.generated 自动生成，如需修改，请删除本行
      */
     @PostMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}")
+    @Auth(auth = "添加", name = "添加${pojoMeta.title}")
     public Mono<Rt<IdRa<${pojoMeta.ids[0].classSimpleName}>>> add(@RequestBody final ${pojoMeta.className}AddTo to) {
         return Mono.create(callback -> callback.success(Rt.success("添加成功", IdRa.of(svc.add(to).getId()))));
     }
@@ -62,6 +65,7 @@ public class ${moduleClassName} {
      * @codgen.generated 自动生成，如需修改，请删除本行
      */
     @PutMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}")
+    @Auth(auth = "修改", name = "修改${pojoMeta.title}的信息")
     public Mono<Rt<?>> modify(@RequestBody final ${pojoMeta.className}ModifyTo to) {
         return Mono.create(callback -> {
             svc.modifyById(to);
@@ -77,6 +81,7 @@ public class ${moduleClassName} {
      * @codgen.generated 自动生成，如需修改，请删除本行
      */
     @DeleteMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}")
+    @Auth(auth = "删除", name = "删除${pojoMeta.title}")
     public Mono<Rt<?>> delById(@RequestParam("${pojoMeta.ids[0].name}") final ${pojoMeta.ids[0].classSimpleName} ${pojoMeta.ids[0].name}) {
 		return Mono.create(callback -> {
 		    svc.delById(${pojoMeta.ids[0].name});
@@ -93,6 +98,7 @@ public class ${moduleClassName} {
      * @codgen.generated 自动生成，如需修改，请删除本行
      */
     @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/get-one")
+    @Auth(auth = "查询", name = "通过条件获取单个${pojoMeta.title}的信息")
     public Mono<Rt<${pojoMeta.className}Vo>> getOne(final ${pojoMeta.className}OneTo qc) {
         return Mono.create(callback -> callback.success(Rt.success("查询成功", svc.getOne(qc))));
     }
@@ -105,6 +111,7 @@ public class ${moduleClassName} {
      * @codgen.generated 自动生成，如需修改，请删除本行
      */
     @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/get-by-id")
+    @Auth(auth = "查询", name = "通过ID获取单个${pojoMeta.title}的信息")
     public Mono<Rt<${pojoMeta.className}Vo>> getById(@RequestParam("${pojoMeta.ids[0].name}") final ${pojoMeta.ids[0].classSimpleName} ${pojoMeta.ids[0].name}) {
         return Mono.create(callback -> callback.success(Rt.success("查询成功", svc.getById(${pojoMeta.ids[0].name}))));
     }
@@ -117,6 +124,7 @@ public class ${moduleClassName} {
      * @codgen.generated 自动生成，如需修改，请删除本行
      */
     @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/exist-by-id")
+    @Auth(auth = "查询", name = "判断${pojoMeta.title}是否存在")
     public Mono<Rt<BooleanRa>> existById(@RequestParam("${pojoMeta.ids[0].name}") final ${pojoMeta.ids[0].classSimpleName} ${pojoMeta.ids[0].name}) {
         return Mono.create(callback -> callback.success(Rt.success("查询成功", BooleanRa.of(svc.existById(${pojoMeta.ids[0].name})))));
     }
@@ -130,6 +138,7 @@ public class ${moduleClassName} {
      * @codgen.generated 自动生成，如需修改，请删除本行
      */
     @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/page")
+    @Auth(auth = "查询", name = "分页查询${pojoMeta.title}的信息")
     public Mono<Rt<PageRa<${pojoMeta.className}Vo>>> page(final ${pojoMeta.className}PageTo qc) {
         return Mono.create(callback -> callback.success(Rt.success("分页查询成功", svc.page(qc))));
     }
@@ -142,6 +151,7 @@ public class ${moduleClassName} {
      * @codgen.generated 自动生成，如需修改，请删除本行
      */
     @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search-one")
+    @Auth(auth = "查询", name = "通过条件获取单个${pojoMeta.title}的信息")
     public Mono<Rt<${pojoMeta.className}Vo>> searchOne(@RequestParam Map<String, Object> qc) {
         return Mono.create(callback -> callback.success(Rt.success("查询成功", svc.beanSearchOne(qc))));
     }
@@ -154,6 +164,7 @@ public class ${moduleClassName} {
      * @codgen.generated 自动生成，如需修改，请删除本行
      */
     @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search-by-id")
+    @Auth(auth = "查询", name = "通过ID获取单个${pojoMeta.title}的信息")
     public Mono<Rt<${pojoMeta.className}Vo>> searchById(@RequestParam("${pojoMeta.ids[0].name}") final ${pojoMeta.ids[0].classSimpleName} ${pojoMeta.ids[0].name}) {
         return Mono.create(callback -> callback.success(Rt.success("查询成功", svc.beanSearchById(${pojoMeta.ids[0].name}))));
     }
@@ -166,8 +177,36 @@ public class ${moduleClassName} {
      * @codgen.generated 自动生成，如需修改，请删除本行
      */
     @GetMapping("/${project}/${pojoMeta.lowerHyphenNameWithoutPrefix}/search")
+    @Auth(auth = "查询", name = "分页搜索${pojoMeta.title}的信息")
     public Mono<Rt<PageRa<${pojoMeta.className}Vo>>> search(@RequestParam Map<String, Object> qc) {
         return Mono.create(callback -> callback.success(Rt.success("分页查询成功", svc.beanSearch(qc))));
     }
 
+<%
+    // 判断是否有seqNo字段，如果有，则重写add，modifyById，delById方法
+    for(var i=0; i<pojoMeta.properties.~size; i++) {
+        var property = pojoMeta.properties[i];
+        var propertyNameLowerCase = strutil.toLowerCase(property.name);
+
+        if (strutil.endWith(propertyNameLowerCase,'seqno')|| strutil.endWith(propertyNameLowerCase,'treecode')){
+%>
+            /**
+             * 修改${pojoMeta.title}的排序
+             *
+             * @param to 修改的具体数据
+             *
+             * @codgen.generated 自动生成，如需修改，请删除本行
+             */
+            @PutMapping("/adm/${pojoMeta.lowerHyphenNameWithoutPrefix}/modify-seq-no")
+            @Auth(auth = "修改", name = "修改${pojoMeta.title}的排序")
+            public Mono<Rt<?>> modifySeqNo(@RequestBody final ${pojoMeta.className}ModifyTo to) {
+                return Mono.create(callback -> {
+                    svc.modifySeqNo(to);
+                    callback.success(Rt.success("排序成功"));
+                });
+            }
+<%
+        }
+    }
+%>
 }

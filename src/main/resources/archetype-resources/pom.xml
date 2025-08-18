@@ -50,6 +50,11 @@
                 <version>${codgen.version}</version>
             </dependency>
             <dependency>
+                <groupId>io.github.codgen</groupId>
+                <artifactId>codgen-java</artifactId>
+                <version>${codgen.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.github.rebue.mbgx</groupId>
                 <artifactId>mbgx</artifactId>
                 <version>${mbgx.version}</version>
