@@ -27,6 +27,7 @@
         <wheel.version>3.8.59</wheel.version>
         <robotech.version>3.8.59</robotech.version>
         <sbs.version>3.8.59</sbs.version>
+        <adm.version>1.0.0</adm.version>
     </properties>
 
     <dependencyManagement>
@@ -35,6 +36,13 @@
                 <groupId>${groupId}</groupId>
                 <artifactId>${rootArtifactId}-api</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+
+            <!-- 权限拦截 -->
+            <dependency>
+                <groupId>rebue.adm</groupId>
+                <artifactId>adm-auth</artifactId>
+                <version>${adm.version}</version>
             </dependency>
 
             <dependency>

@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 // 如需访问其它微服务，请解开下面的注释
 // @EnableFeignClients
 @Slf4j
-public class ${projectNameCapitalise}Application{
+public class ${projectNameCapitalise}Application {
 
     public static void main(final String[] args) {
         try {

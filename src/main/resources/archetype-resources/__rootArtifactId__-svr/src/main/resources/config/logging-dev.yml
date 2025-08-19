@@ -1,5 +1,5 @@
 logging:
-  config: config/logback.xml
+  config: classpath:config/logback.xml
   level:
     root: INFO
     rebue: TRACE

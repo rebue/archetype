@@ -14,7 +14,7 @@
         <node id="voCodeParser" name="Vo代码解析器" type="script" file="node/codeparser/VoCodeParser.java"/>
     </nodes>
     <chain id="base" namespace="disabled">
-        fileScanDir = '../../adm';
+        fileScanDir = '../../${rootArtifactId}';
         fileScanPattern = {{0}};
         fileScannerTo = '{"dir":"'+fileScanDir+'","pattern":"'+fileScanPattern+'"}';
 

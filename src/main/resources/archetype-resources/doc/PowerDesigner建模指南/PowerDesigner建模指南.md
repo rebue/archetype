@@ -103,7 +103,32 @@ st->op1->op2->op3->op4->op5->op6->op7->op8->e
 
   ![排除比较unsigned](排除比较unsigned.png)
 
-### 6.4. 修改生成外键名称规则
+### 6.4. 修改生成索引名称规则
+
+在物理模型生成创建数据库的脚本时，由于原来生成索引的规则问题，生成的索引在表名较长的情况下，有可能会重名
+
+选择 `Database` > `Edit Current DBMS`
+选择 `Scripts` > `Objects` > `Key` > `ConstName`
+可以发现右侧的 `Value` 为：
+`AK_%.U18:AKEY%_%.U8:TABLE%`
+
+可见，该命名方法是：'AK_'+18位索引名+8位表名，你可以根据这中模式自定义为：
+
+`AK_%.U18:TABLE%_%.U18:AKEY%`
+
+**注意，如果无法保存，请使用管理员来打开PowerDesigner**
+
+## 7. 生成建库脚本
+
+点击菜单 `Database` - `Generate Database...`，或者直接 `Ctrl + G`
+
+**注意Formate页面的设置**
+
+![Format页面设置](Format页面设置.png)
+
+具体操作略
+
+### 6.5. 修改生成外键名称规则
 
 在物理模型生成创建数据库的脚本时，由于原来生成外键的规则问题，生成的外键在表名较长的情况下，有可能会重名
 

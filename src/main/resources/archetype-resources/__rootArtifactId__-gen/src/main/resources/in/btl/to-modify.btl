@@ -26,6 +26,7 @@ import rebue.robotech.jackson.geometry.LineGeometryDeserializer;
 import rebue.robotech.jackson.geometry.PolygonGeometryDeserializer;
 import rebue.robotech.to.ModifyTo;
 import rebue.wheel.api.dic.HttpMethodDic;
+import rebue.wheel.api.dic.OpSeqNoDic;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;

@@ -46,7 +46,7 @@ import rebue.wheel.api.ra.IdRa;
 import rebue.wheel.api.ro.Rt;
 import rebue.robotech.svc.BaseSvc;
 import rebue.robotech.svc.impl.BaseSvcImpl;
-import rebue.adm.dic.OpSeqNoDic;
+import rebue.wheel.api.dic.OpSeqNoDic;
 
 import java.util.Collections;
 import java.util.List;

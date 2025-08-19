@@ -14,7 +14,7 @@ import rebue.mbgx.MybatisGeneratorWrap;
 /**
  * 自动生成代码
  */
-public class ${projectNameCapitalise}Gen{
+public class ${projectNameCapitalise}Gen {
 
     public static void main(String[] args) throws IOException, XMLParserException, SQLException, InterruptedException, InvalidConfigurationException {
         // 先根据mbgx的配置模板生成配置、根据数据库生成代码
