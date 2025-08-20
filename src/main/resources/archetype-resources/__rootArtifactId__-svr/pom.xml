@@ -156,7 +156,6 @@
                     <excludes>
                         <!-- 排除打包 src/main/resources 下的所有文件 -->
                         <exclude>config/**</exclude>
-                        <exclude>db/**</exclude>
                         <exclude>META-INF/**</exclude>
                         <exclude>security/**</exclude>
                         <exclude>static/**</exclude>
