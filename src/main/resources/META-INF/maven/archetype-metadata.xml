@@ -90,7 +90,7 @@
         <!--        </fileSet>-->
         <!-- 通过变量赋值的策略生成 .gitignore 文件 -->
         <fileSet encoding="UTF-8">
-            <directory>./</directory>
+            <directory></directory>
             <includes>
                 <include>__gitignore__</include>
                 <include>.gitignore</include>
@@ -172,6 +172,7 @@
                     <includes>
                         <include>**/application.yml</include>
                         <include>**/application-dev.yml</include>
+                        <include>**/application-prod.yml</include>
                     </includes>
                 </fileSet>
                 <fileSet filtered="false" encoding="UTF-8">

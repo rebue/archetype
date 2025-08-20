@@ -68,6 +68,11 @@ bean-searcher:
       size: pageSize
       # 设置起始页为1
       start: 1
+    filter:
+      # JSON 数组参数值过滤器，用于简化前端传参。启用后，当前端需要为同一个字段参数添加多个值时，可以放在一个 JSON 数组进行传递
+      use-json-array: true
+      # 后缀运算符参数过滤器，用于简化前端传参。当启用时，原始字段参数名 与 运算符 可以结合为一个新的参数
+      use-suffix-op: true
   sql:
     dialect: postgresql
     default-mapping:
@@ -75,13 +80,6 @@ bean-searcher:
       upper-case: true
       # 实体类后缀(自动映射表名会自动去掉实体类的后缀)
       redundant-suffixes: Vo
-
-management:
-  influx:
-    metrics:
-      export:
-        # 禁用influx统计(否则启动完成后会报unable to create database 'mydb'的错误，虽然不影响使用)
-        enabled: false
 
 rebue:
   # 配置idworker参数
