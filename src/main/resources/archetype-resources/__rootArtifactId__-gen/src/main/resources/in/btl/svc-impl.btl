@@ -54,7 +54,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static rebue.adm.util.TreeUtil.incrementalTreeCode;
+import static rebue.wheel.core.TreeUtils.incrementalTreeCode;
 
 /**
  * @{pojoMeta.title}的服务实现
@@ -139,44 +139,33 @@ public class @{moduleClassName} extends BaseSvcImpl<@{pojoMeta.ids[0].classSimpl
 
 
     /**
-     * 重写删除操作
-     * 如果逻辑删除，则修改对应逻辑字段。否则直接删除
-     *
-     * @codgen.generated 自动生成，如需修改，请删除本行
-     */
-     @Override
-     public void delById(@{pojoMeta.ids[0].classSimpleName} @{pojoMeta.ids[0].name}) {
-       if(logicDelete){
-          @{pojoMeta.className}ModifyTo to =  @{pojoMeta.className}ModifyTo.builder().id(@{pojoMeta.ids[0].name}).isDeleted(true).build();
-           getThisSvc().modifyById(to);
-       }else{
-           super.delById(@{pojoMeta.ids[0].name});
-         }
-     }
-
-      /**
-      * 重写删除操作
-      * 如果逻辑删除，则修改对应逻辑字段。否则直接删除
-      *
-      * @codgen.generated 自动生成，如需修改，请删除本行
-      */
-       @Override
-       public Integer delSelective(@{pojoMeta.className}DelTo to) {
-           if (logicDelete) {
-           @{pojoMeta.className}Mo mo = cloneMapper.delToMapMo(to);
-               return mybatisMapper.logicDeleteSelective(mo);
-           } else {
-               return super.delSelective(to);
-          }
-       }
+    * 重写删除操作
+    * 如果逻辑删除，则修改对应逻辑字段。否则直接删除
+    *
+    * @codgen.generated 自动生成，如需修改，请删除本行
+    */
+    @Override
+    public Integer delSelective(@{pojoMeta.className}DelTo to) {
+      if (logicDelete) {
+          @{pojoMeta.className}Mo mo = cloneMapper.delToMapMo(to);
+          return mybatisMapper.logicDeleteSelective(mo);
+      } else {
+          return super.delSelective(to);
+      }
+    }
 
 <%
-    // 判断是否有seqNo字段，如果有，则重写add，modifyById，delById方法
+    // 判断是否有seqNo/TreeCode字段，如果有，则重写add，modifyById，delById方法
+    var hasSeqNo = false;
+    var hasTreeCode = false;
     for(var i=0; i<pojoMeta.properties.~size; i++) {
         var property = pojoMeta.properties[i];
-        var propertyNameLowerCase = strutil.toLowerCase(property.name);
+        var propertyNameLowerCase   = strutil.toLowerCase(property.name);
+        var propertyClassSimpleName = property.classSimpleName;
 
         if (strutil.endWith(propertyNameLowerCase,'seqno')) {
+            hasSeqNo = true;
+            var castClass = propertyClassSimpleName=='Byte'?'(Byte)':'';
 %>
     /**
      * 重写add方法，实现添加时，自动设置seqNo
@@ -190,7 +179,7 @@ public class @{moduleClassName} extends BaseSvcImpl<@{pojoMeta.ids[0].classSimpl
         try {
             Map<String, Object> param    = MapUtils.builder().orderBy(@{pojoMeta.className}Vo::getSeqNo).desc().build();
             @{pojoMeta.className}Vo   vo = getThisSvc().beanSearchOne(param);
-            Optional.ofNullable(vo.getSeqNo()).ifPresentOrElse( i -> to.setSeqNo((byte) (i + 1)), () -> to.setSeqNo((byte) 0) );
+            Optional.ofNullable(vo.getSeqNo()).ifPresentOrElse( i -> to.setSeqNo(@{castClass}(i + 1)), () -> to.setSeqNo(@{castClass}0));
             return super.add(to);
         } catch (PessimisticLockingFailureException e) {
             throw new IllegalArgumentException("已有相关操作正在进行，稍后重试", e);
@@ -209,7 +198,7 @@ public class @{moduleClassName} extends BaseSvcImpl<@{pojoMeta.ids[0].classSimpl
         try {
             @{pojoMeta.className}Vo vo       = getThisSvc().getById(to.getId());
             @{pojoMeta.className}Vo targetVo = getThisSvc().getById(to.getTargetId());
-            Byte     before   = vo.getSeqNo();
+            @{propertyClassSimpleName} before   = vo.getSeqNo();
             int      after    = targetVo.getSeqNo();
             if (before < after && to.getOpSeqNoDic() == OpSeqNoDic.UP) {
                 after -= 1;
@@ -217,11 +206,11 @@ public class @{moduleClassName} extends BaseSvcImpl<@{pojoMeta.ids[0].classSimpl
             if (before > after && to.getOpSeqNoDic() == OpSeqNoDic.DOWN) {
                 after += 1;
             }
-            to.setSeqNo((byte) after);
+            to.setSeqNo(@{castClass}after);
             if (after > before) {
-                mybatisMapper.updateSeqNo(before, (byte) after, "-", null);
+                mybatisMapper.updateSeqNo(before, @{castClass}after, "-", null);
             } else {
-                mybatisMapper.updateSeqNo((byte) after, before, "+", null);
+                mybatisMapper.updateSeqNo(@{castClass}after, before, "+", null);
             }
             super.modifyById(to);
         } catch (PessimisticLockingFailureException e) {
@@ -246,9 +235,10 @@ public class @{moduleClassName} extends BaseSvcImpl<@{pojoMeta.ids[0].classSimpl
             throw new IllegalArgumentException("已有相关操作正在进行，稍后重试", e);
         }
     }
-
 <%
-   }else if(strutil.endWith(propertyNameLowerCase,'treecode')){
+            break;
+        } else if (strutil.endWith(propertyNameLowerCase,'treecode')) {
+            hasTreeCode = true;
 %>
     /**
      * 重新添加方法，自动生成treeCode
@@ -438,7 +428,27 @@ public class @{moduleClassName} extends BaseSvcImpl<@{pojoMeta.ids[0].classSimpl
         }
     }
 <%
-   }
-   }
+            break;
+        }
+    }
+    if (!hasSeqNo && !hasTreeCode) {
+%>
+    /**
+     * 重写删除操作
+     * 如果逻辑删除，则修改对应逻辑字段。否则直接删除
+     *
+     * @codgen.generated 自动生成，如需修改，请删除本行
+     */
+     @Override
+     public void delById(@{pojoMeta.ids[0].classSimpleName} @{pojoMeta.ids[0].name}) {
+         if(logicDelete){
+             @{pojoMeta.className}ModifyTo to =  @{pojoMeta.className}ModifyTo.builder().id(@{pojoMeta.ids[0].name}).isDeleted(true).build();
+             getThisSvc().modifyById(to);
+         } else {
+             super.delById(@{pojoMeta.ids[0].name});
+         }
+     }
+<%
+    }   // if end
 %>
 }
