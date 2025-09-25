@@ -96,15 +96,6 @@ public class @{moduleClassName} extends BaseSvcImpl<@{pojoMeta.ids[0].classSimpl
     private Integer maxPageSize;
 
     /**
-    * 是否开启逻辑删除
-    *
-    * @codgen.generated 自动生成，如需修改，请删除本行
-    */
-    @Value("${logic.config.enable.@{pojoMeta.lowerHyphenName}:true}")
-    private Boolean logicDelete;
-
-
-    /**
      * 从接口获取本服务的单例
      * XXX 如果要调用自己的方法，涉及到可能要回滚事务的，请使用getThisSvc()代替this来调用，这样该方法的事务才能回滚
      *
@@ -160,12 +151,16 @@ public class @{moduleClassName} extends BaseSvcImpl<@{pojoMeta.ids[0].classSimpl
     var hasTreeCode = false;
     for(var i=0; i<pojoMeta.properties.~size; i++) {
         var property = pojoMeta.properties[i];
-        var propertyNameLowerCase   = strutil.toLowerCase(property.name);
-        var propertyClassSimpleName = property.classSimpleName;
+        var propertyNameLowerCase            = strutil.toLowerCase(property.name);
+        var propertyClassSimpleName          = property.classSimpleName;
+        var propertyClassSimpleNameLowerCase = strutil.toLowerCase(propertyClassSimpleName);
+        if (propertyClassSimpleNameLowerCase=='integer') {
+            propertyClassSimpleNameLowerCase = 'int';
+        }
 
         if (strutil.endWith(propertyNameLowerCase,'seqno')) {
             hasSeqNo = true;
-            var castClass = propertyClassSimpleName=='Byte'?'(Byte)':'';
+            var castClass = (propertyClassSimpleName!='Integer')?'('+propertyClassSimpleNameLowerCase+')':'';
 %>
     /**
      * 重写add方法，实现添加时，自动设置seqNo
@@ -196,21 +191,21 @@ public class @{moduleClassName} extends BaseSvcImpl<@{pojoMeta.ids[0].classSimpl
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public void modifySeqNo(@{pojoMeta.className}ModifyTo to) {
         try {
-            @{pojoMeta.className}Vo vo       = getThisSvc().getById(to.getId());
-            @{pojoMeta.className}Vo targetVo = getThisSvc().getById(to.getTargetId());
-            @{propertyClassSimpleName} before   = vo.getSeqNo();
-            int      after    = targetVo.getSeqNo();
+            @{pojoMeta.className}Vo             vo       = getThisSvc().getById(to.getId());
+            @{pojoMeta.className}Vo             targetVo = getThisSvc().getById(to.getTargetId());
+            @{propertyClassSimpleNameLowerCase} before   = vo.getSeqNo();
+            @{propertyClassSimpleNameLowerCase} after    = targetVo.getSeqNo();
             if (before < after && to.getOpSeqNoDic() == OpSeqNoDic.UP) {
                 after -= 1;
             }
             if (before > after && to.getOpSeqNoDic() == OpSeqNoDic.DOWN) {
                 after += 1;
             }
-            to.setSeqNo(@{castClass}after);
+            to.setSeqNo(after);
             if (after > before) {
-                mybatisMapper.updateSeqNo(before, @{castClass}after, "-", null);
+                mybatisMapper.updateSeqNo(before, after, "-", null);
             } else {
-                mybatisMapper.updateSeqNo(@{castClass}after, before, "+", null);
+                mybatisMapper.updateSeqNo(after, before, "+", null);
             }
             super.modifyById(to);
         } catch (PessimisticLockingFailureException e) {
@@ -431,24 +426,5 @@ public class @{moduleClassName} extends BaseSvcImpl<@{pojoMeta.ids[0].classSimpl
             break;
         }
     }
-    if (!hasSeqNo && !hasTreeCode) {
-%>
-    /**
-     * 重写删除操作
-     * 如果逻辑删除，则修改对应逻辑字段。否则直接删除
-     *
-     * @codgen.generated 自动生成，如需修改，请删除本行
-     */
-     @Override
-     public void delById(@{pojoMeta.ids[0].classSimpleName} @{pojoMeta.ids[0].name}) {
-         if(logicDelete){
-             @{pojoMeta.className}ModifyTo to =  @{pojoMeta.className}ModifyTo.builder().id(@{pojoMeta.ids[0].name}).isDeleted(true).build();
-             getThisSvc().modifyById(to);
-         } else {
-             super.delById(@{pojoMeta.ids[0].name});
-         }
-     }
-<%
-    }   // if end
 %>
 }

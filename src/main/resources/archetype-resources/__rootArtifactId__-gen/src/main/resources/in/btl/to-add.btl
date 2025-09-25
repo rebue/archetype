@@ -75,8 +75,8 @@ public class ${pojoMeta.className}AddTo implements Serializable {
         	println('* @codgen.generated 自动生成，如需修改，请删除本行');
         	println('*/');
         	
-	        // 如果字段要求非空
-	        if(!property.field.isNullable) {
+	        // 如果字段要求非空且没有默认值
+	        if(!property.field.isNullable && property.field.defaultValue==null) {
                 // 如果是字符串类型，添加 @NotBlank 注解
 	            if (property.classSimpleName == 'String') {
 	                println('@NotBlank(message = "' + property.title + '不能为空")');
