@@ -127,24 +127,6 @@ public class @{moduleClassName} extends BaseSvcImpl<@{pojoMeta.ids[0].classSimpl
     protected Integer getMaxPageSize() {
         return maxPageSize;
     }
-
-
-    /**
-    * 重写删除操作
-    * 如果逻辑删除，则修改对应逻辑字段。否则直接删除
-    *
-    * @codgen.generated 自动生成，如需修改，请删除本行
-    */
-    @Override
-    public Integer delSelective(@{pojoMeta.className}DelTo to) {
-      if (logicDelete) {
-          @{pojoMeta.className}Mo mo = cloneMapper.delToMapMo(to);
-          return mybatisMapper.logicDeleteSelective(mo);
-      } else {
-          return super.delSelective(to);
-      }
-    }
-
 <%
     // 判断是否有seqNo/TreeCode字段，如果有，则重写add，modifyById，delById方法
     var hasSeqNo = false;
