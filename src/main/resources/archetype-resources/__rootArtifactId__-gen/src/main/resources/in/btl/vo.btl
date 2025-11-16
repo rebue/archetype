@@ -72,8 +72,8 @@ public class ${moduleClassName} implements Vo<${pojoMeta.ids[0].classSimpleName}
                     array.add(pkTableNames, pkTableName);
                     // 遍历主键表pojo的所有属性
                     for (property in pojo.properties) {
-                        // 如果字段不是主键且是关键字，关联过来
-                        if (!property.field.isPrimaryKey && property.isKeyWord) {
+                        // 如果字段不是主键，关联过来
+                        if (!property.field.isPrimaryKey) {
                             println('/**');
                             for(remark in property.remarks) {
                                 if (remarkLP.first)
