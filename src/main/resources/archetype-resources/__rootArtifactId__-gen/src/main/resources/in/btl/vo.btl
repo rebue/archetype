@@ -59,21 +59,21 @@ public class ${moduleClassName} implements Vo<${pojoMeta.ids[0].classSimpleName}
 		}
 
         // 如果有外键，生成主键表的字段
-        var<String> pkTableNames = [];
+        // var<String> pkTableNames = [];
 		for (foreignKey in pojoMeta.table.foreignKeys) {
             // 主键表名
             var pkTableName = foreignKey.pkTableName;
             // 判断是否已重复获取主键表
-            if (array.contain(pkTableNames, pkTableName)) continue;
+            // if (array.contain(pkTableNames, pkTableName)) continue;
             // 遍历所有pojo，获取主键表
             for (pojo in pojoMetas) {
                 if (pojo.table.name == pkTableName) {
                     // 先添加进主键表列表，以供判断是否已重复获取主键表
-                    array.add(pkTableNames, pkTableName);
+                    // array.add(pkTableNames, pkTableName);
                     // 遍历主键表pojo的所有属性
                     for (property in pojo.properties) {
-                        // 如果字段不是主键，关联过来
-                        if (!property.field.isPrimaryKey) {
+                        // 如果字段不是主键且不是密钥，关联过来
+                        if (!property.field.isPrimaryKey && !property.isKey) {
                             println('/**');
                             for(remark in property.remarks) {
                                 if (remarkLP.first)
@@ -89,7 +89,7 @@ public class ${moduleClassName} implements Vo<${pojoMeta.ids[0].classSimpleName}
                             // 根据remark解析情况添加脱敏注解
                             addDesensitizeAnnotation(property.remark);
                             var propertyClassName = property.classSimpleName;
-                            println('private ' + propertyClassName + ' ' + property.alias + ';');
+                            println('private ' + propertyClassName + ' ' + foreignKey.fkFieldAlias + property.nameUpperCamel + ';');
                         }
                     }
                     break;
