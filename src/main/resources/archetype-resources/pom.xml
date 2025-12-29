@@ -23,10 +23,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <codgen.version>1.2.37</codgen.version>
-        <mbgx.version>3.8.64</mbgx.version>
-        <wheel.version>3.8.64</wheel.version>
-        <robotech.version>3.8.64</robotech.version>
-        <sbs.version>3.8.64</sbs.version>
+        <mbgx.version>3.9.65</mbgx.version>
+        <wheel.version>3.9.65</wheel.version>
+        <robotech.version>3.9.65</robotech.version>
+        <sbs.version>3.9.65</sbs.version>
         <adm.version>1.0.0</adm.version>
     </properties>
 
