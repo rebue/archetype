@@ -22,7 +22,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <codgen.version>1.2.37</codgen.version>
+        <codgen.version>1.2.38</codgen.version>
         <mbgx.version>3.9.65</mbgx.version>
         <wheel.version>3.9.65</wheel.version>
         <robotech.version>3.9.65</robotech.version>
